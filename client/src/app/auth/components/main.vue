@@ -10,9 +10,9 @@
           <router-link tag="li" :to="{ name: 'auth.singin' }">
             <a>Sing in</a>
           </router-link>
-          <!-- <router-link tag="li" :to="{ name: 'auth.singup' }">
+          <router-link tag="li" :to="{ name: 'auth.singup' }">
             <a>Sing up</a>
-          </router-link> -->
+          </router-link>
         </ul>
       </div>
       <div class="col-md-4">
