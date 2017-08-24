@@ -209,7 +209,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
         <h1>Product Management</h1>
