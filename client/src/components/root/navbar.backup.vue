@@ -71,6 +71,8 @@
 
 <style scoped>
   .cc-navigation {
+    padding-left: 115px;
+    padding-right: 30px;
   }
   .brand {
     font-size: 1.2em;

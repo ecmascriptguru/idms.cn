@@ -7,10 +7,7 @@
 
 <template>
   <div>
-      <div class="cover-container">
-        <img class="cover" src="http://vedovelli.com.br/spas.png" alt="Codecasts Single Page Application starter kit">
-        <h4>A highly opinionated Single Page Application starter kit built on top of Vue.js and Laravel.</h4>
-      </div>
+      <h3>Here it is, the new dashboard you have just created.</h3>
   </div>
 </template>
 
