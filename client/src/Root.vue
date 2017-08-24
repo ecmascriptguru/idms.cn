@@ -1,13 +1,21 @@
 <script>
 import { mapGetters } from 'vuex'
-import CcNavBar from './components/root/navbar'
-import CcAlerts from './components/general/alerts'
+import JdHeader from './components/root/header'
+import JdFooter from './components/root/footer'
+import JdLeftSideBar from './components/root/leftsidebar'
+import JdControlSideBar from './components/root/controlsidebar'
+import JdBgSideBar from './components/root/bgsidebar'
+import JdAlerts from './components/general/alerts'
 
 export default {
   name: 'Codecasts',
   components: {
-    CcNavBar,
-    CcAlerts,
+    JdHeader,
+    JdFooter,
+    JdLeftSideBar,
+    JdControlSideBar,
+    JdBgSideBar,
+    JdAlerts,
   },
   computed: {
     ...mapGetters(['shouldShowNavigation']),
@@ -16,13 +24,22 @@ export default {
 </script>
 
 <template>
-  <div id="app">
-    <cc-nav-bar v-show="shouldShowNavigation"></cc-nav-bar>
+  <div id="app" class="app">
+    <jd-header v-show="shouldShowNavigation"></jd-header>
+    <jd-left-side-bar v-show="shouldShowNavigation"></jd-left-side-bar>
+    <router-view></router-view>
     <div class="container">
-      <cc-alerts></cc-alerts>
-      <router-view></router-view>
+      <jd-alerts></jd-alerts>
     </div>
+    <jd-footer v-show="shouldShowNavigation"></jd-footer>
+    <jd-control-side-bar></jd-control-side-bar>
+    <jd-bg-side-bar></jd-bg-side-bar>
   </div>
 </template>
+<style>
+  .app {
+    position: relative;
+  }
+</style>
 
 <style lang="sass" src="assets/sass/app.scss"></style>

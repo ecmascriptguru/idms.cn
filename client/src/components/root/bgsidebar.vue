@@ -49,38 +49,10 @@
 </script>
 
 <template>
-  <div>
-    <cc-spinner></cc-spinner>
-    <el-menu theme="dark" default-active="1" class="cc-navigation"
-      mode="horizontal" @select="navigate">
-      <el-menu-item index="codecasts" class="brand">Codecasts.com.br</el-menu-item>
-      <el-menu-item index="dashboard.index">Dashboard</el-menu-item>
-      <el-submenu index="menu-modules">
-        <template slot="title">Modules</template>
-        <el-menu-item index="categories.index">Categories</el-menu-item>
-        <el-menu-item index="products.index">Products</el-menu-item>
-      </el-submenu>
-      <el-submenu index="menu-user" class="logout-button">
-        <template slot="title">{{ currentUser.name }}</template>
-        <el-menu-item index="logout">Logout</el-menu-item>
-      </el-submenu>
-    </el-menu>
-    <small class="version">version {{ version }}</small>
-  </div>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
 </template>
 
 <style scoped>
-  .cc-navigation {
-  }
-  .brand {
-    font-size: 1.2em;
-  }
-  .logout-button {
-    float: right;
-  }
-  .version {
-    position: absolute;
-    right: 15px;
-    top: 65px;
-  }
 </style>
