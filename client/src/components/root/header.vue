@@ -266,7 +266,7 @@
                         <img src="../../assets/img/avatar1.png" class="img-circle" alt="avatar">
 
                         <p>
-                        Alexander Pierce - Web Developer
+                        {{ currentUser.name }} - Web Developer
                         <small>Member since Nov. 2012</small>
                         </p>
                     </li>

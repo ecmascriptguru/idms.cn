@@ -150,10 +150,10 @@
 <template>
   <div>
     <div class="row" v-if="hasData">
-      <div class="col-md-6">
+      <div class="col-md-4 col-lg-6">
         <p class="rangeInformation">Showing {{ currentRange }} of {{ paginationData.total }}</p>
       </div>
-      <div class="col-md-6 text-right">
+      <div class="col-md-8 col-lg-6 text-right">
         <nav aria-label="Page navigation">
           <ul class="pagination">
             <li :class="{ disabled: isFirst }">
