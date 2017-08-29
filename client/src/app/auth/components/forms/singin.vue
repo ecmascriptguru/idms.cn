@@ -24,9 +24,19 @@
       submit() {
         const { username, password } = this // http://wesbos.com/destructuring-objects/
         this.attemptLogin({ username, password }) // this is a Vuex action
-          .then(() => {
+          .then((response) => {
+            console.log(response);
             this.setMessage({ type: 'error', message: [] }) // this is a Vuex action
-            this.$router.push({ name: 'dashboard.index' })
+
+            switch (response.role.name) {
+              case "Admin":
+                this.$router.push({ name: "admin.dashboard" })
+                break;
+
+              default:
+                this.$router.push({ name: 'dashboard.index' })
+                break;
+            }
           })
       },
       /**
