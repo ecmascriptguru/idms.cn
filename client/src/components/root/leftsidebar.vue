@@ -75,7 +75,25 @@
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
+      <ul v-if="(currentUser.role || {}).name === 'Admin'" class="sidebar-menu">
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-cog"></i> <span>Settings</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" :to="{ path: '/products' }">
+              <a href="#"><i class="fa fa-circle-o"></i> Products</a>
+            </router-link>
+            <router-link tag="li" :to="{ path: '/categories' }">
+              <a href="#"><i class="fa fa-circle-o"></i> Categories</a>
+            </router-link>
+          </ul>
+        </li>
+      </ul>
+      <ul v-else class="sidebar-menu">
         <!-- <li class="header">MAIN NAVIGATION</li> -->
         <li class="treeview">
           <a href="#">

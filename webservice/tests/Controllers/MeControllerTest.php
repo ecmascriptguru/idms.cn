@@ -18,7 +18,7 @@ class MeControllerTest extends ApiTestCase
         // Create a new user in the database
         $user = $this->create(User::class, [
             'name' => 'Anakin Skywalker',
-            'email' => 'anakin@deathstar.com',
+            'username' => 'anakin@deathstar.com',
         ]);
 
         // Generate user token
@@ -35,14 +35,14 @@ class MeControllerTest extends ApiTestCase
         // Check the JSON structure of the response
         $this->seeJsonStructure([
             'data' => [
-                'name', 'email',
+                'name', 'username',
             ],
         ]);
 
         // Check if the user informations were returned correctly
         $this->seeJson([
             'name' => $user->name,
-            'email' => $user->email,
+            'username' => $user->username,
         ]);
     }
 }

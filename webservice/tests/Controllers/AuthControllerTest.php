@@ -18,7 +18,7 @@ class AuthControllerTest extends ApiTestCase
     public function is_checking_for_invalid_credentials()
     {
         $this->json('POST', $this->urlTokenIssue, [
-            'email' => 'hello@example.com',
+            'username' => 'hello@example.com',
             'password' => 'dummypassword',
         ]);
 
@@ -33,16 +33,16 @@ class AuthControllerTest extends ApiTestCase
      */
     public function can_get_an_authenticated_token()
     {
-        $email = 'hello@example.com';
+        $username = 'hello@example.com';
         $password = 'dummypassword';
 
         $this->create(User::class, [
-            'email' => $email,
+            'username' => $username,
             'password' => Hash::make($password),
         ]);
 
         $this->json('POST', $this->urlTokenIssue, [
-            'email' => $email,
+            'username' => $username,
             'password' => $password,
         ]);
 
@@ -53,7 +53,7 @@ class AuthControllerTest extends ApiTestCase
             'user' => [
                 'id',
                 'name',
-                'email',
+                'username',
             ],
         ]);
     }
@@ -152,7 +152,7 @@ class AuthControllerTest extends ApiTestCase
     private function makeRequestWithInvalidCredentials()
     {
         $this->json('POST', $this->urlTokenIssue, [
-            'email' => 'hello@example.com',
+            'username' => 'hello@example.com',
             'password' => 'dummypassword',
         ]);
     }
@@ -160,7 +160,7 @@ class AuthControllerTest extends ApiTestCase
     private function createUser()
     {
         return $this->create(User::class, [
-            'email' => 'hello@example.com'
+            'username' => 'hello@example.com'
         ]);
     }
 }
