@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash'
 import { getData } from 'utils/get'
 import * as TYPES from './mutations-types'
 
-export const attemptLogin = ({ dispatch }, { email, password }) => http.post('/auth/token/issue', { email, password })
+export const attemptLogin = ({ dispatch }, { username, password }) => http.post('/auth/token/issue', { username, password })
      /**
       * functional approach, more readable and generate minus code
       * examples:

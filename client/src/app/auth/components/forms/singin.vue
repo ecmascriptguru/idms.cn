@@ -7,7 +7,7 @@
     */
     data() {
       return {
-        email: 'happy.developer@vuejsisawesome.com',
+        username: 'admin',
         password: '123456',
       }
     },
@@ -22,8 +22,8 @@
       * Handle form's submit event
       */
       submit() {
-        const { email, password } = this // http://wesbos.com/destructuring-objects/
-        this.attemptLogin({ email, password }) // this is a Vuex action
+        const { username, password } = this // http://wesbos.com/destructuring-objects/
+        this.attemptLogin({ username, password }) // this is a Vuex action
           .then(() => {
             this.setMessage({ type: 'error', message: [] }) // this is a Vuex action
             this.$router.push({ name: 'dashboard.index' })
@@ -33,7 +33,7 @@
       * Reset component's local state
       */
       reset() {
-        this.email = ''
+        this.username = ''
         this.password = ''
       },
     },
@@ -43,8 +43,8 @@
 <template>
   <form class="well" @submit.prevent="submit">
     <div class="form-group">
-      <label for="email" class="control-label">E-mail</label>
-      <input type="email" class="form-control" id="email" v-model="email">
+      <label for="username" class="control-label">Username</label>
+      <input type="text" class="form-control" id="username" v-model="username">
     </div>
     <div class="form-group">
       <label for="password" class="control-label">Password</label>
