@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
      * @var array
      */
     protected $tables = [
+        'roles',
         'users',
         'products',
         'categories',
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->truncate();
 
+        $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
