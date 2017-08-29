@@ -57,11 +57,12 @@ class AuthController extends ApiController
         $this->clearLoginAttempts($request);
 
         $user = Auth::guard('api')->user();
+        $role = $user->role;
 
         // get time to live of token form JWT service.
         $token_ttl = (new Jwt($token))->getTokenTTL();
 
-        return $this->response(compact('token', 'token_ttl', 'user'));
+        return $this->response(compact('token', 'token_ttl', 'user', 'role'));
     }
 
     /**
