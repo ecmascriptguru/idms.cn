@@ -32,8 +32,8 @@ export default {
       <jd-alerts></jd-alerts>
     </div>
     <jd-footer v-show="shouldShowNavigation"></jd-footer>
-    <jd-control-side-bar v-show="shouldShowNavigation"></jd-control-side-bar>
-    <jd-bg-side-bar v-show="shouldShowNavigation"></jd-bg-side-bar>
+    <!-- <jd-control-side-bar v-show="shouldShowNavigation"></jd-control-side-bar> -->
+    <!-- <jd-bg-side-bar v-show="shouldShowNavigation"></jd-bg-side-bar> -->
   </div>
 </template>
 <style>
