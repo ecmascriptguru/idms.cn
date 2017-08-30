@@ -240,7 +240,7 @@
 
 <template>
   <div class="content-wrapper">
-    <div class="row">
+    <div class="">
       <div class="col-md-6">
         <h1>Role Management</h1>
       </div>

@@ -84,10 +84,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <router-link tag="li" :to="{ path: '/products' }">
+            <router-link tag="li" active-class="active" :to="{ path: '/admin/roles', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> Roles</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/products', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Products</a>
             </router-link>
-            <router-link tag="li" :to="{ path: '/categories' }">
+            <router-link tag="li" active-class="active" :to="{ path: '/categories', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Categories</a>
             </router-link>
           </ul>

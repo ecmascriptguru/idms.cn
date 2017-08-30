@@ -149,7 +149,7 @@
 
 <template>
   <div>
-    <div class="row" v-if="hasData">
+    <div class="" v-if="hasData">
       <div class="col-md-4 col-lg-6">
         <p class="rangeInformation">Showing {{ currentRange }} of {{ paginationData.total }}</p>
       </div>

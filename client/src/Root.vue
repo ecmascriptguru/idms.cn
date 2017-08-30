@@ -31,7 +31,7 @@ export default {
     <div class="container">
       <jd-alerts></jd-alerts>
     </div>
-    <jd-footer v-show="shouldShowNavigation"></jd-footer>
+    <!-- <jd-footer v-show="shouldShowNavigation"></jd-footer> -->
     <!-- <jd-control-side-bar v-show="shouldShowNavigation"></jd-control-side-bar> -->
     <!-- <jd-bg-side-bar v-show="shouldShowNavigation"></jd-bg-side-bar> -->
   </div>
@@ -39,6 +39,7 @@ export default {
 <style>
   .app {
     position: relative;
+    height: 100%;
   }
 </style>
 
