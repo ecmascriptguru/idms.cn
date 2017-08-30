@@ -277,13 +277,15 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th colspan="2">Role</th>
+          <th>Role</th>
+          <th colspan="2">Users</th
         </tr>
       </thead>
       <tbody>
         <tr v-for="role in roles">
           <td width="1%" nowrap>{{ role.id }}</td>
           <td>{{ role.name }}</td>
+          <td>{{ role.count }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
               @click.prevent="edit(role.id)"
