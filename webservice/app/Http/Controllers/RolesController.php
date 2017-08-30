@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
 use App\Http\Requests\RoleRequest;
 use App\Transformers\RoleTransformer;
@@ -9,6 +10,13 @@ use App\Transformers\RoleTransformer;
 
 class RolesController extends ApiController
 {
+    public function isAdmin() {
+        $user = Auth::guard('api')->user();
+        $role = $user->role;
+
+        return $role->id === 1;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,12 +27,19 @@ class RolesController extends ApiController
         $sort = $this->getSort();
         $order = $this->getOrder();
         $limit = $this->getLimit();
-
+        
         $roles = Role::orderBy($sort, $order)->paginate($limit);
 
-        return $this->response(
-            $this->transform->collection($roles, new RoleTransformer)
-        );
+        if ($this->isAdmin()) {
+            return $this->response(
+                $this->transform->collection($roles, new RoleTransformer)
+            );
+        } else {
+            $roles = Role::where(['id' => null])->paginate($limit);
+            return $this->response(
+                $this->transform->collection($roles, new RoleTransformer)
+            );
+        }
     }
 
     public function fullList()
@@ -42,9 +57,14 @@ class RolesController extends ApiController
      */
     public function store(RoleRequest $request)
     {
-        Role::create($request->only('name'));
+        if ($this->isAdmin()) {
+        
+            Role::create($request->only('name'));
 
-        return $this->response(['result' => 'success']);
+            return $this->response(['result' => 'success']);
+        } else {
+            return $this->response(['result' => 'failure']);
+        }
     }
 
     /**
@@ -81,10 +101,16 @@ class RolesController extends ApiController
             return $this->responseWithNotFound('Role not found');
         }
 
-        $role->name = $request->get('name');
-        $role->save();
+        if ($this->isAdmin()) {
+            $role->name = $request->get('name');
+            $role->save();
 
-        return $this->response(['result' => 'success']);
+            return $this->response(['result' => 'success']);
+        }
+        else 
+        {
+            return $this->response(['result' => 'failure']);
+        }
     }
 
     /**
@@ -101,8 +127,14 @@ class RolesController extends ApiController
             return $this->responseWithNotFound('Role not found');
         }
 
-        $role->delete();
-
-        return $this->response(['result' => 'success']);
+        if ($this->isAdmin()) 
+        {
+            $role->delete();
+            
+            return $this->response(['result' => 'success']);
+        }
+        else{
+            return $this->response(['result' => 'failure']);
+        }
     }
 }

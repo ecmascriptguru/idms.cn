@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\OperatingCompany;
 use App\Http\Requests\OperatingCompanyRequest;
 use App\Transformers\OperatingCompanyTransformer;
@@ -9,6 +10,14 @@ use App\Transformers\OperatingCompanyTransformer;
 
 class OperatingCompaniesController extends ApiController
 {
+    public function isAdmin() {
+        $user = Auth::guard('api')->user();
+        $role = $user->role;
+
+        return $role->id === 1;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -42,9 +51,13 @@ class OperatingCompaniesController extends ApiController
      */
     public function store(OperatingCompanyRequest $request)
     {
-        OperatingCompany::create($request->only('name', 'short_name', 'contact', 'phone', 'address'));
-
-        return $this->response(['result' => 'success']);
+        if ($this->isAdmin()) {
+            OperatingCompany::create($request->only('name', 'short_name', 'contact', 'phone', 'address'));
+            
+            return $this->response(['result' => 'success']);
+        } else { 
+            return $this->response(['result' => 'failure']);
+        }
     }
 
     /**
@@ -81,14 +94,18 @@ class OperatingCompaniesController extends ApiController
             return $this->responseWithNotFound('OperatingCompany not found');
         }
 
-        $opCompany->name = $request->get('name');
-        $opCompany->short_name = $request->get('short_name');
-        $opCompany->contact = $request->get('contact');
-        $opCompany->phone = $request->get('phone');
-        $opCompany->address = $request->get('address');
-        $opCompany->save();
+        if ($this->isAdmin()) {
+            $opCompany->name = $request->get('name');
+            $opCompany->short_name = $request->get('short_name');
+            $opCompany->contact = $request->get('contact');
+            $opCompany->phone = $request->get('phone');
+            $opCompany->address = $request->get('address');
+            $opCompany->save();
 
-        return $this->response(['result' => 'success']);
+            return $this->response(['result' => 'success']);
+        } else {
+            return $this->response(['result' => 'failure']);
+        }
     }
 
     /**
@@ -105,8 +122,12 @@ class OperatingCompaniesController extends ApiController
             return $this->responseWithNotFound('OperatingCompany not found');
         }
 
-        $opCompany->delete();
-
-        return $this->response(['result' => 'success']);
+        if ($this->isAdmin()) { 
+            $opCompany->delete();
+            
+            return $this->response(['result' => 'success']);
+        } else {
+            return $this->response(['result' => 'failure']);
+        }
     }
 }
