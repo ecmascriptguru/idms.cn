@@ -3,9 +3,10 @@ import { vuex as Categories } from './categories'
 import { vuex as Products } from './products'
 import { vuex as Roles } from './roles'
 import { vuex as Auth } from './auth'
+import { vuex as OperatingCompanies } from './opCompanies'
 
 // start extraction data from vuex modules
-const vuex = { Categories, Products, Roles, Auth };
+const vuex = { Categories, Products, Roles, OperatingCompanies, Auth };
 const keys = Object.keys(vuex)
 // process and extract data (modules and plugins)
 /**

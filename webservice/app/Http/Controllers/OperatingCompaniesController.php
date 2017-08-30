@@ -42,7 +42,7 @@ class OperatingCompaniesController extends ApiController
      */
     public function store(OperatingCompanyRequest $request)
     {
-        OperatingCompany::create($request->only('name'));
+        OperatingCompany::create($request->only('name', 'short_name', 'contact', 'phone', 'address'));
 
         return $this->response(['result' => 'success']);
     }
@@ -82,6 +82,10 @@ class OperatingCompaniesController extends ApiController
         }
 
         $opCompany->name = $request->get('name');
+        $opCompany->short_name = $request->get('short_name');
+        $opCompany->contact = $request->get('contact');
+        $opCompany->phone = $request->get('phone');
+        $opCompany->address = $request->get('address');
         $opCompany->save();
 
         return $this->response(['result' => 'success']);

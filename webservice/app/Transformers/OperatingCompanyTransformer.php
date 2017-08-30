@@ -23,7 +23,7 @@ class OperatingCompanyTransformer extends TransformerAbstract
             'phone' => $oc->phone,
             'contact' => $oc->contact,
             'address' => $oc->address,
-            'count' => count($oc->users),
+            'count' => count($oc->users()),
             'created_at' => $oc->created_at->toIso8601String(),
             'updated_at' => $oc->updated_at->toIso8601String(),
         ];

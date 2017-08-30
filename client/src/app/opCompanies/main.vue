@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'CcRoles',
+    name: 'CcOperatingCompanies',
 
     /**
     * Components registered with
@@ -22,21 +22,21 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'admin.roles.edit',
+          name: 'admin.ops.edit',
           params: { id },
           query: { page: this.currentPage } })
       },
       create() {
-        this.$router.push({ name: 'admin.roles.new', query: { page: this.currentPage } })
+        this.$router.push({ name: 'admin.ops.new', query: { page: this.currentPage } })
       },
       hide() {
-        this.$router.push({ name: 'admin.roles.index', query: { page: this.currentPage } })
+        this.$router.push({ name: 'admin.ops.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['rolesSetData', 'setFetching']),
+      ...mapActions(['operatingCompaniesSetData', 'setFetching']),
 
       fetch() {
         this.fetchPaginated()
@@ -44,7 +44,7 @@
       },
 
       /**
-      * Fetch a new set of roles
+      * Fetch a new set of ops
       * based on the current page
       */
       fetchPaginated() {
@@ -61,12 +61,12 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`roles?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`ops?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
-          * the Vuex Roles module
+          * the Vuex OpratingCompany module
           */
-          this.rolesSetData({
+          this.operatingCompaniesSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
@@ -82,18 +82,18 @@
 
       /**
       * Differente from fetch() which always
-      * return a paginated set of roles
+      * return a paginated set of ops
       * this one returns the full set, which
       * is used by other components in the app.
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('roles/full-list').then(({ data }) => {
+        this.$http.get('ops/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
-          * the Vuex Roles module
+          * the Vuex OperatingCompany module
           */
-          this.rolesSetData({
+          this.operatingCompaniesSetData({
             full_list: data.data,
           })
           this.setFetching({ fetching: false })
@@ -108,10 +108,10 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'admin.roles.index', query: { page: obj.page } })
+        this.$router.push({ name: 'admin.ops.index', query: { page: obj.page } })
 
         /**
-        * Fetch a new set of Roles based on
+        * Fetch a new set of OperatingCompanies based on
         * current page number. Mind the nextTick()
         * which delays a the request a fraction
         * of a second. This ensures the currentPage
@@ -123,31 +123,31 @@
       /**
       * Shows a confirmation dialog
       */
-      askRemove(role) {
+      askRemove(op) {
         swal({
           title: 'Are you sure?',
-          text: `Role ${role.name} will be permanently removed.`,
+          text: `Operating Company ${op.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
           confirmButtonText: 'Yes, do it!',
           closeOnConfirm: false,
-        }, () => this.remove(role)) // callback executed when OK is pressed
+        }, () => this.remove(op)) // callback executed when OK is pressed
       },
 
       /**
       * Makes the HTTP requesto to the API
       */
-      remove(role) {
-        this.$http.delete(`roles/${role.id}`).then(() => {
+      remove(op) {
+        this.$http.delete(`ops/${op.id}`).then(() => {
           /**
-          * On success fetch a new set of Roles
+          * On success fetch a new set of OperatingCompanies
           * based on current page number
           */
           this.fetchPaginated()
 
           /**
-          * If we remove a role then
+          * If we remove a op then
           * the full list must be refreshed
           */
           this.fetchFullList()
@@ -155,14 +155,14 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'Role removed.', 'success')
+          swal('Done!', 'Operating Company removed.', 'success')
 
           /**
           * Redirects back to the main list,
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'admin.roles.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'admin.ops.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -184,17 +184,17 @@
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.Roles.pagination,
-        list: state => state.Roles.list,
+        pagination: state => state.OperatingCompanies.pagination,
+        list: state => state.OperatingCompanies.list,
       }),
-      roles() {
+      operatingCompanies() {
         return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
       isFormVisible() {
-        return this.$route.name === 'admin.roles.new' || this.$route.name === 'admin.roles.edit'
+        return this.$route.name === 'admin.ops.new' || this.$route.name === 'admin.ops.edit'
       },
     },
     /**
@@ -205,8 +205,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('role.created')
-      this.$bus.$off('role.updated')
+      this.$bus.$off('op.created')
+      this.$bus.$off('op.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -216,10 +216,10 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * Role was created or updated, refresh the list
+      * Operating Company was created or updated, refresh the list
       */
-      this.$bus.$on('role.created', this.fetch)
-      this.$bus.$on('role.updated', this.fetch)
+      this.$bus.$on('op.created', this.fetch)
+      this.$bus.$on('op.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
@@ -240,9 +240,9 @@
 
 <template>
   <div class="content-wrapper">
-    <div class="">
+    <div class="row">
       <div class="col-md-6">
-        <h1>Role Management</h1>
+        <h1>OpC Management</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -251,7 +251,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Role">
+            title="New Operating Company">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -259,7 +259,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Role">
+            title="New Operating Company">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -268,7 +268,7 @@
 
     <!-- Form to create/edit will be inserted here  -->
     <!-- when navigate to /nova or /editar/{id}  -->
-    <!-- see /src/modules/roles/routes.js  -->
+    <!-- see /src/modules/opCompanies/routes.js  -->
     <transition name="fade">
       <router-view></router-view>
     </transition>
@@ -277,32 +277,40 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Role</th>
+          <th>Name</th>
+          <th>Short Name</th>
+          <th>Contact</th>
+          <th>Address</th>
+          <th>Phone</th>
           <th colspan="2">Users</th
         </tr>
       </thead>
       <tbody>
-        <tr v-for="role in roles">
-          <td width="1%" nowrap>{{ role.id }}</td>
-          <td>{{ role.name }}</td>
-          <td>{{ role.count }}</td>
+        <tr v-for="op in operatingCompanies">
+          <td width="1%" nowrap>{{ op.id }}</td>
+          <td>{{ op.name }}</td>
+          <td>{{ op.short_name }}</td>
+          <td>{{ op.contact }}</td>
+          <td>{{ op.address }}</td>
+          <td>{{ op.phone }}</td>
+          <td>{{ op.count }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
-              @click.prevent="edit(role.id)"
+              @click.prevent="edit(op.id)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
               title="Edit">
               <i class="fa fa-fw fa-pencil"></i>
             </a>
-            <!-- <a href="#"
-              @click="askRemove(role)"
+            <a href="#"
+              @click="askRemove(op)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
               title="Remove">
               <i class="fa fa-fw fa-times"></i>
-            </a> -->
+            </a>
           </td>
         </tr>
       </tbody>

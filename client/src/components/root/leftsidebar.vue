@@ -87,6 +87,20 @@
             <router-link tag="li" active-class="active" :to="{ path: '/admin/roles', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Roles</a>
             </router-link>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-wrench"></i> <span>Operations</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active" :to="{ path: '/admin/ops', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> Operating Companies</a>
+            </router-link>
             <router-link tag="li" active-class="active" :to="{ path: '/products', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Products</a>
             </router-link>

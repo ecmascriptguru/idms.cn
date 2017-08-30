@@ -32,5 +32,12 @@ Route::group([
         Route::resource('/roles', 'RolesController', [
             'except' => ['create', 'edit'],
         ]);
+
+
+        Route::get('/ops/full-list', 'OperatingCompaniesController@fullList');
+        
+        Route::resource('/ops', 'OperatingCompaniesController', [
+           'except' => ['create', 'edit'],
+        ]);
     });
 });
