@@ -21,5 +21,16 @@ Route::group([
         ]);
 
         Route::get('/me', 'MeController@show');
+
+
+
+        /**
+         *  Created by Alex
+         */
+        Route::get('/roles/full-list', 'RolesController@fullList');
+         
+        Route::resource('/roles', 'RolesController', [
+            'except' => ['create', 'edit'],
+        ]);
     });
 });
