@@ -62,7 +62,7 @@ class AuthController extends ApiController
         // get time to live of token form JWT service.
         $token_ttl = (new Jwt($token))->getTokenTTL();
 
-        return $this->response(compact('token', 'token_ttl', 'user', 'role'));
+        return $this->response(compact('token', 'token_ttl', 'user'));
     }
 
     /**

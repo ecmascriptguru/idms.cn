@@ -22,6 +22,8 @@ class UserTransformer extends TransformerAbstract
             'username' => $user->username,
             'phone' => $user->phone,
             'address' => $user->address,
+            'role' => $user->role,
+            'organization' => $user->organization,
             'created_at' => $user->created_at->toIso8601String(),
             'updated_at' => $user->updated_at->toIso8601String(),
         ];

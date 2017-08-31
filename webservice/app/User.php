@@ -6,6 +6,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Role;
+use App\Models\OperatingCompany;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -41,5 +42,15 @@ class User extends Authenticatable implements JWTSubject
 
     public function role() {
         return $this->belongsTo(Role::class);
+    }
+
+    public function organization() {
+        $role = $this->role;
+
+        if ($role->id == 1) {
+            return $this->belongsTo(OperatingCompany::class, 'organization_id');
+        } elseif ($role->id == 2) {
+            return $this->belongsTo(OperatingCompany::class, 'organization_id');
+        }
     }
 }

@@ -23,20 +23,22 @@ Route::group([
         Route::get('/me', 'MeController@show');
 
 
-
         /**
          *  Created by Alex
          */
-        Route::get('/roles/full-list', 'RolesController@fullList');
-         
-        Route::resource('/roles', 'RolesController', [
+        Route::get('/roles/full-list', 'Admin\RolesController@fullList');         
+        Route::resource('/roles', 'Admin\RolesController', [
             'except' => ['create', 'edit'],
         ]);
 
 
-        Route::get('/ops/full-list', 'OperatingCompaniesController@fullList');
-        
-        Route::resource('/ops', 'OperatingCompaniesController', [
+        Route::get('/ops/full-list', 'Admin\OperatingCompaniesController@fullList');        
+        Route::resource('/ops', 'Admin\OperatingCompaniesController', [
+           'except' => ['create', 'edit'],
+        ]);
+
+        Route::get('/users/full-list', 'Admin\UsersController@fullList');        
+        Route::resource('/users', 'Admin\UsersController', [
            'except' => ['create', 'edit'],
         ]);
     });

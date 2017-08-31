@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Auth;
-use App\Models\Role;
-use App\Http\Requests\RoleRequest;
-use App\Transformers\RoleTransformer;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\User;
 
-
-class RolesController extends ApiController
+class UsersController extends Controller
 {
     public function isAdmin() {
         $user = Auth::guard('api')->user();
@@ -28,16 +26,16 @@ class RolesController extends ApiController
         $order = $this->getOrder();
         $limit = $this->getLimit();
         
-        $roles = Role::orderBy($sort, $order)->paginate($limit);
+        $users = User::orderBy($sort, $order)->where(['role_id' => 2])->paginate($limit);
 
         if ($this->isAdmin()) {
             return $this->response(
-                $this->transform->collection($roles, new RoleTransformer)
+                $this->transform->collection($users, new UserTransformer)
             );
         } else {
-            $roles = Role::where(['id' => null])->paginate($limit);
+            $users = User::where(['id' => null])->paginate($limit);
             return $this->response(
-                $this->transform->collection($roles, new RoleTransformer)
+                $this->transform->collection($users, new UserTransformer)
             );
         }
     }
@@ -45,7 +43,7 @@ class RolesController extends ApiController
     public function fullList()
     {
         return $this->response(
-            $this->transform->collection(Role::all(), new RoleTransformer)
+            $this->transform->collection(User::all(), new UserTransformer)
         );
     }
 
@@ -55,11 +53,11 @@ class RolesController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleRequest $request)
+    public function store(UserRequest $request)
     {
         if ($this->isAdmin()) {
         
-            Role::create($request->only('name'));
+            User::create($request->only('name', 'username', 'phone', 'address', 'role_id', 'organization_id'));
 
             return $this->response(['result' => 'success']);
         } else {
@@ -75,14 +73,14 @@ class RolesController extends ApiController
      */
     public function show($id)
     {
-        $role = Role::find($id);
+        $user = User::find($id);
 
-        if (! $role) {
-            return $this->responseWithNotFound('Role not found');
+        if (! $user) {
+            return $this->responseWithNotFound('User not found');
         }
 
         return $this->response(
-            $this->transform->item($role, new RoleTransformer)
+            $this->transform->item($user, new UserTransformer)
         );
     }
 
@@ -93,17 +91,22 @@ class RolesController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RoleRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $role = Role::find($id);
+        $user = User::find($id);
 
-        if (! $role) {
-            return $this->responseWithNotFound('Role not found');
+        if (! $user) {
+            return $this->responseWithNotFound('User not found');
         }
 
         if ($this->isAdmin()) {
-            $role->name = $request->get('name');
-            $role->save();
+            $user->name = $request->get('name');
+            $user->username = $request->get('username');
+            $user->phone = $request->get('phone');
+            $user->address = $request->get('address');
+            $user->role_id = $request->get('role_id');
+            $user->organization_id = $request->get('organization_id');
+            $user->save();
 
             return $this->response(['result' => 'success']);
         }
@@ -121,15 +124,15 @@ class RolesController extends ApiController
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
+        $user = User::find($id);
 
-        if (! $role) {
-            return $this->responseWithNotFound('Role not found');
+        if (! $user) {
+            return $this->responseWithNotFound('User not found');
         }
 
         if ($this->isAdmin()) 
         {
-            $role->delete();
+            $user->delete();
             
             return $this->response(['result' => 'success']);
         }
