@@ -278,7 +278,7 @@
         <tr>
           <th>ID</th>
           <th>Role</th>
-          <th colspan="2">Users</th
+          <th colspan="2">Users</th>
         </tr>
       </thead>
       <tbody>
