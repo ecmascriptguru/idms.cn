@@ -157,6 +157,7 @@
         list: state => state.Products.list,
       }),
       products() {
+        console.log(this.list)
         return this.list
       },
       currentPage() {

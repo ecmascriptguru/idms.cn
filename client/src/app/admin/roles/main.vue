@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'CcRoles',
+    name: 'JdRoles',
 
     /**
     * Components registered with
@@ -184,8 +184,8 @@
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.Roles.pagination,
-        list: state => state.Roles.list,
+        pagination: state => state.Admin.Roles.pagination,
+        list: state => state.Admin.Roles.list,
       }),
       roles() {
         return this.list
