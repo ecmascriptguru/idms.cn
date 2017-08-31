@@ -1,3 +1,6 @@
+import { polyfill } from 'es6-promise'
+polyfill()
+
 import { isFunction } from 'lodash'
 import { vuex as Categories } from './categories'
 import { vuex as Products } from './products'
