@@ -19,8 +19,15 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  Users: {
+    organization_id: 2,
+    role_id: 2,
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
-      
+
   }
 }
 
@@ -48,6 +55,17 @@ const mutations = {
       st.OperatingCompanies.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_USERS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.Users.list = obj.list
+    }
+    if (obj.full_list) {
+      st.Users.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.Users.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -56,6 +74,9 @@ const actions = {
   },
   operatingCompaniesSetData({ commit }, obj) {
     commit(TYPES.OPERATING_COMPANIES_SET_DATA, obj)
+  },
+  usersSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_USERS_SET_DATA, obj)
   },
 }
 

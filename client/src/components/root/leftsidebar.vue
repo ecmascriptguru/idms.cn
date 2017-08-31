@@ -101,6 +101,9 @@
             <router-link tag="li" active-class="active" :to="{ path: '/admin/ops', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Operating Companies</a>
             </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/admin/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> Users</a>
+            </router-link>
             <router-link tag="li" active-class="active" :to="{ path: '/products', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Products</a>
             </router-link>

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
 use App\Transformers\UserTransformer;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class UsersController extends ApiController
@@ -58,8 +59,9 @@ class UsersController extends ApiController
     public function store(UserRequest $request)
     {
         if ($this->isAdmin()) {
-        
-            User::create($request->only('name', 'username', 'phone', 'address', 'role_id', 'organization_id'));
+            $params = $request->only('name', 'username', 'phone', 'address', 'role_id', 'organization_id');
+            $params['password'] = Hash::make($request->input('password'));
+            User::create($params);
 
             return $this->response(['result' => 'success']);
         } else {
