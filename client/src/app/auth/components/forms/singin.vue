@@ -25,12 +25,12 @@
         const { username, password } = this // http://wesbos.com/destructuring-objects/
         this.attemptLogin({ username, password }) // this is a Vuex action
           .then((response) => {
-            console.log(response);
             this.setMessage({ type: 'error', message: [] }) // this is a Vuex action
 
             switch (response.role.name) {
               case "Admin":
                 this.$router.push({ name: "admin.dashboard" })
+                console.log("Here");
                 break;
 
               default:

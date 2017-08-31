@@ -1,2 +1,2 @@
 export { routes } from './routes'
-export { vuex } from './vuex'
+export { default as  vuex } from './vuex'

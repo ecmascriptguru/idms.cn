@@ -224,7 +224,13 @@
       * Fetch data immediately after component is mounted
       */
       this.fetchPaginated()
-      $.AdminLTE.layout.fix()
+      if (jQuery.AdminLTE.layout) {
+        jQuery.AdminLTE.layout.fix()
+      } else {
+        jQuery(document).ready(() => {
+          jQuery.AdminLTE.layout.fix()
+        })
+      }
     },
     /**
     * This hook is called every time DOM
@@ -235,7 +241,13 @@
       * start Bootstrap Tooltip
       */
       jQuery('[data-toggle="tooltip"]').tooltip()
-      $.AdminLTE.layout.fix()
+      if (jQuery.AdminLTE.layout) {
+        jQuery.AdminLTE.layout.fix()
+      } else {
+        jQuery(document).ready(() => {
+          jQuery.AdminLTE.layout.fix()
+        })
+      }
     },
   }
 </script>

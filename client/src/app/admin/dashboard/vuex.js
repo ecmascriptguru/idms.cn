@@ -1,6 +1,6 @@
 
-const module = {}
+// const module = {}
 
 export default {
-    module
+    // module
 }
