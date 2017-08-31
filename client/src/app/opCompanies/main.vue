@@ -224,6 +224,7 @@
       * Fetch data immediately after component is mounted
       */
       this.fetchPaginated()
+      $.AdminLTE.layout.fix()
     },
     /**
     * This hook is called every time DOM
@@ -233,7 +234,8 @@
       /**
       * start Bootstrap Tooltip
       */
-      jQuery('[data-toggle="tooltip"]').tooltip()
+      jQuery('[data-toggle="tooltip"]').tooltip();
+      $.AdminLTE.layout.fix()
     },
   }
 </script>
@@ -273,7 +275,7 @@
       <router-view></router-view>
     </transition>
 
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" style="margin-bottom:0;">
       <thead>
         <tr>
           <th>ID</th>
