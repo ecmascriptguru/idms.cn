@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserRequest;
+use App\Transformers\UserTransformer;
+use App\Http\Controllers\ApiController;
 use App\User;
 
-class UsersController extends Controller
+class UsersController extends ApiController
 {
     public function isAdmin() {
         $user = Auth::guard('api')->user();
