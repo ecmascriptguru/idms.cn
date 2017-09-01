@@ -4,8 +4,8 @@
 * http://router.vuejs.org/en/advanced/lazy-loading.html
 */
 /* eslint-disable global-require */
-const Users = r => require.ensure([], () => r(require('./main')), 'admin-bundle')
-const Form = r => require.ensure([], () => r(require('./form')), 'admin-bundle')
+const Users = r => require.ensure([], () => r(require('./main')), 'opa-bundle')
+const Form = r => require.ensure([], () => r(require('./form')), 'opa-bundle')
 
 const meta = {
   requiresAuth: true,

@@ -17,6 +17,16 @@ class PropertyCompaniesController extends ApiController
         return $role->id === 2;
     }
 
+    private function getOperatingCompanyId() {
+        $user = Auth::guard('api')->user();
+        
+        if ($user->organization) {
+            return $user->organization->id;
+        } else {
+            return null;
+        }
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -29,7 +39,7 @@ class PropertyCompaniesController extends ApiController
         $order = $this->getOrder();
         $limit = $this->getLimit();
 
-        $propertyCompanies = PropertyCompany::orderBy($sort, $order)->paginate($limit);
+        $propertyCompanies = PropertyCompany::orderBy($sort, $order)->where(['operating_company_id' => $this->getOperatingCompanyId()])->paginate($limit);
 
         return $this->response(
             $this->transform->collection($propertyCompanies, new PropertyCompanyTransformer)
@@ -39,7 +49,7 @@ class PropertyCompaniesController extends ApiController
     public function fullList()
     {
         return $this->response(
-            $this->transform->collection(PropertyCompany::all(), new PropertyCompanyTransformer)
+            $this->transform->collection(PropertyCompany::where(['operating_company_id' => $this->getOperatingCompanyId()]), new PropertyCompanyTransformer)
         );
     }
 
@@ -52,7 +62,9 @@ class PropertyCompaniesController extends ApiController
     public function store(PropertyCompanyRequest $request)
     {
         if ($this->isOperatingCompanyAdmin()) {
-            PropertyCompany::create($request->only('name', 'short_name', 'contact', 'phone', 'address', 'operating_company_id'));
+            $param = $request->only('name', 'short_name', 'contact', 'phone', 'address', 'operating_company_id');
+            $param['operating_company_id'] = $this->getOperatingCompanyId();
+            PropertyCompany::create($param);
             
             return $this->response(['result' => 'success']);
         } else { 

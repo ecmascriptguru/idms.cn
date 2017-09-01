@@ -4,8 +4,8 @@
 * http://router.vuejs.org/en/advanced/lazy-loading.html
 */
 /* eslint-disable global-require */
-const OperatingCompanies = r => require.ensure([], () => r(require('./main')), 'admin-bundle')
-const Form = r => require.ensure([], () => r(require('./form')), 'admin-bundle')
+const PropertyCompanies = r => require.ensure([], () => r(require('./main')), 'opa-bundle')
+const Form = r => require.ensure([], () => r(require('./form')), 'opa-bundle')
 
 const meta = {
   requiresAuth: true,
@@ -16,7 +16,7 @@ export default [
   {
     name: 'opManager.propertyCompanies.index',
     path: '/op/ppCompanies',
-    component: OperatingCompanies,
+    component: PropertyCompanies,
     meta,
     children: [
       {

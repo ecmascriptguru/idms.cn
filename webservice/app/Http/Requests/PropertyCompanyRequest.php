@@ -29,7 +29,6 @@ class PropertyCompanyRequest extends FormRequest
             'address' => 'required',
             'phone' => 'required',
             'contact' => 'required',
-            'operating_company_id' => 'required',
         ];
     }
 }

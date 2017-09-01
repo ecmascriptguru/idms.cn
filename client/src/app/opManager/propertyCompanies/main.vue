@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'CcOperatingCompanies',
+    name: 'CcPropertyCompanies',
 
     /**
     * Components registered with
@@ -22,21 +22,21 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'admin.ops.edit',
+          name: 'opManager.propertyCompanies.edit',
           params: { id },
           query: { page: this.currentPage } })
       },
       create() {
-        this.$router.push({ name: 'admin.ops.new', query: { page: this.currentPage } })
+        this.$router.push({ name: 'opManager.propertyCompanies.new', query: { page: this.currentPage } })
       },
       hide() {
-        this.$router.push({ name: 'admin.ops.index', query: { page: this.currentPage } })
+        this.$router.push({ name: 'opManager.propertyCompanies.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['operatingCompaniesSetData', 'setFetching']),
+      ...mapActions(['propertyCompaniesSetData', 'setFetching']),
 
       fetch() {
         this.fetchPaginated()
@@ -44,7 +44,7 @@
       },
 
       /**
-      * Fetch a new set of ops
+      * Fetch a new set of propertyCompanies
       * based on the current page
       */
       fetchPaginated() {
@@ -61,12 +61,12 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`ops?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`oca/ppcs?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
           * the Vuex OpratingCompany module
           */
-          this.operatingCompaniesSetData({
+          this.propertyCompaniesSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
@@ -82,18 +82,18 @@
 
       /**
       * Differente from fetch() which always
-      * return a paginated set of ops
+      * return a paginated set of propertyCompanies
       * this one returns the full set, which
       * is used by other components in the app.
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('ops/full-list').then(({ data }) => {
+        this.$http.get('oca/ppcs/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
           * the Vuex OperatingCompany module
           */
-          this.operatingCompaniesSetData({
+          this.propertyCompaniesSetData({
             full_list: data.data,
           })
           this.setFetching({ fetching: false })
@@ -108,7 +108,7 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'admin.ops.index', query: { page: obj.page } })
+        this.$router.push({ name: 'opManager.propertyCompanies.index', query: { page: obj.page } })
 
         /**
         * Fetch a new set of OperatingCompanies based on
@@ -123,23 +123,23 @@
       /**
       * Shows a confirmation dialog
       */
-      askRemove(op) {
+      askRemove(item) {
         swal({
           title: 'Are you sure?',
-          text: `Operating Company ${op.name} will be permanently removed.`,
+          text: `Operating Company ${item.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
           confirmButtonText: 'Yes, do it!',
           closeOnConfirm: false,
-        }, () => this.remove(op)) // callback executed when OK is pressed
+        }, () => this.remove(item)) // callback executed when OK is pressed
       },
 
       /**
       * Makes the HTTP requesto to the API
       */
-      remove(op) {
-        this.$http.delete(`ops/${op.id}`).then(() => {
+      remove(item) {
+        this.$http.delete(`oca/ppcs/${item.id}`).then(() => {
           /**
           * On success fetch a new set of OperatingCompanies
           * based on current page number
@@ -147,7 +147,7 @@
           this.fetchPaginated()
 
           /**
-          * If we remove a op then
+          * If we remove a item then
           * the full list must be refreshed
           */
           this.fetchFullList()
@@ -162,7 +162,7 @@
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'admin.ops.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'opManager.propertyCompanies.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -184,17 +184,17 @@
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.Admin.OperatingCompanies.pagination,
-        list: state => state.Admin.OperatingCompanies.list,
+        pagination: state => state.OpManager.PropertyCompanies.pagination,
+        list: state => state.OpManager.PropertyCompanies.list,
       }),
-      operatingCompanies() {
+      propertyCompanies() {
         return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
       isFormVisible() {
-        return this.$route.name === 'admin.ops.new' || this.$route.name === 'admin.ops.edit'
+        return this.$route.name === 'opManager.propertyCompanies.new' || this.$route.name === 'opManager.propertyCompanies.edit'
       },
     },
     /**
@@ -205,8 +205,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('op.created')
-      this.$bus.$off('op.updated')
+      this.$bus.$off('propertyCompany.created')
+      this.$bus.$off('propertyCompany.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -218,8 +218,8 @@
       /**
       * Operating Company was created or updated, refresh the list
       */
-      this.$bus.$on('op.created', this.fetch)
-      this.$bus.$on('op.updated', this.fetch)
+      this.$bus.$on('propertyCompany.created', this.fetch)
+      this.$bus.$on('propertyCompany.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
@@ -256,7 +256,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>OpC Management</h1>
+        <h1>物业公司管理</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -300,17 +300,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(op, index) in operatingCompanies">
+        <tr v-for="(item, index) in propertyCompanies">
           <td width="1%" nowrap>{{ index +1 }}</td>
-          <td>{{ op.name }}</td>
-          <td>{{ op.short_name }}</td>
-          <td>{{ op.contact }}</td>
-          <td>{{ op.address }}</td>
-          <td>{{ op.phone }}</td>
-          <td>{{ op.count }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.short_name }}</td>
+          <td>{{ item.contact }}</td>
+          <td>{{ item.address }}</td>
+          <td>{{ item.phone }}</td>
+          <td>{{ item.count }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
-              @click.prevent="edit(op.id)"
+              @click.prevent="edit(item.id)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
@@ -318,7 +318,7 @@
               <i class="fa fa-fw fa-pencil"></i>
             </a>
             <a href="#"
-              @click="askRemove(op)"
+              @click="askRemove(item)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"

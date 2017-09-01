@@ -1,11 +1,3 @@
-// import { vuex as Dashboard } from './dashboard'
-// import { vuex as Roles } from './roles'
-// import { vuex as OperatingCompanies } from './opCompanies'
-
-// const vuex = { ...Dashboard, ...Roles, ...OperatingCompanies }
-
-// export { vuex }
-
 import * as TYPES from '../../store/types'
 
 const state = {
@@ -30,13 +22,13 @@ const state = {
 const mutations = {
   [TYPES.PROPERTY_COMPANIES_SET_DATA](st, obj) {
     if (obj.list) {
-      st.OperatingCompanies.list = obj.list
+      st.PropertyCompanies.list = obj.list
     }
     if (obj.full_list) {
-      st.OperatingCompanies.full_list = obj.full_list
+      st.PropertyCompanies.full_list = obj.full_list
     }
     if (obj.pagination) {
-      st.OperatingCompanies.pagination = obj.pagination
+      st.PropertyCompanies.pagination = obj.pagination
     }
   },
   [TYPES.OP_USERS_SET_DATA](st, obj) {
@@ -53,7 +45,7 @@ const mutations = {
 }
 
 const actions = {
-  operatingCompaniesSetData({ commit }, obj) {
+  propertyCompaniesSetData({ commit }, obj) {
     commit(TYPES.PROPERTY_COMPANIES_SET_DATA, obj)
   },
   usersSetData({ commit }, obj) {

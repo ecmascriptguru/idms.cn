@@ -10,7 +10,7 @@
     */
     data() {
       return {
-        operatingCompany: {
+        propertyCompany: {
           id: 0,
           name: '',
           short_name: '',
@@ -42,27 +42,27 @@
     */
     computed: {
       isEditing() {
-        return this.operatingCompany.id > 0
+        return this.propertyCompany.id > 0
       },
       isValid() {
         this.resetMessages()
-        if (this.operatingCompany.name === '') {
+        if (this.propertyCompany.name === '') {
           this.setMessage({ type: 'error', message: ['Please fill company name'] })
           return false
         }
-        if (this.operatingCompany.short_name === '') {
+        if (this.propertyCompany.short_name === '') {
           this.setMessage({ type: 'error', message: ['Please fill company short name'] })
           return false
         }
-        if (this.operatingCompany.contact === '') {
+        if (this.propertyCompany.contact === '') {
           this.setMessage({ type: 'error', message: ['Please fill company contact'] })
           return false
         }
-        if (this.operatingCompany.phone === '') {
+        if (this.propertyCompany.phone === '') {
           this.setMessage({ type: 'error', message: ['Please fill company phone'] })
           return false
         }
-        if (this.operatingCompany.address === '') {
+        if (this.propertyCompany.address === '') {
           this.setMessage({ type: 'error', message: ['Please fill company address'] })
           return false
         }
@@ -92,14 +92,14 @@
           * Fetch the op from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`ops/${id}`).then((res) => {
+          this.$http.get(`oca/ppcs/${id}`).then((res) => {
             const { id: _id, name, short_name, contact, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
-            this.operatingCompany.id = _id
-            this.operatingCompany.name = name
-            this.operatingCompany.short_name = short_name
-            this.operatingCompany.contact = contact
-            this.operatingCompany.phone = phone
-            this.operatingCompany.address = address
+            this.propertyCompany.id = _id
+            this.propertyCompany.name = name
+            this.propertyCompany.short_name = short_name
+            this.propertyCompany.contact = contact
+            this.propertyCompany.phone = phone
+            this.propertyCompany.address = address
             this.setFetching({ fetching: false })
           })
         }
@@ -122,13 +122,13 @@
         }
       },
       save() {
-        this.$http.post('ops', 
+        this.$http.post('oca/ppcs', 
           { 
-            name: this.operatingCompany.name,
-            short_name: this.operatingCompany.short_name,
-            contact: this.operatingCompany.contact,
-            phone: this.operatingCompany.phone,
-            address: this.operatingCompany.address,
+            name: this.propertyCompany.name,
+            short_name: this.propertyCompany.short_name,
+            contact: this.propertyCompany.contact,
+            phone: this.propertyCompany.phone,
+            address: this.propertyCompany.address,
           }).then(() => {
           /**
           * This event will notify the world about
@@ -155,14 +155,14 @@
         })
       },
       update() {
-        this.$http.put(`ops/${this.operatingCompany.id}`, this.operatingCompany).then(() => {
+        this.$http.put(`oca/ppcs/${this.propertyCompany.id}`, this.propertyCompany).then(() => {
           /**
           * This event will notify the world about
           * the op creation. In this case
           * the Op main component will intercept
           * the event and refresh the list.
           */
-          this.$bus.$emit('op.updated')
+          this.$bus.$emit('propertyCompany.updated')
 
           /**
           * Hides the global spinner
@@ -176,12 +176,12 @@
         })
       },
       reset() {
-        this.operatingCompany.id = 0
-        this.operatingCompany.name = ''
-        this.operatingCompany.short_name = ''
-        this.operatingCompany.contact = ''
-        this.operatingCompany.phone = ''
-        this.operatingCompany.address = ''
+        this.propertyCompany.id = 0
+        this.propertyCompany.name = ''
+        this.propertyCompany.short_name = ''
+        this.propertyCompany.contact = ''
+        this.propertyCompany.phone = ''
+        this.propertyCompany.address = ''
       },
     },
   }
@@ -190,24 +190,24 @@
 <template>
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
-      <label for="name" class="control-label">Operating Company Name</label>
-      <input ref="firstInput" type="text" id="name" class="form-control" v-model="operatingCompany.name">
+      <label for="name" class="control-label">Property Company Name</label>
+      <input ref="firstInput" type="text" id="name" class="form-control" v-model="propertyCompany.name">
     </div>
     <div class="form-group">
       <label for="short_name" class="control-label">Short Name</label>
-      <input ref="firstInput" type="text" id="short_name" class="form-control" v-model="operatingCompany.short_name">
+      <input ref="firstInput" type="text" id="short_name" class="form-control" v-model="propertyCompany.short_name">
     </div>
     <div class="form-group">
       <label for="contact" class="control-label">Contact</label>
-      <input ref="firstInput" type="text" id="contact" class="form-control" v-model="operatingCompany.contact">
+      <input ref="firstInput" type="text" id="contact" class="form-control" v-model="propertyCompany.contact">
     </div>
     <div class="form-group">
       <label for="phone" class="control-label">Phone</label>
-      <input ref="firstInput" type="text" id="phone" class="form-control" v-model="operatingCompany.phone">
+      <input ref="firstInput" type="text" id="phone" class="form-control" v-model="propertyCompany.phone">
     </div>
     <div class="form-group">
       <label for="address" class="control-label">Address</label>
-      <input ref="firstInput" type="text" id="address" class="form-control" v-model="operatingCompany.address">
+      <input ref="firstInput" type="text" id="address" class="form-control" v-model="propertyCompany.address">
     </div>
     <button class="btn btn-primary btn-xs" type="submit">Save</button>
   </form>
