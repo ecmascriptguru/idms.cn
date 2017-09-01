@@ -25,6 +25,7 @@ Route::group([
 
         /**
          *  Created by Alex
+         *  For administrator
          */
         Route::get('/admin/roles/full-list', 'Admin\RolesController@fullList');         
         Route::resource('/admin/roles', 'Admin\RolesController', [
@@ -41,5 +42,13 @@ Route::group([
         Route::resource('/admin/users', 'Admin\UsersController', [
            'except' => ['create', 'edit'],
         ]);
+
+        /**
+         *  For Operating Company Admin
+         */
+         Route::get('/oca/ppcs/full-list', 'Admin\PropertyCompaniesController@fullList');        
+         Route::resource('/oca/ppcs', 'Admin\PropertyCompaniesController', [
+            'except' => ['create', 'edit'],
+         ]);
     });
 });
