@@ -113,6 +113,79 @@
           </ul>
         </li>
       </ul>
+
+      <ul v-else-if="(currentUser.role || {}).id === 2" class="sidebar-menu">
+        <li active-class="active" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>运营公司设置</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active"  :to="{ path: '/op/ppCompanies', query: { page: 1} }">
+              <a href="#"><i class="fa fa-circle-o"></i> 物业公司</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/op/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 账户设置</a>
+            </router-link>
+          </ul>
+        </li>
+
+        <router-link tag="li" active-class="active" :to="{ path: '/op/shops', query: { page: 1} }" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>运营商设置</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        </router-link>
+
+        <router-link tag="li" active-class="active" :to="{ path: '/op/retailer', query: { page: 1} }" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>商铺入住审核</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        </router-link>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-wrench"></i> <span>广告设置</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active" :to="{ path: '/op/appAdv', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> APP广告</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/op/deviceAdv', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 设备广告管理</a>
+            </router-link>
+          </ul>
+        </li>
+
+        <router-link tag="li" active-class="active" :to="{ path: '/op/devices', query: { page: 1} }" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>设备监控</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        </router-link>
+
+        <router-link tag="li" active-class="active" :to="{ path: '/op/parameters', query: { page: 1} }" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>设备参数</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        </router-link>
+      </ul>
+
       <ul v-else class="sidebar-menu">
         <!-- <li class="header">MAIN NAVIGATION</li> -->
         <li class="treeview">

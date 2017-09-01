@@ -27,11 +27,22 @@
           .then((response) => {
             this.setMessage({ type: 'error', message: [] }) // this is a Vuex action
 
-            switch (response.role.name) {
-              case "Admin":
+            switch (response.role.id) {
+              case 1:
                 this.$router.push({ name: "admin.dashboard" })
-                console.log("Here");
                 break;
+
+              case 2:
+                this.$router.push({ name: "opManager.dashboard" })
+                break;
+
+              // case 3:
+              //   this.$router.push({ name: "wuye.dashboard" })
+              //   break;
+
+              // case 4:
+              //   this.$router.push({ name: "shequ.dashboard" })
+              //   break;
 
               default:
                 this.$router.push({ name: 'dashboard.index' })

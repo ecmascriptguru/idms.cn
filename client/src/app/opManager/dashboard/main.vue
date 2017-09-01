@@ -1,6 +1,6 @@
 <template>
   <div class="content-wrapper">
-    Admin Developer Dashboard
+    Operating Company Employee Dashboard
   </div>
 </template>
 

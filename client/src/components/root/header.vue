@@ -51,13 +51,23 @@
 <template>
   <header class="main-header">
     <cc-spinner></cc-spinner>
-    <a v-if="(currentUser.role || {}).name === 'Admin'" href="/" class="logo" title="Admin Dashboard">
+    <a v-if="(currentUser.role || {}).id === 1" href="/admin" class="logo" title="Admin Dashboard">
         <span class="logo-mini"><b>A</b>D</span>
         <span class="logo-lg"><b>Admin</b>Dashbaord</span>
     </a>
-    <a v-else-if="(currentUser.role || {}).name === 'Operating Manager'" title="Property Company Dashboard" href="/" class="logo">
-        <span class="logo-mini"><b>Op</b>D</span>
-        <span class="logo-lg"><b>Operating</b>Dashboard</span>
+    <a v-else-if="(currentUser.role || {}).id === 2" title="Operating Company Dashboard" href="/op" class="logo">
+        <span class="logo-mini"><b>运营</b></span>
+        <span class="logo-lg"><b>运营公司</b></span>
+    </a>
+
+    <a v-else-if="(currentUser.role || {}).id === 3" title="Property Company Dashboard" href="/op" class="logo">
+        <span class="logo-mini"><b>物业</b></span>
+        <span class="logo-lg"><b>物业公司</b></span>
+    </a>
+
+    <a v-else-if="(currentUser.role || {}).id === 4" title="District Company Dashboard" href="/op" class="logo">
+        <span class="logo-mini"><b>社区</b></span>
+        <span class="logo-lg"><b>社区公司</b></span>
     </a>
     <nav class="navbar navbar-static-top">
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
