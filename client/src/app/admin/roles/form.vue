@@ -72,7 +72,7 @@
           * Fetch the role from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`roles/${id}`).then((res) => {
+          this.$http.get(`admin/roles/${id}`).then((res) => {
             const { id: _id, name } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.role.id = _id
             this.role.name = name
@@ -98,7 +98,7 @@
         }
       },
       save() {
-        this.$http.post('roles', { name: this.role.name }).then(() => {
+        this.$http.post('admin/roles', { name: this.role.name }).then(() => {
           /**
           * This event will notify the world about
           * the role creation. In this case
@@ -124,7 +124,7 @@
         })
       },
       update() {
-        this.$http.put(`roles/${this.role.id}`, this.role).then(() => {
+        this.$http.put(`admin/roles/${this.role.id}`, this.role).then(() => {
           /**
           * This event will notify the world about
           * the role creation. In this case

@@ -78,7 +78,7 @@
           * Fetch the user from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`users/${id}`).then((res) => {
+          this.$http.get(`admin/users/${id}`).then((res) => {
             const { id: _id, name, username, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.user.id = _id
             this.user.name = name
@@ -107,7 +107,7 @@
         }
       },
       save() {
-        this.$http.post('users', 
+        this.$http.post('admin/users', 
           { 
             name: this.user.name,
             username: this.user.username,
@@ -142,7 +142,7 @@
         })
       },
       update() {
-        this.$http.put(`users/${this.user.id}`, this.user).then(() => {
+        this.$http.put(`admin/users/${this.user.id}`, this.user).then(() => {
           /**
           * This event will notify the world about
           * the user creation. In this case

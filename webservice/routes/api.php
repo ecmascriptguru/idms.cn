@@ -26,19 +26,19 @@ Route::group([
         /**
          *  Created by Alex
          */
-        Route::get('/roles/full-list', 'Admin\RolesController@fullList');         
-        Route::resource('/roles', 'Admin\RolesController', [
+        Route::get('/admin/roles/full-list', 'Admin\RolesController@fullList');         
+        Route::resource('/admin/roles', 'Admin\RolesController', [
             'except' => ['create', 'edit'],
         ]);
 
 
-        Route::get('/ops/full-list', 'Admin\OperatingCompaniesController@fullList');        
-        Route::resource('/ops', 'Admin\OperatingCompaniesController', [
+        Route::get('/admin/ops/full-list', 'Admin\OperatingCompaniesController@fullList');        
+        Route::resource('/admin/ops', 'Admin\OperatingCompaniesController', [
            'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/users/full-list', 'Admin\UsersController@fullList');        
-        Route::resource('/users', 'Admin\UsersController', [
+        Route::get('/admin/users/full-list', 'Admin\UsersController@fullList');        
+        Route::resource('/admin/users', 'Admin\UsersController', [
            'except' => ['create', 'edit'],
         ]);
     });

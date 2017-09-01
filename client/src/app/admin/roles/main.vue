@@ -61,7 +61,7 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`roles?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`admin/roles?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
           * the Vuex Roles module
@@ -88,7 +88,7 @@
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('roles/full-list').then(({ data }) => {
+        this.$http.get('admin/roles/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
           * the Vuex Roles module

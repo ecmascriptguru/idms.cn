@@ -61,7 +61,7 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`users?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`admin/users?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
           * the Vuex Users module
@@ -88,7 +88,7 @@
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('users/full-list').then(({ data }) => {
+        this.$http.get('admin/users/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
           * the Vuex Users module
