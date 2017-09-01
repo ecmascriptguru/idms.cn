@@ -136,7 +136,7 @@
           * the Op main component will intercept
           * the event and refresh the list.
           */
-          this.$bus.$emit('ops.created')
+          this.$bus.$emit('propertyCompany.created')
 
           /**
           * Hides the global spinner

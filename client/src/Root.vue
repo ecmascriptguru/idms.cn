@@ -28,9 +28,9 @@ export default {
     <jd-header v-show="shouldShowNavigation"></jd-header>
     <jd-left-side-bar v-show="shouldShowNavigation"></jd-left-side-bar>
     <router-view></router-view>
-    <div class="container">
+    <!-- <div class="container">
       <jd-alerts></jd-alerts>
-    </div>
+    </div> -->
     <jd-footer v-show="shouldShowNavigation"></jd-footer>
     <!-- <jd-control-side-bar v-show="shouldShowNavigation"></jd-control-side-bar> -->
     <!-- <jd-bg-side-bar v-show="shouldShowNavigation"></jd-bg-side-bar> -->
