@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePropertyComapniesTable extends Migration
+class CreateDistrictsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreatePropertyComapniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('property_companies', function (Blueprint $table) {
+        Schema::create('districts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('operating_company_id')->unsigned();
-            $table->foreign('operating_company_id')->references('id')->on('operating_companies');
+            $table->integer('property_company_id')->unsigned();
+            $table->foreign('property_company_id')->references('id')->on('property_companies');
             $table->string('name', 50);
             $table->string('short_name', 10);
             $table->string('address', 255);
@@ -33,6 +33,6 @@ class CreatePropertyComapniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('property_companies');
+        Schema::dropIfExists('districts');
     }
 }
