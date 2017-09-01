@@ -291,15 +291,21 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>User</th>
-          <th colspan="2">Users</th>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th colspan="2">Member Since</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="user in users">
           <td width="1%" nowrap>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
           <td>{{ user.name }}</td>
-          <td>{{ user.count }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.address }}</td>
+          <td>{{ user.created_at }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
               @click.prevent="edit(user.id)"

@@ -78,9 +78,12 @@
           */
           this.setFetching({ fetching: true })
           this.$http.get(`users/${id}`).then((res) => {
-            const { id: _id, name } = res.data.data // http://wesbos.com/destructuring-renaming/
+            const { id: _id, name, username, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.user.id = _id
             this.user.name = name
+            this.user.username = username
+            this.user.phone = phone
+            this.user.address = address
             this.setFetching({ fetching: false })
           })
         }
