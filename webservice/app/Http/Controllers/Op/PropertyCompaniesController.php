@@ -8,7 +8,7 @@ use App\Http\Requests\PropertyCompanyRequest;
 use App\Transformers\PropertyCompanyTransformer;
 use App\Http\Controllers\ApiController;
 
-class PropertyCompaniesController extends Controller
+class PropertyCompaniesController extends ApiController
 {
     public function isOperatingCompanyAdmin() {
         $user = Auth::guard('api')->user();
