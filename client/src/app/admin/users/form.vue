@@ -14,6 +14,7 @@
           id: 0,
           name: '',
           username: '',
+          password: '',
           phone: '',
           address: '',
           role_id: 2,
@@ -167,6 +168,7 @@
         this.user.username = ''
         this.user.phone = ''
         this.user.address = ''
+        this.user.password = ''
         this.user.role_id = 2
         this.user.organization_id = 2
       },

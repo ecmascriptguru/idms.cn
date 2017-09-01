@@ -110,6 +110,10 @@ class UsersController extends ApiController
             $user->address = $request->get('address');
             $user->role_id = $request->get('role_id');
             $user->organization_id = $request->get('organization_id');
+
+            if (!empty($request->get('password'))) {
+                $user->password = Hash::make($request->get('password'));
+            }
             $user->save();
 
             return $this->response(['result' => 'success']);

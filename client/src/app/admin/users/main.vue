@@ -315,14 +315,14 @@
               title="Edit">
               <i class="fa fa-fw fa-pencil"></i>
             </a>
-            <!-- <a href="#"
+            <a href="#"
               @click="askRemove(user)"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
               title="Remove">
               <i class="fa fa-fw fa-times"></i>
-            </a> -->
+            </a>
           </td>
         </tr>
       </tbody>
