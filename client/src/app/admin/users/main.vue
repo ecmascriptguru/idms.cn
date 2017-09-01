@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'JdUsers',
+    name: 'JdAdminUsers',
 
     /**
     * Components registered with

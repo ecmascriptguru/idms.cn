@@ -18,7 +18,7 @@
           phone: '',
           address: '',
           role_id: 2,
-          operating_company_id: 2,
+          operating_company_id: '',
         },
       }
     },
@@ -83,12 +83,13 @@
           */
           this.setFetching({ fetching: true })
           this.$http.get(`admin/users/${id}`).then((res) => {
-            const { id: _id, name, username, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
+            const { id: _id, name, username, phone, address, operating_company_id } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.user.id = _id
             this.user.name = name
             this.user.username = username
             this.user.phone = phone
             this.user.address = address
+            this.user.operating_company_id = operating_company_id
             this.setFetching({ fetching: false })
           })
         }
@@ -190,7 +191,7 @@
         this.user.address = ''
         this.user.password = ''
         this.user.role_id = 2
-        this.user.operating_company_id = 2
+        this.user.operating_company_id = ''
       },
     },
   }

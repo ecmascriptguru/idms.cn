@@ -39,7 +39,8 @@ class PropertyCompaniesController extends ApiController
         $order = $this->getOrder();
         $limit = $this->getLimit();
 
-        $propertyCompanies = PropertyCompany::orderBy($sort, $order)->where(['operating_company_id' => $this->getOperatingCompanyId()])->paginate($limit);
+        $propertyCompanies = PropertyCompany::orderBy($sort, $order)
+            ->where(['operating_company_id' => $this->getOperatingCompanyId()])->paginate($limit);
 
         return $this->response(
             $this->transform->collection($propertyCompanies, new PropertyCompanyTransformer)
@@ -49,7 +50,7 @@ class PropertyCompaniesController extends ApiController
     public function fullList()
     {
         return $this->response(
-            $this->transform->collection(PropertyCompany::where(['operating_company_id' => $this->getOperatingCompanyId()]), new PropertyCompanyTransformer)
+            $this->transform->collection(PropertyCompany::where(['operating_company_id' => $this->getOperatingCompanyId()])->get(), new PropertyCompanyTransformer)
         );
     }
 

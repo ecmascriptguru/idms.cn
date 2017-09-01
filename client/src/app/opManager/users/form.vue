@@ -1,6 +1,6 @@
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     name: 'CcUserForm',
@@ -17,8 +17,8 @@
           password: '',
           phone: '',
           address: '',
-          role_id: 2,
-          organization_id: 2,
+          role_id: 3,
+          property_company_id: '',
         },
       }
     },
@@ -28,6 +28,7 @@
     */
     mounted() {
       this.fetch()
+      this.fetchPropertyCompanies()
     },
 
     /**
@@ -43,6 +44,9 @@
     * is editing instead of creating.
     */
     computed: {
+      ...mapState({
+        propertyCompanies: state => state.OpManager.PropertyCompanies.full_list,
+      }),
       isEditing() {
         return this.user.id > 0
       },
@@ -57,7 +61,7 @@
     },
 
     methods: {
-      ...mapActions(['setFetching', 'resetMessages', 'setMessage']),
+      ...mapActions(['propertyCompaniesSetData', 'setFetching', 'resetMessages', 'setMessage']),
 
       /**
       * If there's an ID in the route params
@@ -78,13 +82,30 @@
           * Fetch the user from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`users/${id}`).then((res) => {
-            const { id: _id, name, username, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
+          this.$http.get(`oca/users/${id}`).then((res) => {
+            const { id: _id, name, username, phone, address, property_company_id, } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.user.id = _id
             this.user.name = name
             this.user.username = username
             this.user.phone = phone
             this.user.address = address
+            this.user.property_company_id = property_company_id
+            this.setFetching({ fetching: false })
+          })
+        }
+      },
+      fetchPropertyCompanies() {
+        console.log("Here 1");
+        if (!this.propertyCompanies.length) {
+          this.setFetching({ fetching: true })
+          this.$http.get('oca/ppcs/full-list').then(({ data }) => {
+            /**
+            * Vuex action to set full list array in
+            * the Vuex OperatingCompanies module
+            */
+            this.propertyCompaniesSetData({
+              full_list: data.data,
+            })
             this.setFetching({ fetching: false })
           })
         }
@@ -107,7 +128,7 @@
         }
       },
       save() {
-        this.$http.post('users', 
+        this.$http.post('oca/users', 
           { 
             name: this.user.name,
             username: this.user.username,
@@ -115,7 +136,7 @@
             phone: this.user.phone,
             address: this.user.address,
             role_id: this.user.role_id,
-            organization_id: this.user.organization_id,
+            property_company_id: this.user.property_company_id,
           }).then(() => {
           /**
           * This event will notify the world about
@@ -142,7 +163,7 @@
         })
       },
       update() {
-        this.$http.put(`users/${this.user.id}`, this.user).then(() => {
+        this.$http.put(`oca/users/${this.user.id}`, this.user).then(() => {
           /**
           * This event will notify the world about
           * the user creation. In this case
@@ -170,7 +191,7 @@
         this.user.address = ''
         this.user.password = ''
         this.user.role_id = 2
-        this.user.organization_id = 2
+        this.user.property_company_id = ''
       },
     },
   }
@@ -197,6 +218,14 @@
     <div class="form-group">
       <label for="address" class="control-label">Address</label>
       <input ref="firstInput" type="text" id="address" class="form-control" v-model="user.address">
+    </div>
+    <div class="form-group">
+      <label for="property_company_id" class="control-label">Property Company</label>
+      <select name="property_company_id" id="property_company_id" class="form-control" v-model="user.property_company_id">
+        <option v-for="company in propertyCompanies" :value="company.id">
+          {{ company.name }}
+        </option>
+      </select>
     </div>
     <button class="btn btn-primary btn-xs" type="submit">Salvar</button>
   </form>

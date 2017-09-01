@@ -46,9 +46,14 @@ Route::group([
         /**
          *  For Operating Company Admin
          */
-         Route::get('/oca/ppcs/full-list', 'Op\PropertyCompaniesController@fullList');        
-         Route::resource('/oca/ppcs', 'Op\PropertyCompaniesController', [
-            'except' => ['create', 'edit'],
-         ]);
+        Route::get('/oca/ppcs/full-list', 'Op\PropertyCompaniesController@fullList');        
+        Route::resource('/oca/ppcs', 'Op\PropertyCompaniesController', [
+           'except' => ['create', 'edit'],
+        ]);
+
+        Route::get('/oca/users/full-list', 'Op\UsersController@fullList');        
+        Route::resource('/oca/users', 'Op\UsersController', [
+           'except' => ['create', 'edit'],
+        ]);
     });
 });

@@ -46,7 +46,7 @@ class UsersController extends ApiController
     public function fullList()
     {
         return $this->response(
-            $this->transform->collection(User::all(), new UserTransformer)
+            $this->transform->collection(User::where(['role_id' => 2]), new UserTransformer)
         );
     }
 

@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'JdUsers',
+    name: 'JdOpUsers',
 
     /**
     * Components registered with
@@ -22,15 +22,15 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'admin.users.edit',
+          name: 'opManager.users.edit',
           params: { id },
           query: { page: this.currentPage } })
       },
       create() {
-        this.$router.push({ name: 'admin.users.new', query: { page: this.currentPage } })
+        this.$router.push({ name: 'opManager.users.new', query: { page: this.currentPage } })
       },
       hide() {
-        this.$router.push({ name: 'admin.users.index', query: { page: this.currentPage } })
+        this.$router.push({ name: 'opManager.users.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
@@ -61,7 +61,7 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`users?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`oca/users?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
           * the Vuex Users module
@@ -88,7 +88,7 @@
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('users/full-list').then(({ data }) => {
+        this.$http.get('oca/users/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
           * the Vuex Users module
@@ -108,7 +108,7 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'admin.users.index', query: { page: obj.page } })
+        this.$router.push({ name: 'opManager.users.index', query: { page: obj.page } })
 
         /**
         * Fetch a new set of Users based on
@@ -162,7 +162,7 @@
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'admin.users.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'opManager.users.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -194,7 +194,7 @@
         return parseInt(this.$route.query.page, 10)
       },
       isFormVisible() {
-        return this.$route.name === 'admin.users.new' || this.$route.name === 'admin.users.edit'
+        return this.$route.name === 'opManager.users.new' || this.$route.name === 'opManager.users.edit'
       },
     },
     /**

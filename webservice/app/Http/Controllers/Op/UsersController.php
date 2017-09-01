@@ -45,7 +45,7 @@ class UsersController extends ApiController
                     'operating_company_id' => $this->getOperatingCompanyId()
                 ])->paginate($limit);
 
-        if ($this->isAdmin()) {
+        if ($this->isOperatingCompanyAdmin()) {
             return $this->response(
                 $this->transform->collection($users, new UserTransformer)
             );
@@ -60,7 +60,10 @@ class UsersController extends ApiController
     public function fullList()
     {
         return $this->response(
-            $this->transform->collection(User::all(), new UserTransformer)
+            $this->transform->collection(User::where([
+                'role_id' => 3,
+                'operating_company_id' => $this->getOperatingCompanyId()
+            ]), new UserTransformer)
         );
     }
 
@@ -72,7 +75,7 @@ class UsersController extends ApiController
      */
     public function store(UserRequest $request)
     {
-        if ($this->isAdmin()) {
+        if ($this->isOperatingCompanyAdmin()) {
             $params = $request->only('name', 'username', 'phone', 'address', 'role_id', 'property_company_id');
             $params['operating_company_id'] = $this->getOperatingCompanyId();
             $params['password'] = Hash::make($request->input('password'));
@@ -118,14 +121,14 @@ class UsersController extends ApiController
             return $this->responseWithNotFound('User not found');
         }
 
-        if ($this->isAdmin()) {
+        if ($this->isOperatingCompanyAdmin()) {
             $user->name = $request->get('name');
             $user->username = $request->get('username');
             $user->phone = $request->get('phone');
             $user->address = $request->get('address');
             $user->role_id = $request->get('role_id');
             $user->property_company_id = $request->get('property_company_id');
-            $user->operating_company_id = $this->getOperatingCompanyId();
+            // $user->operating_company_id = $this->getOperatingCompanyId();
 
             if (!empty($request->get('password'))) {
                 $user->password = Hash::make($request->get('password'));
@@ -154,7 +157,7 @@ class UsersController extends ApiController
             return $this->responseWithNotFound('User not found');
         }
 
-        if ($this->isAdmin()) 
+        if ($this->isOperatingCompanyAdmin()) 
         {
             $user->delete();
             
