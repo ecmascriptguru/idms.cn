@@ -300,8 +300,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="op in operatingCompanies">
-          <td width="1%" nowrap>{{ op.id }}</td>
+        <tr v-for="(op, index) in operatingCompanies">
+          <td width="1%" nowrap>{{ index +1 }}</td>
           <td>{{ op.name }}</td>
           <td>{{ op.short_name }}</td>
           <td>{{ op.contact }}</td>

@@ -296,8 +296,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="role in roles">
-          <td width="1%" nowrap>{{ role.id }}</td>
+        <tr v-for="(role, index) in roles">
+          <td width="1%" nowrap>{{ index + 1 }}</td>
           <td>{{ role.name }}</td>
           <td>{{ role.count }}</td>
           <td width="1%" nowrap="nowrap">

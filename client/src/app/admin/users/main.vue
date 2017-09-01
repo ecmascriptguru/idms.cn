@@ -299,8 +299,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users">
-          <td width="1%" nowrap>{{ user.id }}</td>
+        <tr v-for="(user, index) in users">
+          <td width="1%" nowrap>{{ index + 1 }}</td>
           <td>{{ user.username }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.phone }}</td>
