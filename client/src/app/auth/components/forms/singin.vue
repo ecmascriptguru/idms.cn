@@ -7,8 +7,8 @@
     */
     data() {
       return {
-        username: 'admin',
-        password: '123456',
+        username: '',
+        password: '',
       }
     },
     methods: {

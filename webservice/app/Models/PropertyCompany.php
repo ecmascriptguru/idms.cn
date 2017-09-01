@@ -19,7 +19,7 @@ class PropertyCompany extends Model
 
     public function users()
     {
-        $role = Role::find(2);
-        return User::where(['role_id' => $role->id, 'organization_id' => $this->id])->get();
+        $role = Role::find(3);
+        return User::where(['role_id' => $role->id, 'property_company_id' => $this->id])->get();
     }
 }

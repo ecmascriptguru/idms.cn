@@ -1,6 +1,6 @@
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     name: 'CcUserForm',
@@ -18,7 +18,7 @@
           phone: '',
           address: '',
           role_id: 2,
-          organization_id: 2,
+          operating_company_id: 2,
         },
       }
     },
@@ -28,6 +28,7 @@
     */
     mounted() {
       this.fetch()
+      this.fetchOperatingCompanies()
     },
 
     /**
@@ -43,6 +44,9 @@
     * is editing instead of creating.
     */
     computed: {
+      ...mapState({
+        operatingCompanies: state => state.Admin.OperatingCompanies.full_list,
+      }),
       isEditing() {
         return this.user.id > 0
       },
@@ -57,7 +61,7 @@
     },
 
     methods: {
-      ...mapActions(['setFetching', 'resetMessages', 'setMessage']),
+      ...mapActions(['operatingCompaniesSetData', 'setFetching', 'resetMessages', 'setMessage']),
 
       /**
       * If there's an ID in the route params
@@ -89,6 +93,22 @@
           })
         }
       },
+      fetchOperatingCompanies() {
+        console.log("Here 1");
+        if (!this.operatingCompanies.length) {
+          this.setFetching({ fetching: true })
+          this.$http.get('admin/ops/full-list').then(({ data }) => {
+            /**
+            * Vuex action to set full list array in
+            * the Vuex OperatingCompanies module
+            */
+            this.operatingCompaniesSetData({
+              full_list: data.data,
+            })
+            this.setFetching({ fetching: false })
+          })
+        }
+      },
       submit() {
         /**
         * Pre-conditions are met
@@ -115,7 +135,7 @@
             phone: this.user.phone,
             address: this.user.address,
             role_id: this.user.role_id,
-            organization_id: this.user.organization_id,
+            operating_company_id: this.user.operating_company_id,
           }).then(() => {
           /**
           * This event will notify the world about
@@ -170,7 +190,7 @@
         this.user.address = ''
         this.user.password = ''
         this.user.role_id = 2
-        this.user.organization_id = 2
+        this.user.operating_company_id = 2
       },
     },
   }
@@ -197,6 +217,14 @@
     <div class="form-group">
       <label for="address" class="control-label">Address</label>
       <input ref="firstInput" type="text" id="address" class="form-control" v-model="user.address">
+    </div>
+    <div class="form-group">
+      <label for="operating_company_id" class="control-label">Operating Company</label>
+      <select name="operating_company_id" id="operating_company_id" class="form-control" v-model="user.operating_company_id">
+        <option v-for="company in operatingCompanies" :value="company.id">
+          {{ company.name }}
+        </option>
+      </select>
     </div>
     <button class="btn btn-primary btn-xs" type="submit">Salvar</button>
   </form>

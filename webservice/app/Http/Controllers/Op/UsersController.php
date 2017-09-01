@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Op;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
@@ -11,11 +11,21 @@ use App\User;
 
 class UsersController extends ApiController
 {
-    public function isAdmin() {
+    public function isOperatingCompanyAdmin() {
         $user = Auth::guard('api')->user();
         $role = $user->role;
 
-        return $role->id === 1;
+        return $role->id === 2;
+    }
+
+    private function getOperatingCompanyId() {
+        $user = Auth::guard('api')->user();
+        
+        if ($user->organization) {
+            return $user->organization->id;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -29,7 +39,11 @@ class UsersController extends ApiController
         $order = $this->getOrder();
         $limit = $this->getLimit();
         
-        $users = User::orderBy($sort, $order)->where(['role_id' => 2])->paginate($limit);
+        $users = User::orderBy($sort, $order)
+                ->where([
+                    'role_id' => 3,
+                    'operating_company_id' => $this->getOperatingCompanyId()
+                ])->paginate($limit);
 
         if ($this->isAdmin()) {
             return $this->response(
@@ -59,7 +73,8 @@ class UsersController extends ApiController
     public function store(UserRequest $request)
     {
         if ($this->isAdmin()) {
-            $params = $request->only('name', 'username', 'phone', 'address', 'role_id', 'operating_company_id');
+            $params = $request->only('name', 'username', 'phone', 'address', 'role_id', 'property_company_id');
+            $params['operating_company_id'] = $this->getOperatingCompanyId();
             $params['password'] = Hash::make($request->input('password'));
             User::create($params);
 
@@ -109,7 +124,8 @@ class UsersController extends ApiController
             $user->phone = $request->get('phone');
             $user->address = $request->get('address');
             $user->role_id = $request->get('role_id');
-            $user->operating_company_id = $request->get('operating_company_id');
+            $user->property_company_id = $request->get('property_company_id');
+            $user->operating_company_id = $this->getOperatingCompanyId();
 
             if (!empty($request->get('password'))) {
                 $user->password = Hash::make($request->get('password'));

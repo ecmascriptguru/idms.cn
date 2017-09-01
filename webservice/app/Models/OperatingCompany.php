@@ -18,7 +18,7 @@ class OperatingCompany extends Model
 
     public function users()
     {
-        $role = Role::first();
-        return User::where(['role_id' => $role->id, 'organization_id' => $this->id])->get();
+        $role = Role::find(2);
+        return User::where(['role_id' => $role->id, 'operating_company_id' => $this->id])->get();
     }
 }

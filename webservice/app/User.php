@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Role;
 use App\Models\OperatingCompany;
+use App\Models\PropertyCompany;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -18,7 +19,16 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'password', 'phone', 'address', 'role_id', 'organization_id'
+        'name', 
+        'username', 
+        'password', 
+        'phone', 
+        'address', 
+        'role_id', 
+        'operating_company_id', 
+        'property_company_id', 
+        'district_id', 
+        'organization_id'
     ];
 
     /**
@@ -48,9 +58,13 @@ class User extends Authenticatable implements JWTSubject
         $role = $this->role;
 
         if ($role->id == 1) {
-            return $this->belongsTo(OperatingCompany::class, 'organization_id');
+            return $this->belongsTo(OperatingCompany::class, 'operating_company_id');
         } elseif ($role->id == 2) {
-            return $this->belongsTo(OperatingCompany::class, 'organization_id');
+            return $this->belongsTo(OperatingCompany::class, 'operating_company_id');
+        } elseif ($role->id == 3) {
+            return $this->belongsTo(PropertyCompany::class, 'property_company_id');
+        } elseif ($role->id == 4) {
+            return $this->belongsTo(PropertyCompany::class, 'property_company_id');
         }
     }
 }
