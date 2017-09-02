@@ -60,12 +60,12 @@
         <span class="logo-lg"><b>运营公司</b></span>
     </a>
 
-    <a v-else-if="(currentUser.role || {}).id === 3" title="Property Company Dashboard" href="/op" class="logo">
+    <a v-else-if="(currentUser.role || {}).id === 3" title="Property Company Dashboard" href="/ppc" class="logo">
         <span class="logo-mini"><b>物业</b></span>
         <span class="logo-lg"><b>物业公司</b></span>
     </a>
 
-    <a v-else-if="(currentUser.role || {}).id === 4" title="District Company Dashboard" href="/op" class="logo">
+    <a v-else-if="(currentUser.role || {}).id === 4" title="District Company Dashboard" href="/dct" class="logo">
         <span class="logo-mini"><b>社区</b></span>
         <span class="logo-lg"><b>社区公司</b></span>
     </a>

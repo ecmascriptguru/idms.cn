@@ -36,9 +36,9 @@
                 this.$router.push({ name: "opManager.dashboard" })
                 break;
 
-              // case 3:
-              //   this.$router.push({ name: "wuye.dashboard" })
-              //   break;
+              case 3:
+                this.$router.push({ name: "ppcManager.dashboard" })
+                break;
 
               // case 4:
               //   this.$router.push({ name: "shequ.dashboard" })
