@@ -108,6 +108,7 @@
               full_list: data.data,
             })
             this.setFetching({ fetching: false })
+            this.setOperatingCompanyId()
           })
         }
       },

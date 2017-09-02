@@ -134,25 +134,19 @@
 
         <router-link tag="li" active-class="active" :to="{ path: '/op/shops', query: { page: 1} }" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>运营商设置</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            <i class="glyphicon glyphicon-shopping-cart"></i> <span>运营商设置</span>
           </a>
         </router-link>
 
         <router-link tag="li" active-class="active" :to="{ path: '/op/retailer', query: { page: 1} }" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>商铺入住审核</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            <i class="glyphicon glyphicon-book"></i> <span>商铺入住审核</span>
           </a>
         </router-link>
 
         <li class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-wrench"></i> <span>广告设置</span>
+            <i class="glyphicon glyphicon-share"></i> <span>广告设置</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -169,19 +163,13 @@
 
         <router-link tag="li" active-class="active" :to="{ path: '/op/devices', query: { page: 1} }" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>设备监控</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            <i class="glyphicon glyphicon-wrench"></i> <span>设备监控</span>
           </a>
         </router-link>
 
         <router-link tag="li" active-class="active" :to="{ path: '/op/parameters', query: { page: 1} }" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>设备参数</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            <i class="glyphicon glyphicon-blackboard"></i> <span>设备参数</span>
           </a>
         </router-link>
       </ul>
