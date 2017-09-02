@@ -8,9 +8,10 @@ import { vuex as Auth } from './auth'
 import { vuex as Admin } from './admin'
 import { vuex as OpManager } from './opManager'
 import { vuex as PpcManager } from './ppcManager'
+import { vuex as DctManager } from './dctManager'
 
 // start extraction data from vuex modules
-const vuex = { Categories, Products, Auth, Admin, OpManager, PpcManager };
+const vuex = { Categories, Products, Auth, Admin, OpManager, PpcManager, DctManager };
 const keys = Object.keys(vuex)
 // process and extract data (modules and plugins)
 /**

@@ -229,6 +229,180 @@
         </router-link>
       </ul>
 
+      <ul v-else-if="(currentUser.role || {}).id === 4" class="sidebar-menu">
+        <li active-class="active" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>档案管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active"  :to="{ path: '/dct/districts', query: { page: 1} }">
+              <a href="#"><i class="fa fa-circle-o"></i> 楼栋档案</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 房屋档案</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 用户导入</a>
+            </router-link>
+          </ul>
+        </li>
+
+        <router-link tag="li" active-class="active" :to="{ path: '/dct/costs', query: { page: 1} }">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>房屋认证</span>
+          </a>
+        </router-link>
+
+        <li active-class="active" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>物业费用</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active"  :to="{ path: '/dct/districts', query: { page: 1} }">
+              <a href="#"><i class="fa fa-circle-o"></i> 催缴管理</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 账单管理</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 缴费</a>
+            </router-link>
+          </ul>
+        </li>
+
+        <li active-class="active" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>物业管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active"  :to="{ path: '/dct/districts', query: { page: 1} }">
+              <a href="#"><i class="fa fa-circle-o"></i> 公告管理</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 房屋报修</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 投诉建议</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 系统物业</a>
+            </router-link>
+          </ul>
+        </li>
+
+        <li active-class="active" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>门禁系统</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active"  :to="{ path: '/dct/districts', query: { page: 1} }">
+              <a href="#"><i class="fa fa-circle-o"></i> 门禁设备</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 设备监控</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 门禁卡管理</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 指纹管理</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 开门记录</a>
+            </router-link>
+          </ul>
+        </li>
+
+        <li active-class="active" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>梯控系统</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active"  :to="{ path: '/dct/districts', query: { page: 1} }">
+              <a href="#"><i class="fa fa-circle-o"></i> 业主卡管理</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 电梯管理</a>
+            </router-link>
+          </ul>
+        </li>
+
+        <li active-class="active" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>停车场系统</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active"  :to="{ path: '/dct/districts', query: { page: 1} }">
+              <a href="#"><i class="fa fa-circle-o"></i> 停车场信息</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 车位审核</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 月租车缴费</a>
+            </router-link>
+          </ul>
+        </li>
+
+        <li active-class="active" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>社区互动</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active"  :to="{ path: '/dct/districts', query: { page: 1} }">
+              <a href="#"><i class="fa fa-circle-o"></i> 社区话题</a>
+            </router-link>
+          </ul>
+        </li>
+
+        <router-link tag="li" active-class="active" :to="{ path: '/dct/payments', query: { page: 1} }">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>商家入驻</span>
+          </a>
+        </router-link>
+
+        <router-link tag="li" active-class="active" :to="{ path: '/dct/parkings', query: { page: 1} }">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>住户管理</span>
+          </a>
+        </router-link>
+
+        <li active-class="active" class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-home"></i> <span>员工管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <router-link tag="li" active-class="active"  :to="{ path: '/dct/districts', query: { page: 1} }">
+              <a href="#"><i class="fa fa-circle-o"></i> 员工信息</a>
+            </router-link>
+          </ul>
+        </li>
+      </ul>
+
       <ul v-else class="sidebar-menu">
         <!-- <li class="header">MAIN NAVIGATION</li> -->
         <li class="treeview">

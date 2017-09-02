@@ -40,9 +40,9 @@
                 this.$router.push({ name: "ppcManager.dashboard" })
                 break;
 
-              // case 4:
-              //   this.$router.push({ name: "shequ.dashboard" })
-              //   break;
+              case 4:
+                this.$router.push({ name: "dctManager.dashboard" })
+                break;
 
               default:
                 this.$router.push({ name: 'dashboard.index' })
