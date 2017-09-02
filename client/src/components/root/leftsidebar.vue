@@ -104,12 +104,12 @@
             <router-link tag="li" active-class="active" :to="{ path: '/admin/users', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Users</a>
             </router-link>
-            <router-link tag="li" active-class="active" :to="{ path: '/products', query: { page: 1 } }">
+            <!-- <router-link tag="li" active-class="active" :to="{ path: '/products', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Products</a>
             </router-link>
             <router-link tag="li" active-class="active" :to="{ path: '/categories', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Categories</a>
-            </router-link>
+            </router-link> -->
           </ul>
         </li>
       </ul>

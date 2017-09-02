@@ -175,6 +175,19 @@
           swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
+
+      /**
+       * @param {object} op
+       */
+      addUser(op) {
+        this.$router.push({
+          name: "admin.users.new",
+          query: {
+            page: 1,
+            ocId: op.id
+          }
+        })
+      }
     },
 
     /**
@@ -256,7 +269,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>OpC Management</h1>
+        <h1>运营公司管理</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -265,7 +278,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Operating Company">
+            title="添加">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -273,7 +286,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Operating Company">
+            title="关">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -291,12 +304,12 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
-          <th>Short Name</th>
-          <th>Contact</th>
-          <th>Address</th>
-          <th>Phone</th>
-          <th colspan="2">Districts</th>
+          <th>名称</th>
+          <th>简称</th>
+          <th>联系人</th>
+          <th>地址</th>
+          <th>手机</th>
+          <th colspan="2">社区</th>
         </tr>
       </thead>
       <tbody>
@@ -309,6 +322,14 @@
           <td>{{ op.phone }}</td>
           <td>{{ op.count }}</td>
           <td width="1%" nowrap="nowrap">
+            <a href="#"
+              @click.prevent="addUser(op)"
+              class="btn btn-xs btn-default"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Add User">
+              <i class="fa fa-fw fa-user"></i>
+            </a>
             <a href="#"
               @click.prevent="edit(op.id)"
               class="btn btn-xs btn-default"

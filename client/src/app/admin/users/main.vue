@@ -256,7 +256,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>User Management</h1>
+        <h1>运营公司账户管理</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -265,7 +265,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New User">
+            title="添加">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -273,7 +273,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New User">
+            title="关">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -291,11 +291,11 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Username</th>
-          <th>Name</th>
-          <th>Phone</th>
-          <th>Address</th>
-          <th colspan="2">Member Since</th>
+          <th>用户</th>
+          <th>名称</th>
+          <th>手机</th>
+          <th>地址</th>
+          <th colspan="2">参加日子</th>
         </tr>
       </thead>
       <tbody>

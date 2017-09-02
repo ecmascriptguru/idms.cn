@@ -3,7 +3,7 @@
   import { mapActions, mapState } from 'vuex'
 
   export default {
-    name: 'CcUserForm',
+    name: 'JdAdminUserForm',
 
     /**
     * Component's local state
@@ -29,6 +29,7 @@
     mounted() {
       this.fetch()
       this.fetchOperatingCompanies()
+      this.setOperatingCompanyId()
     },
 
     /**
@@ -95,7 +96,6 @@
         }
       },
       fetchOperatingCompanies() {
-        console.log("Here 1");
         if (!this.operatingCompanies.length) {
           this.setFetching({ fetching: true })
           this.$http.get('admin/ops/full-list').then(({ data }) => {
@@ -193,6 +193,10 @@
         this.user.role_id = 2
         this.user.operating_company_id = ''
       },
+
+      setOperatingCompanyId() {
+        this.user.operating_company_id = parseInt(this.$route.query.ocId || 0)
+      }
     },
   }
 </script>
