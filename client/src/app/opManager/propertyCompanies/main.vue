@@ -175,6 +175,19 @@
           swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
+
+      /**
+       * @param {object} item
+       */
+      addUser(item) {
+        this.$router.push({
+          name: "opManager.users.new",
+          query: {
+            page: 1,
+            pcId: item.id
+          }
+        })
+      }
     },
 
     /**
@@ -291,11 +304,11 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
-          <th>Short Name</th>
-          <th>Contact</th>
-          <th>Address</th>
-          <th>Phone</th>
+          <th>名称</th>
+          <th>简称</th>
+          <th>联系人</th>
+          <th>地址</th>
+          <th>手机</th>
           <th colspan="2">Districts</th>
         </tr>
       </thead>
@@ -309,6 +322,14 @@
           <td>{{ item.phone }}</td>
           <td>{{ item.count }}</td>
           <td width="1%" nowrap="nowrap">
+            <a href="#"
+              @click.prevent="addUser(item)"
+              class="btn btn-xs btn-default"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Add User">
+              <i class="fa fa-fw fa-user"></i>
+            </a>
             <a href="#"
               @click.prevent="edit(item.id)"
               class="btn btn-xs btn-default"

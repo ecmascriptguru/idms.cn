@@ -190,23 +190,23 @@
 <template>
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
-      <label for="name" class="control-label">Property Company Name</label>
+      <label for="name" class="control-label">物业公司名称</label>
       <input ref="firstInput" type="text" id="name" class="form-control" v-model="propertyCompany.name">
     </div>
     <div class="form-group">
-      <label for="short_name" class="control-label">Short Name</label>
+      <label for="short_name" class="control-label">公司简称</label>
       <input type="text" id="short_name" class="form-control" v-model="propertyCompany.short_name">
     </div>
     <div class="form-group">
-      <label for="contact" class="control-label">Contact</label>
+      <label for="contact" class="control-label">联系人</label>
       <input type="text" id="contact" class="form-control" v-model="propertyCompany.contact">
     </div>
     <div class="form-group">
-      <label for="phone" class="control-label">Phone</label>
+      <label for="phone" class="control-label">手机</label>
       <input type="text" id="phone" class="form-control" v-model="propertyCompany.phone">
     </div>
     <div class="form-group">
-      <label for="address" class="control-label">Address</label>
+      <label for="address" class="control-label">地址</label>
       <input type="text" id="address" class="form-control" v-model="propertyCompany.address">
     </div>
     <button class="btn btn-primary btn-xs" type="submit">Save</button>

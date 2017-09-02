@@ -291,11 +291,11 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Username</th>
-          <th>Name</th>
-          <th>Phone</th>
-          <th>Address</th>
-          <th colspan="2">Member Since</th>
+          <th>用户</th>
+          <th>姓名</th>
+          <th>手机</th>
+          <th>地址</th>
+          <th colspan="2">参加日子</th>
         </tr>
       </thead>
       <tbody>

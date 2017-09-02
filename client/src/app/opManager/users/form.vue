@@ -29,6 +29,7 @@
     mounted() {
       this.fetch()
       this.fetchPropertyCompanies()
+      this.setOperatingCompanyId()
     },
 
     /**
@@ -193,6 +194,10 @@
         this.user.role_id = 2
         this.user.property_company_id = ''
       },
+
+      setOperatingCompanyId() {
+        this.user.property_company_id = parseInt(this.$route.query.pcId || 0)
+      }
     },
   }
 </script>
@@ -200,27 +205,27 @@
 <template>
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
-      <label for="name" class="control-label">Full Name</label>
+      <label for="name" class="control-label">姓名</label>
       <input ref="firstInput" type="text" id="name" class="form-control" v-model="user.name">
     </div>
     <div class="form-group">
-      <label for="username" class="control-label">Username</label>
+      <label for="username" class="control-label">用户</label>
       <input type="text" id="username" class="form-control" v-model="user.username">
     </div>
     <div class="form-group">
-      <label for="password" class="control-label">Password</label>
+      <label for="password" class="control-label">密码</label>
       <input type="password" id="password" class="form-control" v-model="user.password">
     </div>
     <div class="form-group">
-      <label for="phone" class="control-label">Phone</label>
+      <label for="phone" class="control-label">手机</label>
       <input type="text" id="phone" class="form-control" v-model="user.phone">
     </div>
     <div class="form-group">
-      <label for="address" class="control-label">Address</label>
+      <label for="address" class="control-label">地址</label>
       <input type="text" id="address" class="form-control" v-model="user.address">
     </div>
     <div class="form-group">
-      <label for="property_company_id" class="control-label">Property Company</label>
+      <label for="property_company_id" class="control-label">物业公司</label>
       <select name="property_company_id" id="property_company_id" class="form-control" v-model="user.property_company_id">
         <option v-for="company in propertyCompanies" :value="company.id">
           {{ company.name }}
