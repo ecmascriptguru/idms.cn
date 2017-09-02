@@ -64,5 +64,10 @@ Route::group([
         Route::resource('/pca/districts', 'Ppc\DistrictsController', [
            'except' => ['create', 'edit'],
         ]);
+
+        Route::get('/pca/users/full-list', 'Ppc\UsersController@fullList');        
+        Route::resource('/pca/users', 'Ppc\UsersController', [
+           'except' => ['create', 'edit'],
+        ]);
     });
 });

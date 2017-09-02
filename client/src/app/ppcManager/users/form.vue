@@ -3,7 +3,7 @@
   import { mapActions, mapState } from 'vuex'
 
   export default {
-    name: 'CcUserForm',
+    name: 'JdPpcUserForm',
 
     /**
     * Component's local state
@@ -17,8 +17,8 @@
           password: '',
           phone: '',
           address: '',
-          role_id: 3,
-          property_company_id: '',
+          role_id: 4,
+          district_id: '',
         },
       }
     },
@@ -28,7 +28,7 @@
     */
     mounted() {
       this.fetch()
-      this.fetchPropertyCompanies()
+      this.fetchDistricts()
     },
 
     /**
@@ -45,7 +45,7 @@
     */
     computed: {
       ...mapState({
-        propertyCompanies: state => state.OpManager.PropertyCompanies.full_list,
+        districts: state => state.PpcManager.Districts.full_list,
       }),
       isEditing() {
         return this.user.id > 0
@@ -61,7 +61,7 @@
     },
 
     methods: {
-      ...mapActions(['propertyCompaniesSetData', 'setFetching', 'resetMessages', 'setMessage']),
+      ...mapActions(['districtsSetData', 'setFetching', 'resetMessages', 'setMessage']),
 
       /**
       * If there's an ID in the route params
@@ -82,28 +82,28 @@
           * Fetch the user from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`oca/users/${id}`).then((res) => {
-            const { id: _id, name, username, phone, address, property_company_id, } = res.data.data // http://wesbos.com/destructuring-renaming/
+          this.$http.get(`pca/users/${id}`).then((res) => {
+            const { id: _id, name, username, phone, address, district_id, } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.user.id = _id
             this.user.name = name
             this.user.username = username
             this.user.phone = phone
             this.user.address = address
-            this.user.property_company_id = property_company_id
+            this.user.district_id = district_id
             this.setFetching({ fetching: false })
           })
         }
       },
-      fetchPropertyCompanies() {
+      fetchDistricts() {
         console.log("Here 1");
-        if (!this.propertyCompanies.length) {
+        if (!this.districts.length) {
           this.setFetching({ fetching: true })
-          this.$http.get('oca/ppcs/full-list').then(({ data }) => {
+          this.$http.get('pca/districts/full-list').then(({ data }) => {
             /**
             * Vuex action to set full list array in
             * the Vuex OperatingCompanies module
             */
-            this.propertyCompaniesSetData({
+            this.districtsSetData({
               full_list: data.data,
             })
             this.setFetching({ fetching: false })
@@ -128,7 +128,7 @@
         }
       },
       save() {
-        this.$http.post('oca/users', 
+        this.$http.post('pca/users', 
           { 
             name: this.user.name,
             username: this.user.username,
@@ -136,7 +136,7 @@
             phone: this.user.phone,
             address: this.user.address,
             role_id: this.user.role_id,
-            property_company_id: this.user.property_company_id,
+            district_id: this.user.district_id,
           }).then(() => {
           /**
           * This event will notify the world about
@@ -163,7 +163,7 @@
         })
       },
       update() {
-        this.$http.put(`oca/users/${this.user.id}`, this.user).then(() => {
+        this.$http.put(`pca/users/${this.user.id}`, this.user).then(() => {
           /**
           * This event will notify the world about
           * the user creation. In this case
@@ -190,8 +190,8 @@
         this.user.phone = ''
         this.user.address = ''
         this.user.password = ''
-        this.user.role_id = 2
-        this.user.property_company_id = ''
+        this.user.role_id = 4
+        this.user.district_id = ''
       },
     },
   }
@@ -220,10 +220,10 @@
       <input type="text" id="address" class="form-control" v-model="user.address">
     </div>
     <div class="form-group">
-      <label for="property_company_id" class="control-label">Property Company</label>
-      <select name="property_company_id" id="property_company_id" class="form-control" v-model="user.property_company_id">
-        <option v-for="company in propertyCompanies" :value="company.id">
-          {{ company.name }}
+      <label for="district_id" class="control-label">District</label>
+      <select name="district_id" id="district_id" class="form-control" v-model="user.district_id">
+        <option v-for="district in districts" :value="district.id">
+          {{ district.name }}
         </option>
       </select>
     </div>
