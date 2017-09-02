@@ -56,18 +56,18 @@
         <span class="logo-lg"><b>Admin</b>Dashbaord</span>
     </a>
     <a v-else-if="(currentUser.role || {}).id === 2" title="Operating Company Dashboard" href="/op" class="logo">
-        <span class="logo-mini"><b>运营</b></span>
-        <span class="logo-lg"><b>运营公司</b></span>
+        <span class="logo-mini"><b>{{ currentUser.organization.short_name }}</b></span>
+        <span class="logo-lg"><b>{{ currentUser.organization.name }}</b></span>
     </a>
 
     <a v-else-if="(currentUser.role || {}).id === 3" title="Property Company Dashboard" href="/ppc" class="logo">
-        <span class="logo-mini"><b>物业</b></span>
-        <span class="logo-lg"><b>物业公司</b></span>
+        <span class="logo-mini"><b>{{ currentUser.organization.short_name }}</b></span>
+        <span class="logo-lg"><b>{{ currentUser.organization.name }}</b></span>
     </a>
 
     <a v-else-if="(currentUser.role || {}).id === 4" title="District Company Dashboard" href="/dct" class="logo">
-        <span class="logo-mini"><b>社区</b></span>
-        <span class="logo-lg"><b>社区公司</b></span>
+        <span class="logo-mini"><b>{{ currentUser.organization.short_name }}</b></span>
+        <span class="logo-lg"><b>{{ currentUser.organization.name }}</b></span>
     </a>
     <nav class="navbar navbar-static-top">
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -272,7 +272,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="../../assets/img/avatar1.png" class="user-image" alt="avatar">
-                        <span class="hidden-xs">{{ currentUser.name }}</span>
+                        <span class="hidden-xs">{{ currentUser.username }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- avatar -->

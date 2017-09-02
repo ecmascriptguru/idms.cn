@@ -58,6 +58,7 @@ class AuthController extends ApiController
 
         $user = Auth::guard('api')->user();
         $role = $user->role;
+        $org = $user->organization;
 
         // get time to live of token form JWT service.
         $token_ttl = (new Jwt($token))->getTokenTTL();
