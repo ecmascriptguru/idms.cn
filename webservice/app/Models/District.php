@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OperatingCompany;
+use App\Models\PropertyCompany;
 use App\Models\Role;
-use App\Models\District;
 use App\User;
 
-class PropertyCompany extends Model
+class District extends Model
 {
     protected $fillable = [
         'operating_company_id',
+        'property_company_id',
         'name',
         'short_name',
         'address',
@@ -21,15 +22,15 @@ class PropertyCompany extends Model
 
     public function users()
     {
-        $role = Role::find(3);
-        return User::where(['role_id' => $role->id, 'property_company_id' => $this->id])->get();
+        $role = Role::find(4);
+        return User::where(['role_id' => $role->id, 'district_id' => $this->id])->get();
     }
 
     public function operatingCompany() {
         return $this->belongsTo(OperatingCompany::class);
     }
 
-    public function districts() {
-        return $this->hasMany(District::class);
+    public function propertyCompany() {
+        return $this->belongsTo(PropertyCompany::class);
     }
 }

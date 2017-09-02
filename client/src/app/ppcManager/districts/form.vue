@@ -92,7 +92,7 @@
           * Fetch the op from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`oca/ppcs/${id}`).then((res) => {
+          this.$http.get(`pca/districts/${id}`).then((res) => {
             const { id: _id, name, short_name, contact, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.district.id = _id
             this.district.name = name
@@ -122,7 +122,7 @@
         }
       },
       save() {
-        this.$http.post('oca/ppcs', 
+        this.$http.post('pca/districts', 
           { 
             name: this.district.name,
             short_name: this.district.short_name,
@@ -155,7 +155,7 @@
         })
       },
       update() {
-        this.$http.put(`oca/ppcs/${this.district.id}`, this.district).then(() => {
+        this.$http.put(`pca/districts/${this.district.id}`, this.district).then(() => {
           /**
           * This event will notify the world about
           * the op creation. In this case

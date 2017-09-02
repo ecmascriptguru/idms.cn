@@ -23,7 +23,8 @@ class PropertyCompanyTransformer extends TransformerAbstract
             'phone' => $pc->phone,
             'contact' => $pc->contact,
             'address' => $pc->address,
-            'count' => count($pc->users()),
+            'count' => count($pc->districts),
+            // 'count' => count($pc->users()),
             'created_at' => $pc->created_at->toIso8601String(),
             'updated_at' => $pc->updated_at->toIso8601String(),
         ];

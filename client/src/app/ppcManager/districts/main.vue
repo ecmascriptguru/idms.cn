@@ -61,7 +61,7 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`oca/ppcs?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`pca/districts?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
           * the Vuex OpratingCompany module
@@ -88,7 +88,7 @@
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('oca/ppcs/full-list').then(({ data }) => {
+        this.$http.get('pca/districts/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
           * the Vuex District module
@@ -139,7 +139,7 @@
       * Makes the HTTP requesto to the API
       */
       remove(item) {
-        this.$http.delete(`oca/ppcs/${item.id}`).then(() => {
+        this.$http.delete(`pca/districts/${item.id}`).then(() => {
           /**
           * On success fetch a new set of Districts
           * based on current page number

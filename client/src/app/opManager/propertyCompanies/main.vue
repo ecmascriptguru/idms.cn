@@ -296,7 +296,7 @@
           <th>Contact</th>
           <th>Address</th>
           <th>Phone</th>
-          <th colspan="2">Users</th>
+          <th colspan="2">Districts</th>
         </tr>
       </thead>
       <tbody>
