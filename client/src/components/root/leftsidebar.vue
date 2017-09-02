@@ -132,7 +132,7 @@
           </ul>
         </li>
 
-        <router-link tag="li" active-class="active" :to="{ path: '/op/shops', query: { page: 1} }" class="treeview">
+        <router-link tag="li" active-class="active" :to="{ path: '/op/shop', query: { page: 1} }" class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-shopping-cart"></i> <span>运营商设置</span>
           </a>

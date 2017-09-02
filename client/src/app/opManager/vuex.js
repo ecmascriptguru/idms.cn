@@ -13,6 +13,9 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  OperatingCompany: {
+    //
+  },
   Dashboard: {
 
   }
@@ -42,6 +45,11 @@ const mutations = {
       st.Users.pagination = obj.pagination
     }
   },
+  [TYPES.OP_OPERATING_COMPANY_SET_DATA](st, obj) {
+    if (obj) {
+      st.OperatingCompany = obj
+    }
+  }
 }
 
 const actions = {
@@ -50,6 +58,9 @@ const actions = {
   },
   usersSetData({ commit }, obj) {
     commit(TYPES.OP_USERS_SET_DATA, obj)
+  },
+  operatingCompanySetData({ commit }, obj) {
+    commit(TYPES.OP_OPERATING_COMPANY_SET_DATA, obj)
   },
 }
 
