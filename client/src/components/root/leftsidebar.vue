@@ -117,7 +117,7 @@
       <ul v-else-if="(currentUser.role || {}).id === 2" class="sidebar-menu">
         <li active-class="active" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>运营公司设置</span>
+            <i class="glyphicon glyphicon-home"></i> <span>物业公司设置</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
