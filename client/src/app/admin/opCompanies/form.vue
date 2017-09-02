@@ -195,19 +195,19 @@
     </div>
     <div class="form-group">
       <label for="short_name" class="control-label">Short Name</label>
-      <input ref="firstInput" type="text" id="short_name" class="form-control" v-model="operatingCompany.short_name">
+      <input type="text" id="short_name" class="form-control" v-model="operatingCompany.short_name">
     </div>
     <div class="form-group">
       <label for="contact" class="control-label">Contact</label>
-      <input ref="firstInput" type="text" id="contact" class="form-control" v-model="operatingCompany.contact">
+      <input type="text" id="contact" class="form-control" v-model="operatingCompany.contact">
     </div>
     <div class="form-group">
       <label for="phone" class="control-label">Phone</label>
-      <input ref="firstInput" type="text" id="phone" class="form-control" v-model="operatingCompany.phone">
+      <input type="text" id="phone" class="form-control" v-model="operatingCompany.phone">
     </div>
     <div class="form-group">
       <label for="address" class="control-label">Address</label>
-      <input ref="firstInput" type="text" id="address" class="form-control" v-model="operatingCompany.address">
+      <input type="text" id="address" class="form-control" v-model="operatingCompany.address">
     </div>
     <button class="btn btn-primary btn-xs" type="submit">Save</button>
   </form>

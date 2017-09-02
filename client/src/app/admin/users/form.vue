@@ -205,19 +205,19 @@
     </div>
     <div class="form-group">
       <label for="username" class="control-label">Username</label>
-      <input ref="firstInput" type="text" id="username" class="form-control" v-model="user.username">
+      <input type="text" id="username" class="form-control" v-model="user.username">
     </div>
     <div class="form-group">
       <label for="password" class="control-label">Password</label>
-      <input ref="firstInput" type="password" id="password" class="form-control" v-model="user.password">
+      <input type="password" id="password" class="form-control" v-model="user.password">
     </div>
     <div class="form-group">
       <label for="phone" class="control-label">Phone</label>
-      <input ref="firstInput" type="text" id="phone" class="form-control" v-model="user.phone">
+      <input type="text" id="phone" class="form-control" v-model="user.phone">
     </div>
     <div class="form-group">
       <label for="address" class="control-label">Address</label>
-      <input ref="firstInput" type="text" id="address" class="form-control" v-model="user.address">
+      <input type="text" id="address" class="form-control" v-model="user.address">
     </div>
     <div class="form-group">
       <label for="operating_company_id" class="control-label">Operating Company</label>

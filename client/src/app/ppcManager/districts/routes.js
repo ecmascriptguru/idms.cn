@@ -15,7 +15,7 @@ const meta = {
 export default [
   {
     name: 'ppcManager.districts.index',
-    path: '/op/ppCompanies',
+    path: '/ppc/districts',
     component: Districts,
     meta,
     children: [
