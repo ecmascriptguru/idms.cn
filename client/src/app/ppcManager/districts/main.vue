@@ -175,6 +175,16 @@
           swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
+
+      addUser(item) {
+        this.$router.push({
+          name: 'ppcManager.users.new',
+          query: {
+            page: 1,
+            dctId: item.id
+          }
+        })
+      }
     },
 
     /**
@@ -256,7 +266,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>物业公司管理</h1>
+        <h1>社区管理</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -291,12 +301,12 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
-          <th>Short Name</th>
-          <th>Contact</th>
-          <th>Address</th>
-          <th>Phone</th>
-          <th colspan="2">Users</th>
+          <th>名称</th>
+          <th>简称</th>
+          <th>联系人</th>
+          <th>地址</th>
+          <th>手机</th>
+          <th colspan="2">账户</th>
         </tr>
       </thead>
       <tbody>
@@ -309,6 +319,14 @@
           <td>{{ item.phone }}</td>
           <td>{{ item.count }}</td>
           <td width="1%" nowrap="nowrap">
+            <a href="#"
+              @click.prevent="addUser(item)"
+              class="btn btn-xs btn-default"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Add User">
+              <i class="fa fa-fw fa-user"></i>
+            </a>
             <a href="#"
               @click.prevent="edit(item.id)"
               class="btn btn-xs btn-default"

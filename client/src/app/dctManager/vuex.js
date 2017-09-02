@@ -13,22 +13,22 @@ const state = {
 
 /* eslint-disable no-param-reassign */
 const mutations = {
-  [TYPES.DISTRICTS_SET_DATA](st, obj) {
+  [TYPES.BUILDINGS_SET_DATA](st, obj) {
     if (obj.list) {
-      st.Districts.list = obj.list
+      st.Buildings.list = obj.list
     }
     if (obj.full_list) {
-      st.Districts.full_list = obj.full_list
+      st.Buildings.full_list = obj.full_list
     }
     if (obj.pagination) {
-      st.Districts.pagination = obj.pagination
+      st.Buildings.pagination = obj.pagination
     }
   },
 }
 
 const actions = {
-  districtsSetData({ commit }, obj) {
-    commit(TYPES.DISTRICTS_SET_DATA, obj)
+  buildingsSetData({ commit }, obj) {
+    commit(TYPES.BUILDINGS_SET_DATA, obj)
   },
 }
 

@@ -29,6 +29,7 @@
     mounted() {
       this.fetch()
       this.fetchDistricts()
+      this.setDistrictId()
     },
 
     /**
@@ -95,7 +96,6 @@
         }
       },
       fetchDistricts() {
-        console.log("Here 1");
         if (!this.districts.length) {
           this.setFetching({ fetching: true })
           this.$http.get('pca/districts/full-list').then(({ data }) => {
@@ -193,6 +193,9 @@
         this.user.role_id = 4
         this.user.district_id = ''
       },
+      setDistrictId() {
+        this.user.district_id = parseInt(this.$route.query.dctId || 0)
+      }
     },
   }
 </script>
@@ -200,27 +203,27 @@
 <template>
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
-      <label for="name" class="control-label">Full Name</label>
+      <label for="name" class="control-label">姓名</label>
       <input ref="firstInput" type="text" id="name" class="form-control" v-model="user.name">
     </div>
     <div class="form-group">
-      <label for="username" class="control-label">Username</label>
+      <label for="username" class="control-label">用户</label>
       <input type="text" id="username" class="form-control" v-model="user.username">
     </div>
     <div class="form-group">
-      <label for="password" class="control-label">Password</label>
+      <label for="password" class="control-label">密码</label>
       <input type="password" id="password" class="form-control" v-model="user.password">
     </div>
     <div class="form-group">
-      <label for="phone" class="control-label">Phone</label>
+      <label for="phone" class="control-label">手机</label>
       <input type="text" id="phone" class="form-control" v-model="user.phone">
     </div>
     <div class="form-group">
-      <label for="address" class="control-label">Address</label>
+      <label for="address" class="control-label">地址</label>
       <input type="text" id="address" class="form-control" v-model="user.address">
     </div>
     <div class="form-group">
-      <label for="district_id" class="control-label">District</label>
+      <label for="district_id" class="control-label">社区</label>
       <select name="district_id" id="district_id" class="form-control" v-model="user.district_id">
         <option v-for="district in districts" :value="district.id">
           {{ district.name }}

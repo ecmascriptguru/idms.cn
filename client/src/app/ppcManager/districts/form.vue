@@ -190,25 +190,25 @@
 <template>
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
-      <label for="name" class="control-label">District Name</label>
+      <label for="name" class="control-label">社区名称</label>
       <input ref="firstInput" type="text" id="name" class="form-control" v-model="district.name">
     </div>
     <div class="form-group">
-      <label for="short_name" class="control-label">Short Name</label>
+      <label for="short_name" class="control-label">社区简称</label>
       <input type="text" id="short_name" class="form-control" v-model="district.short_name">
     </div>
     <div class="form-group">
-      <label for="contact" class="control-label">Contact</label>
+      <label for="contact" class="control-label">联系人</label>
       <input type="text" id="contact" class="form-control" v-model="district.contact">
     </div>
     <div class="form-group">
-      <label for="phone" class="control-label">Phone</label>
+      <label for="phone" class="control-label">手机</label>
       <input type="text" id="phone" class="form-control" v-model="district.phone">
     </div>
     <div class="form-group">
-      <label for="address" class="control-label">Address</label>
+      <label for="address" class="control-label">地址</label>
       <input type="text" id="address" class="form-control" v-model="district.address">
     </div>
-    <button class="btn btn-primary btn-xs" type="submit">Save</button>
+    <button class="btn btn-primary" type="submit">保存</button>
   </form>
 </template>
