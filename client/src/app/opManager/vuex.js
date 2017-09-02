@@ -47,7 +47,7 @@ const mutations = {
   },
   [TYPES.OP_OPERATING_COMPANY_SET_DATA](st, obj) {
     if (obj) {
-      st.OperatingCompany = obj
+      st.OperatingCompany.shop = obj.shop
     }
   }
 }

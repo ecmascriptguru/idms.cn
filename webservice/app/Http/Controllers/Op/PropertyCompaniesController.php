@@ -143,4 +143,10 @@ class PropertyCompaniesController extends ApiController
             return $this->response(['result' => 'failure']);
         }
     }
+
+    public function getOperatingCompany() {
+        $user = Auth::guard('api')->user();
+        $operatingCompany = $user->operatingCompany;
+        return $this->response(compact('operatingCompany'));
+    }
 }

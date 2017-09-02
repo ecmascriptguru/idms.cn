@@ -51,6 +51,10 @@ Route::group([
            'except' => ['create', 'edit'],
         ]);
 
+        Route::resource('/oca/shop', 'Op\ShopController', [
+           'except' => ['index', 'store', 'destroy', 'create', 'edit'],
+        ]);
+
         Route::get('/oca/users/full-list', 'Op\UsersController@fullList');        
         Route::resource('/oca/users', 'Op\UsersController', [
            'except' => ['create', 'edit'],

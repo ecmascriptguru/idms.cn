@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Role;
 use App\Models\OperatingCompany;
 use App\Models\PropertyCompany;
+use App\Models\District;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -57,14 +58,26 @@ class User extends Authenticatable implements JWTSubject
     public function organization() {
         $role = $this->role;
 
-        if ($role->id == 1) {
-            return $this->belongsTo(OperatingCompany::class, 'operating_company_id');
-        } elseif ($role->id == 2) {
+        if ($role->id == 2) {
             return $this->belongsTo(OperatingCompany::class, 'operating_company_id');
         } elseif ($role->id == 3) {
             return $this->belongsTo(PropertyCompany::class, 'property_company_id');
         } elseif ($role->id == 4) {
-            return $this->belongsTo(PropertyCompany::class, 'property_company_id');
+            return $this->belongsTo(District::class, 'district_id');
+        } else {
+            return $this->belongsTo(OperatingCompany::class, 'operating_company_id');
         }
+    }
+
+    public function operatingCompany() {
+        return $this->belongsTo(OperatingCompany::class);
+    }
+
+    public function propertyCompany() {
+        return $this->belongsTo(PropertyCompany::class);
+    }
+
+    public function district() {
+        return $this->belongsTo(District::class);
     }
 }
