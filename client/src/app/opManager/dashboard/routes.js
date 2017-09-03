@@ -1,4 +1,4 @@
-const Dashboard = r => require.ensure([], () => r(require('./main')), 'op-bundle')
+const Dashboard = r => require.ensure([], () => r(require('./main')), 'opManager-bundle')
 
 const children = [{
     name: 'opManager.dashboard',

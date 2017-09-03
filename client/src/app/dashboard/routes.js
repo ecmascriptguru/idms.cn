@@ -4,8 +4,8 @@
 * http://router.vuejs.org/en/advanced/lazy-loading.html
 */
 /* eslint-disable global-require */
-const OriginDashboard = r => require.ensure([], () => r(require('./main.backup')), 'dashboard-bundle')
-const Dashboard = r => require.ensure([], () => r(require('./main')), 'dashboard-bundle')
+const OriginDashboard = r => require.ensure([], () => r(require('./main.backup')), 'app-bundle')
+const Dashboard = r => require.ensure([], () => r(require('./main')), 'app-bundle')
 
 export default [
   {
