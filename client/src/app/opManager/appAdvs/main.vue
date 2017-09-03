@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'JdOpPropertyCompanies',
+    name: 'JdOpAppAdvs',
 
     /**
     * Components registered with
@@ -22,21 +22,21 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'opManager.propertyCompanies.edit',
+          name: 'opManager.appAdvs.edit',
           params: { id },
           query: { page: this.currentPage } })
       },
       create() {
-        this.$router.push({ name: 'opManager.propertyCompanies.new', query: { page: this.currentPage } })
+        this.$router.push({ name: 'opManager.appAdvs.new', query: { page: this.currentPage } })
       },
       hide() {
-        this.$router.push({ name: 'opManager.propertyCompanies.index', query: { page: this.currentPage } })
+        this.$router.push({ name: 'opManager.appAdvs.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['propertyCompaniesSetData', 'setFetching']),
+      ...mapActions(['appAdvsSetData', 'setFetching']),
 
       fetch() {
         this.fetchPaginated()
@@ -44,7 +44,7 @@
       },
 
       /**
-      * Fetch a new set of propertyCompanies
+      * Fetch a new set of appAdvs
       * based on the current page
       */
       fetchPaginated() {
@@ -66,7 +66,7 @@
           * Vuex action to set pagination object in
           * the Vuex OpratingCompany module
           */
-          this.propertyCompaniesSetData({
+          this.appAdvsSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
@@ -82,7 +82,7 @@
 
       /**
       * Differente from fetch() which always
-      * return a paginated set of propertyCompanies
+      * return a paginated set of appAdvs
       * this one returns the full set, which
       * is used by other components in the app.
       */
@@ -93,7 +93,7 @@
           * Vuex action to set full list array in
           * the Vuex OperatingCompany module
           */
-          this.propertyCompaniesSetData({
+          this.appAdvsSetData({
             full_list: data.data,
           })
           this.setFetching({ fetching: false })
@@ -108,7 +108,7 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'opManager.propertyCompanies.index', query: { page: obj.page } })
+        this.$router.push({ name: 'opManager.appAdvs.index', query: { page: obj.page } })
 
         /**
         * Fetch a new set of OperatingCompanies based on
@@ -126,7 +126,7 @@
       askRemove(item) {
         swal({
           title: 'Are you sure?',
-          text: `Operating Company ${item.name} will be permanently removed.`,
+          text: `App Advertisement ${item.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
@@ -155,14 +155,14 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'Operating Company removed.', 'success')
+          swal('Done!', 'App Advertisement removed.', 'success')
 
           /**
           * Redirects back to the main list,
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'opManager.propertyCompanies.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'opManager.appAdvs.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -197,17 +197,17 @@
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.OpManager.PropertyCompanies.pagination,
-        list: state => state.OpManager.PropertyCompanies.list,
+        pagination: state => state.OpManager.AppAdvs.pagination,
+        list: state => state.OpManager.AppAdvs.list,
       }),
-      propertyCompanies() {
+      appAdvs() {
         return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
       isFormVisible() {
-        return this.$route.name === 'opManager.propertyCompanies.new' || this.$route.name === 'opManager.propertyCompanies.edit'
+        return this.$route.name === 'opManager.appAdvs.new' || this.$route.name === 'opManager.appAdvs.edit'
       },
     },
     /**
@@ -218,8 +218,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('propertyCompany.created')
-      this.$bus.$off('propertyCompany.updated')
+      this.$bus.$off('appAdv.created')
+      this.$bus.$off('appAdv.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -229,10 +229,10 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * Operating Company was created or updated, refresh the list
+      * App Advertisement was created or updated, refresh the list
       */
-      this.$bus.$on('propertyCompany.created', this.fetch)
-      this.$bus.$on('propertyCompany.updated', this.fetch)
+      this.$bus.$on('appAdv.created', this.fetch)
+      this.$bus.$on('appAdv.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
@@ -269,7 +269,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>物业公司管理</h1>
+        <h1>App广告管理</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -278,7 +278,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Operating Company">
+            title="New App Advertisement">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -286,7 +286,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Operating Company">
+            title="New App Advertisement">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -313,7 +313,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in propertyCompanies">
+        <tr v-for="(item, index) in appAdvs">
           <td width="1%" nowrap>{{ index +1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.short_name }}</td>

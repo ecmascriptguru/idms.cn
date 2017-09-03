@@ -16,6 +16,16 @@ const state = {
   OperatingCompany: {
     //
   },
+  AppAdvs: {
+    list: [],
+    full_list: [],
+    pagination: {}
+  },
+  DeviceAdvs: {
+    list: [],
+    full_list: [],
+    pagination: {}
+  },
   Dashboard: {
 
   }
@@ -49,7 +59,27 @@ const mutations = {
     if (obj) {
       st.OperatingCompany.shop = obj.shop
     }
-  }
+  },[TYPES.OP_APP_ADVS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.AppAdvs.list = obj.list
+    }
+    if (obj.full_list) {
+      st.AppAdvs.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.AppAdvs.pagination = obj.pagination
+    }
+  },[TYPES.OP_DEVICE_ADVS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.DeviceAdvs.list = obj.list
+    }
+    if (obj.full_list) {
+      st.DeviceAdvs.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.DeviceAdvs.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -61,6 +91,12 @@ const actions = {
   },
   operatingCompanySetData({ commit }, obj) {
     commit(TYPES.OP_OPERATING_COMPANY_SET_DATA, obj)
+  },
+  appAdvsSetData({ commit }, obj) {
+    commit(TYPES.OP_APP_ADVS_SET_DATA, obj)
+  },
+  deviceAdvsSetData({ commit }, obj) {
+    commit(TYPES.OP_DEVICE_ADVS_SET_DATA, obj)
   },
 }
 

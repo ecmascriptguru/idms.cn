@@ -152,10 +152,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <router-link tag="li" active-class="active" :to="{ path: '/op/appAdv', query: { page: 1 } }">
+            <router-link tag="li" active-class="active" :to="{ path: '/op/appAdvs', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> APP广告</a>
             </router-link>
-            <router-link tag="li" active-class="active" :to="{ path: '/op/deviceAdv', query: { page: 1 } }">
+            <router-link tag="li" active-class="active" :to="{ path: '/op/deviceAdvs', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 设备广告管理</a>
             </router-link>
           </ul>
