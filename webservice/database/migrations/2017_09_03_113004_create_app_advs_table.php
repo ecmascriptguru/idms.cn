@@ -13,7 +13,7 @@ class CreateAppAdvsTable extends Migration
      */
     public function up()
     {
-        Schema::create('app_advertisementss', function (Blueprint $table) {
+        Schema::create('app_advertisements', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('operating_company_id')->unsigned();
             $table->foreign('operating_company_id')->references('id')->on('operating_companies');
@@ -31,6 +31,6 @@ class CreateAppAdvsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('app_advertisementss');
+        Schema::dropIfExists('app_advertisements');
     }
 }
