@@ -1,7 +1,19 @@
 
 <script>
+  import Vue from 'vue'
+  import { mapState, mapActions } from 'vuex'
+
   export default {
     name: 'CcDashboard',
+
+    mounted() {
+      this.checkRole()
+    },
+
+    methods: {
+      checkRole() {
+      }
+    }
   }
 </script>
 
