@@ -1,11 +1,3 @@
-// import { vuex as Dashboard } from './dashboard'
-// import { vuex as Roles } from './roles'
-// import { vuex as OperatingCompanies } from './opCompanies'
-
-// const vuex = { ...Dashboard, ...Roles, ...OperatingCompanies }
-
-// export { vuex }
-
 import * as TYPES from '../../store/types'
 
 const state = {
