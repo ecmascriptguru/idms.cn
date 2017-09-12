@@ -24,6 +24,16 @@ Route::group([
 
 
         /**
+         *
+         */
+        Route::get('files', 'FileEntryController@index');
+        Route::get('files/get/{filename}', [
+            'as' => 'getentry', 'uses' => 'FileEntryController@get']);
+        Route::post('files/add',[ 
+                'as' => 'addentry', 'uses' => 'FileEntryController@add']);
+
+
+        /**
          *  Created by Alex
          *  For administrator
          */
