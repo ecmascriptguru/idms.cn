@@ -7,7 +7,7 @@ Route::group([
     Route::post('/auth/token/refresh', 'AuthController@refreshToken');
 
     Route::group([
-        'middleware' => 'jwt.auth',
+        // 'middleware' => 'jwt.auth',
     ], function () {
         Route::post('/auth/token/revoke', 'AuthController@revokeToken');
         Route::get('/categories/full-list', 'CategoriesController@fullList');
