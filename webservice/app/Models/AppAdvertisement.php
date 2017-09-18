@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\FileEntry;
-
 use Illuminate\Database\Eloquent\Model;
+use App\Models\FileEntry;
+use App\Models\OperatingCompany;
 
 class AppAdvertisement extends Model
 {
@@ -16,6 +16,10 @@ class AppAdvertisement extends Model
     ];
 
     public function image() {
-        return $this->belongsTo(FileEntry::class);
+        return $this->belongsTo(FileEntry::class, 'file_entry_id');
+    }
+
+    public function operatngCompany() {
+        return $this->belongsTo(OperatingCompany::class);
     }
 }
