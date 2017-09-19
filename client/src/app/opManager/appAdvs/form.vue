@@ -12,7 +12,10 @@
       return {
         appAdv: {
           id: 0,
-          name: '',
+          title: '',
+          image_title: '',
+          file_entry_id: null,
+          image_url: null,
         },
       }
     },
@@ -42,8 +45,8 @@
       },
       isValid() {
         this.resetMessages()
-        if (this.appAdv.name === '') {
-          this.setMessage({ type: 'error', message: ['Please fill company name'] })
+        if (this.appAdv.title === '') {
+          this.setMessage({ type: 'error', message: ['Please fill AppAdv Title'] })
           return false
         }
         return true
@@ -72,14 +75,14 @@
           * Fetch the op from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`oca/ppcs/${id}`).then((res) => {
-            const { id: _id, name, short_name, contact, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
+          this.$http.get(`oca/app-advs/${id}`).then((res) => {
+            console.log(res.data.data)
+            const { id: _id, title, image_title, file_entry_id, image_url } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.appAdv.id = _id
-            this.appAdv.name = name
-            this.appAdv.short_name = short_name
-            this.appAdv.contact = contact
-            this.appAdv.phone = phone
-            this.appAdv.address = address
+            this.appAdv.title = title
+            this.appAdv.image_title = image_title
+            this.appAdv.file_entry_id = file_entry_id
+            this.appAdv.image_url = image_url
             this.setFetching({ fetching: false })
           })
         }
@@ -102,13 +105,12 @@
         }
       },
       save() {
-        this.$http.post('oca/ppcs', 
+        this.$http.post('oca/app-advs', 
           { 
-            name: this.appAdv.name,
-            short_name: this.appAdv.short_name,
-            contact: this.appAdv.contact,
-            phone: this.appAdv.phone,
-            address: this.appAdv.address,
+            title: this.appAdv.title,
+            image_title: this.appAdv.image_title,
+            file_entry_id: this.appAdv.file_entry_id,
+            image_url: this.appAdv.image_url,
           }).then(() => {
           /**
           * This event will notify the world about
@@ -126,7 +128,7 @@
           /**
           * Sets the global feedback message
           */
-          this.setMessage({ type: 'success', message: 'New operating Company was created' })
+          this.setMessage({ type: 'success', message: 'New App Advertisement was created' })
 
           /**
           * Resets component's state
@@ -135,7 +137,7 @@
         })
       },
       update() {
-        this.$http.put(`oca/ppcs/${this.appAdv.id}`, this.appAdv).then(() => {
+        this.$http.put(`oca/app-advs/${this.appAdv.id}`, this.appAdv).then(() => {
           /**
           * This event will notify the world about
           * the op creation. In this case
@@ -152,16 +154,15 @@
           /**
           * Sets the global feedback message
           */
-          this.setMessage({ type: 'success', message: 'Operating Company was updated' })
+          this.setMessage({ type: 'success', message: 'AppAdvertisement was updated' })
         })
       },
       reset() {
         this.appAdv.id = 0
-        this.appAdv.name = ''
-        this.appAdv.short_name = ''
-        this.appAdv.contact = ''
-        this.appAdv.phone = ''
-        this.appAdv.address = ''
+        this.appAdv.title = ''
+        this.appAdv.image_title = ''
+        this.appAdv.file_entry_id = null
+        this.appAdv.image_url = null
       },
     },
   }
@@ -170,9 +171,21 @@
 <template>
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
-      <label for="name" class="control-label">物业公司名称</label>
-      <input ref="firstInput" type="text" id="name" class="form-control" v-model="appAdv.name">
+      <label for="title" class="control-label">广告标题</label>
+      <input ref="firstInput" type="text" id="title" class="form-control" v-model="appAdv.title">
     </div>
+    <div v-if="appAdv.file_entry_id > 0" class="form-group">
+      <img v-bind:src="appAdv.image_url" class="app-adv-image" />
+    </div>
+    <div class="form-group">
+      <label for="image_file" class="control-label">Upload Image</label>
+      <input type="file" name="image_file" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="image_title" class="control-label">图片标题</label>
+      <input type="text" id="image_title" class="form-control" v-model="appAdv.image_title">
+    </div>
+    <input type="hidden" id="file_entry_id" v-model="appAdv.file_entry_id" />
     <button class="btn btn-primary" type="submit">保存</button>
   </form>
 </template>

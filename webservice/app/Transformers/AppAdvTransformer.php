@@ -14,12 +14,14 @@ class AppAdvTransformer extends TransformerAbstract
      *
      * @return array
      */
-    public function transform(AppAdv $adv)
+    public function transform(AppAdvertisement $adv)
     {
         return [
             'id' => $adv->id,
             'title' => $adv->title,
             'image_title' => $adv->image_title,
+            'file_entry_id' => $adv->file_entry_id,
+            'image_url' => "",
             'image' => $adv->image,
             'created_at' => $adv->created_at->toIso8601String(),
             'updated_at' => $adv->updated_at->toIso8601String(),

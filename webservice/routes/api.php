@@ -70,6 +70,11 @@ Route::group([
            'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/oca/app-advs/full-list', 'Op\AppAdvsController@fullList');        
+        Route::resource('/oca/app-advs', 'Op\AppAdvsController', [
+           'except' => ['create', 'edit'],
+        ]);
+
 
         /**
          *  For Property Company admin

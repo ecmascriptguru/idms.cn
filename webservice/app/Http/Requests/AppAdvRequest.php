@@ -24,7 +24,6 @@ class AppAdvRequest extends FormRequest
     public function rules()
     {
         return [
-            'operating_company_id' => 'required',
             'title' => 'required',
         ];
     }

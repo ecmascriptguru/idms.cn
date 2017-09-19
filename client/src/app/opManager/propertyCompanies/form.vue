@@ -209,6 +209,6 @@
       <label for="address" class="control-label">地址</label>
       <input type="text" id="address" class="form-control" v-model="propertyCompany.address">
     </div>
-    <button class="btn btn-primary btn-xs" type="submit">Save</button>
+    <button class="btn btn-primary" type="submit">Save</button>
   </form>
 </template>

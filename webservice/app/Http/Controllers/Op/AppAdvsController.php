@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Op;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\AddAdvertisement;
+use App\Models\AppAdvertisement;
 use Illuminate\Http\Request;
 use App\Http\Requests\AppAdvRequest as AppAdvertisementRequest;
 use App\Transformers\AppAdvTransformer as AppAdvertisementTransformer;

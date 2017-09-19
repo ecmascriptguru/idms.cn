@@ -61,7 +61,7 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`oca/ppcs?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`oca/app-advs?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
           * the Vuex OpratingCompany module
@@ -88,7 +88,7 @@
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('oca/ppcs/full-list').then(({ data }) => {
+        this.$http.get('oca/app-advs/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
           * the Vuex OperatingCompany module
@@ -139,7 +139,7 @@
       * Makes the HTTP requesto to the API
       */
       remove(item) {
-        this.$http.delete(`oca/ppcs/${item.id}`).then(() => {
+        this.$http.delete(`oca/app-advs/${item.id}`).then(() => {
           /**
           * On success fetch a new set of OperatingCompanies
           * based on current page number
@@ -175,19 +175,6 @@
           swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
-
-      /**
-       * @param {object} item
-       */
-      addUser(item) {
-        this.$router.push({
-          name: "opManager.users.new",
-          query: {
-            page: 1,
-            pcId: item.id
-          }
-        })
-      }
     },
 
     /**
@@ -304,32 +291,15 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>名称</th>
-          <th>简称</th>
-          <th>联系人</th>
-          <th>地址</th>
-          <th>手机</th>
-          <th colspan="2">Districts</th>
+          <th>广告标题</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in appAdvs">
           <td width="1%" nowrap>{{ index +1 }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.short_name }}</td>
-          <td>{{ item.contact }}</td>
-          <td>{{ item.address }}</td>
-          <td>{{ item.phone }}</td>
-          <td>{{ item.count }}</td>
+          <td>{{ item.title }}</td>
           <td width="1%" nowrap="nowrap">
-            <a href="#"
-              @click.prevent="addUser(item)"
-              class="btn btn-xs btn-default"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Add User">
-              <i class="fa fa-fw fa-user"></i>
-            </a>
             <a href="#"
               @click.prevent="edit(item.id)"
               class="btn btn-xs btn-default"
