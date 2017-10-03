@@ -3,6 +3,7 @@
   import { mapActions } from 'vuex'
   import { resourceUrl } from '../../../config'
   import axios from 'axios'
+  import Datepicker from 'vuejs-datepicker';
 
   export default {
     name: 'JdDeviceAdvForm',
@@ -18,6 +19,7 @@
           from: '',
           to: '',
           title: '',
+          status: 1,
           file_entry_id: null,
           url: null,
         },
@@ -29,7 +31,7 @@
     },
 
     components: {
-      // FileUpload
+      Datepicker
     },
 
     /**
@@ -37,6 +39,13 @@
     */
     mounted() {
       this.fetch()
+      if (jQuery.AdminLTE.layout) {
+        jQuery.AdminLTE.layout.fix()
+      } else {
+        jQuery(document).ready(() => {
+          jQuery.AdminLTE.layout.fix()
+        })
+      }
     },
 
     /**
@@ -87,12 +96,14 @@
           * Fetch the op from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`oca/app-advs/${id}`).then((res) => {
+          this.$http.get(`oca/device-advs/${id}`).then((res) => {
             const { id: _id, name, from, to, title, file_entry_id, url } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.deviceAdv.id = _id
             this.deviceAdv.name = name
             this.deviceAdv.from = from
+            $("#from").val(from)
             this.deviceAdv.to = to
+            $("#to").val(to)
             this.deviceAdv.title = title
             this.deviceAdv.file_entry_id = file_entry_id
             this.deviceAdv.url = resourceUrl + url
@@ -119,13 +130,7 @@
       },
       save() {
         this.$http.post('oca/device-advs', 
-          { 
-            name: this.deviceAdv.name,
-            from: this.deviceAdv.from,
-            to: this.deviceAdv.to,
-            title: this.deviceAdv.title,
-            file_entry_id: this.deviceAdv.file_entry_id,
-          }).then(() => {
+          this.deviceAdv).then(() => {
           /**
           * This event will notify the world about
           * the op creation. In this case
@@ -250,6 +255,12 @@
           closeOnConfirm: false,
         }, () => this.removeImage()) // callback executed when OK is pressed
       },
+      onFromChanged(val) {
+        this.deviceAdv.from = val.toISOString().substr(0, 10)
+      },
+      onToChanged(val) {
+        this.deviceAdv.to = val.toISOString().substr(0, 10)
+      },
       removeImage() {
         this.deviceAdv.file_entry_id = null;
         this.update()
@@ -262,6 +273,7 @@
         this.deviceAdv.to = ''
         this.deviceAdv.title = ''
         this.deviceAdv.file_entry_id = null
+        this.deviceAdv.status = 1,
         this.deviceAdv.url = null
         this.media.file = null
         this.media.image = ''
@@ -273,16 +285,24 @@
 <template>
   <form @submit.prevent="submit" class="well" enctype="multipart/form-data">
     <div class="form-group">
-      <label for="name" class="control-label">广告名称</label>
+      <label for="name" class="control-label">广告计划名称</label>
       <input ref="firstInput" type="text" id="name" class="form-control" v-model="deviceAdv.name">
     </div>
     <div class="form-group">
-      <label for="title" class="control-label">广告标题</label>
-      <input ref="firstInput" type="text" id="title" class="form-control" v-model="deviceAdv.title">
+      <div class="row">
+        <div class="col-sm-6 col-xs-12">
+          <label for="from" class="control-label">开始时间</label>
+          <datepicker ref="from" @selected="onFromChanged" language="zh" id="from" name="from" format="yyyy-MM-dd" input-class="form-control"></datepicker>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <label for="to" class="control-label">终止时间</label>
+          <datepicker ref="to" @selected="onToChanged" language="zh" id="to" name="to" format="yyyy-MM-dd" input-class="form-control"></datepicker>
+        </div>
+      </div>
     </div>
     <div class="form-group">
-      <label for="image_title" class="control-label">图片标题</label>
-      <input type="text" id="image_title" class="form-control" v-model="deviceAdv.image_title">
+      <label for="title" class="control-label">广告视频标题</label>
+      <input type="text" id="title" class="form-control" v-model="deviceAdv.title">
     </div>
     <div v-if="deviceAdv.file_entry_id" class="form-group">
       <div class="row">
@@ -298,7 +318,7 @@
     </div>
     <div v-else class="form-group">
       <div class="">
-        <label for="file" class="control-label">图片</label>
+        <label for="file" class="control-label">广告视频</label>
       </div>
       <div v-if="media.image" class="row">
         <div class="col-xs-12">

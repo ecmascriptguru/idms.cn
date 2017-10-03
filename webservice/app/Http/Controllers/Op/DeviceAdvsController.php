@@ -66,7 +66,7 @@ class DeviceAdvsController extends ApiController
     public function store(DeviceAdvertisementRequest $request)
     {
         if ($this->isOperatingCompanyAdmin()) {
-            $param = $request->only('title', 'image_title', 'file_entry_id');
+            $param = $request->only('name', 'title', 'from', 'to', 'file_entry_id', 'status');
             $param['operating_company_id'] = $this->getOperatingCompanyId();
             DeviceAdvertisement::create($param);
             
@@ -111,14 +111,17 @@ class DeviceAdvsController extends ApiController
         }
 
         if ($this->isOperatingCompanyAdmin()) {
+            $adv->name = $request->get('name');
+            $adv->from = $request->get('from');
+            $adv->to = $request->get('to');
+            $adv->status = $request->get('status');
             $adv->title = $request->get('title');
-            $adv->image_title = $request->get('image_title');
-            if ($adv->image && $adv->file_entry_id != $request->get('file_entry_id')) {
+            if ($adv->file && $adv->file_entry_id != $request->get('file_entry_id')) {
                 $adv->file_entry_id = $request->get('file_entry_id');
-                Storage::disk('public')->delete($adv->image->filename);
+                Storage::disk('public')->delete($adv->file->filename);
                 $adv->save();
-                $adv->image->delete();
-                return $this->response(['result' => 'success', 'msg' => 'Image File removed.']);
+                $adv->file->delete();
+                return $this->response(['result' => 'success', 'msg' => 'Adv File removed.']);
             } else {
                 $adv->file_entry_id = $request->get('file_entry_id');
                 $adv->save();

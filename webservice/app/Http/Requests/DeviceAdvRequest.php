@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AppAdvRequest extends FormRequest
+class DeviceAdvRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,6 @@ class AppAdvRequest extends FormRequest
             'name' => 'required',
             'from' => 'required',
             'to' => 'required',
-            'status' => 'required',
         ];
     }
 }
