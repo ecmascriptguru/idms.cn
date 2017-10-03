@@ -13,15 +13,15 @@ class UsersController extends ApiController
 {
     public function isOperatingCompanyAdmin() {
         $user = Auth::guard('api')->user();
-        $role = $user->role;
+        // $role = $user->role;
 
-        return $role->id === 2;
+        return (gettype($user) == 'object') ? $user->role->id === 2 : false;
     }
 
     private function getOperatingCompanyId() {
         $user = Auth::guard('api')->user();
         
-        if ($user->organization) {
+        if (gettype($user) == 'object' && $user->organization) {
             return $user->organization->id;
         } else {
             return null;

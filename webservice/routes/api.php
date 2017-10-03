@@ -75,11 +75,10 @@ Route::group([
            'except' => ['create', 'edit'],
         ]);
 
-
         /**
          *  For Property Company admin
          */
-        Route::get('/pca/districts/full-list', 'Ppc\DistrictsController@fullList');        
+        Route::get('/pca/districts/full-list', 'Ppc\DistrictsController@fullList');
         Route::resource('/pca/districts', 'Ppc\DistrictsController', [
            'except' => ['create', 'edit'],
         ]);

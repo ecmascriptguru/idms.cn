@@ -4,24 +4,26 @@ namespace App\Http\Controllers\Op;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\AppAdvertisement;
+use App\Models\FileEntry;
 use Illuminate\Http\Request;
 use App\Http\Requests\AppAdvRequest as AppAdvertisementRequest;
 use App\Transformers\AppAdvTransformer as AppAdvertisementTransformer;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Storage;
 
 class AppAdvsController extends ApiController
 {
     public function isOperatingCompanyAdmin() {
         $user = Auth::guard('api')->user();
-        $role = $user->role;
+        // $role = $user->role;
 
-        return $role->id === 2;
+        return ($user && $user->role) ? $user->role->id === 2 : false;
     }
 
     private function getOperatingCompanyId() {
         $user = Auth::guard('api')->user();
         
-        if ($user->organization) {
+        if ($user && $user->organization) {
             return $user->organization->id;
         } else {
             return null;
@@ -111,10 +113,17 @@ class AppAdvsController extends ApiController
         if ($this->isOperatingCompanyAdmin()) {
             $adv->title = $request->get('title');
             $adv->image_title = $request->get('image_title');
-            $adv->file_entry_id = $request->get('file_entry_id');
-            $adv->save();
-
-            return $this->response(['result' => 'success']);
+            if ($adv->image && $adv->file_entry_id != $request->get('file_entry_id')) {
+                $adv->file_entry_id = $request->get('file_entry_id');
+                Storage::disk('public')->delete($adv->image->filename);
+                $adv->save();
+                $adv->image->delete();
+                return $this->response(['result' => 'success', 'msg' => 'Image File removed.']);
+            } else {
+                $adv->file_entry_id = $request->get('file_entry_id');
+                $adv->save();
+                return $this->response(['result' => 'success']);
+            }
         } else {
             return $this->response(['result' => 'failure']);
         }
@@ -134,12 +143,24 @@ class AppAdvsController extends ApiController
             return $this->responseWithNotFound('AppAdvertisement not found');
         }
 
-        if ($this->isOperatingCompanyAdmin()) { 
-            $adv->delete();
+        if ($this->isOperatingCompanyAdmin()) {
+            if ($adv->file_entry_id) {
+                $entry = $adv->image;
+                $adv->delete();
+                Storage::delete($entry->filename);
+                $entry->delete();
+            } else {
+                $adv->delete();
+            }
             
             return $this->response(['result' => 'success']);
         } else {
             return $this->response(['result' => 'failure']);
         }
+    }
+
+    public function removeImage($id)
+    {
+        return $this->response(['result' => 'success', 'id' => $id]);
     }
 }

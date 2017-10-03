@@ -13,9 +13,8 @@ class ShopController extends ApiController
 {
     public function isOperatingCompanyAdmin() {
         $user = Auth::guard('api')->user();
-        $role = $user->role;
 
-        return $role->id === 2;
+        return ($user && $user->role) ? $role->id === 2 : false;
     }
 
     /**

@@ -23,16 +23,16 @@ class FileEntryController extends ApiController
  
 	public function add(Request $request) {
  
-		$file = $request::file('filefield');
+		$file = $request::file('file');
 		$extension = $file->getClientOriginalExtension();
-		Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
-		$entry = new Fileentry();
+		Storage::disk('public')->put($file->getFilename().'.'.$extension,  File::get($file));
+		$entry = new FileEntry();
 		$entry->mime = $file->getClientMimeType();
 		$entry->original_filename = $file->getClientOriginalName();
 		$entry->filename = $file->getFilename().'.'.$extension;
  
 		if ($entry->save()) {
-            return $this->response(['result' => 'success', 'file' => $entry]);
+            return $this->response(['result' => 'success', 'file' => $this->transform->item($entry, new FileEntryTransformer)]);
         } else {
             return $this->response(['result' => 'failure']);
         }
