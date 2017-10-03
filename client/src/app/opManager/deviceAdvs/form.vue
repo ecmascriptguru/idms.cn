@@ -4,6 +4,7 @@
   import { resourceUrl } from '../../../config'
   import axios from 'axios'
   import Datepicker from 'vuejs-datepicker';
+  import myVideo from 'vue-video'
 
   export default {
     name: 'JdDeviceAdvForm',
@@ -26,12 +27,18 @@
         media: {
           image: '',
           file: null
-        }
+        },
+        options: {
+          autoplay: false,
+          volume: 0.6,
+        },
+        sources: [],
       }
     },
 
     components: {
-      Datepicker
+      Datepicker,
+      myVideo
     },
 
     /**
@@ -97,7 +104,7 @@
           */
           this.setFetching({ fetching: true })
           this.$http.get(`oca/device-advs/${id}`).then((res) => {
-            const { id: _id, name, from, to, title, file_entry_id, url } = res.data.data // http://wesbos.com/destructuring-renaming/
+            const { id: _id, name, from, to, title, file_entry_id, url, file } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.deviceAdv.id = _id
             this.deviceAdv.name = name
             this.deviceAdv.from = from
@@ -108,6 +115,10 @@
             this.deviceAdv.file_entry_id = file_entry_id
             this.deviceAdv.url = resourceUrl + url
             this.setFetching({ fetching: false })
+            this.sources = [{
+              src: this.deviceAdv.url,
+              type: file.mime
+            }]
           })
         }
       },
@@ -239,6 +250,10 @@
           let file = response.data.file.data
           self.deviceAdv.file_entry_id = file.id
           self.deviceAdv.url = resourceUrl + file.url
+          self.sources.push({
+            src: self.deviceAdv.url,
+            type: file.mime
+          })
           if (self.deviceAdv.id > 0) {
             self.update()
           }
@@ -307,7 +322,7 @@
     <div v-if="deviceAdv.file_entry_id" class="form-group">
       <div class="row">
         <div class="col-xs-12 app-adv-img-container">
-          <img :src="deviceAdv.image_url" class="img-responsive">
+          <my-video :sources="sources" :options="options"></my-video>
           <div class="app-adv-img-hover">
             <button class="btn btn-remove" @click.prevent="askRemove(deviceAdv)" title="Remove This File">
               <i class="fa fa-remove" >

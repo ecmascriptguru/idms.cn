@@ -24,7 +24,7 @@ export default {
 </script>
 
 <template>
-  <div id="app" class="app">
+  <div id="idms" class="app">
     <jd-header v-show="shouldShowNavigation"></jd-header>
     <jd-left-side-bar v-show="shouldShowNavigation"></jd-left-side-bar>
     <router-view></router-view>
