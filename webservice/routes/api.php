@@ -75,6 +75,11 @@ Route::group([
            'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/oca/device-advs/full-list', 'Op\DeviceAdvsController@fullList');        
+        Route::resource('/oca/device-advs', 'Op\DeviceAdvsController', [
+           'except' => ['create', 'edit'],
+        ]);
+
         /**
          *  For Property Company admin
          */
