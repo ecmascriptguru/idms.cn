@@ -291,13 +291,19 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>广告标题</th>
+          <th>广告名称
+          <th>开始时间</th>
+          <th>终止时间</th>
+          <th>广告视频标题</th>
           <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in deviceAdvs">
           <td width="1%" nowrap>{{ index +1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.from }}</td>
+          <td>{{ item.to }}</td>
           <td>{{ item.title }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"

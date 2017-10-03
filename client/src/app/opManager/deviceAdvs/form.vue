@@ -115,10 +115,12 @@
             this.deviceAdv.file_entry_id = file_entry_id
             this.deviceAdv.url = resourceUrl + url
             this.setFetching({ fetching: false })
-            this.sources = [{
-              src: this.deviceAdv.url,
-              type: file.mime
-            }]
+            if (file) {
+              this.sources = [{
+                src: this.deviceAdv.url,
+                type: file.mime
+              }]
+            }
           })
         }
       },
