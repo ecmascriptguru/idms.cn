@@ -15,6 +15,8 @@ class District extends Model
         'property_company_id',
         'name',
         'short_name',
+        'province',
+        'city',
         'address',
         'phone',
         'contact'

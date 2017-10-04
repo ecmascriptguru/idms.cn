@@ -14,6 +14,8 @@
           id: 0,
           name: '',
           short_name: '',
+          province: '',
+          city: '',
           contact: '',
           phone: '',
           address: '',
@@ -93,9 +95,11 @@
           */
           this.setFetching({ fetching: true })
           this.$http.get(`pca/districts/${id}`).then((res) => {
-            const { id: _id, name, short_name, contact, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
+            const { id: _id, name, province, city, short_name, contact, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.district.id = _id
             this.district.name = name
+            this.district.province = province
+            this.district.city = city
             this.district.short_name = short_name
             this.district.contact = contact
             this.district.phone = phone
@@ -127,6 +131,8 @@
             name: this.district.name,
             short_name: this.district.short_name,
             contact: this.district.contact,
+            province: this.district.province,
+            city: this.district.city,
             phone: this.district.phone,
             address: this.district.address,
           }).then(() => {
@@ -179,6 +185,8 @@
         this.district.id = 0
         this.district.name = ''
         this.district.short_name = ''
+        this.province = '',
+        this.city = '',
         this.district.contact = ''
         this.district.phone = ''
         this.district.address = ''
@@ -196,6 +204,14 @@
     <div class="form-group">
       <label for="short_name" class="control-label">社区简称</label>
       <input type="text" id="short_name" class="form-control" v-model="district.short_name">
+    </div>
+    <div class="form-group">
+      <label for="province" class="control-label">省</label>
+      <input type="text" id="province" class="form-control" v-model="district.province">
+    </div>
+    <div class="form-group">
+      <label for="city" class="control-label">市</label>
+      <input type="text" id="city" class="form-control" v-model="district.city">
     </div>
     <div class="form-group">
       <label for="contact" class="control-label">联系人</label>

@@ -266,7 +266,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>社区管理</h1>
+        <h1>小区管理</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -302,10 +302,12 @@
         <tr>
           <th>ID</th>
           <th>名称</th>
-          <th>简称</th>
+          <th>省</th>
+          <th>市</th>
+          <!-- <th>简称</th> -->
           <th>联系人</th>
-          <th>地址</th>
           <th>手机</th>
+          <th>地址</th>
           <th colspan="2">账户</th>
         </tr>
       </thead>
@@ -313,10 +315,12 @@
         <tr v-for="(item, index) in districts">
           <td width="1%" nowrap>{{ index +1 }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.short_name }}</td>
+          <td>{{ item.province }}</td>
+          <td>{{ item.city }}</td>
+          <!-- <td>{{ item.short_name }}</td> -->
           <td>{{ item.contact }}</td>
-          <td>{{ item.address }}</td>
           <td>{{ item.phone }}</td>
+          <td>{{ item.address }}</td>
           <td>{{ item.count }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"

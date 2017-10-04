@@ -20,6 +20,8 @@ class DistrictTransformer extends TransformerAbstract
             'id' => $district->id,
             'name' => $district->name,
             'short_name' => $district->short_name,
+            'province' => $district->province,
+            'city' => $district->city,
             'phone' => $district->phone,
             'contact' => $district->contact,
             'address' => $district->address,

@@ -177,14 +177,14 @@
       <ul v-else-if="(currentUser.role || {}).id === 3" class="sidebar-menu">
         <li active-class="active" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>社区设置</span>
+            <i class="glyphicon glyphicon-home"></i> <span>小区设置</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <router-link tag="li" active-class="active"  :to="{ path: '/ppc/districts', query: { page: 1} }">
-              <a href="#"><i class="fa fa-circle-o"></i> 社区管理</a>
+              <a href="#"><i class="fa fa-circle-o"></i> 小区管理</a>
             </router-link>
             <router-link tag="li" active-class="active" :to="{ path: '/ppc/users', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 账户设置</a>

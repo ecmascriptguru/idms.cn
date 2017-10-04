@@ -64,7 +64,7 @@ class DistrictsController extends ApiController
     public function store(DistrictRequest $request)
     {
         if ($this->isPropertyCompanyAdmin()) {
-            $param = $request->only('name', 'short_name', 'contact', 'phone', 'address', 'property_company_id');
+            $param = $request->only('name', 'short_name', 'province', 'city', 'contact', 'phone', 'address', 'property_company_id');
             $ppc = PropertyCompany::find($this->getPropertyCompanyId());
             $opc = $ppc->operatingCompany;
             $param['operating_company_id'] = $opc->id;
@@ -114,6 +114,8 @@ class DistrictsController extends ApiController
         if ($this->isPropertyCompanyAdmin()) {
             $district->name = $request->get('name');
             $district->short_name = $request->get('short_name');
+            $district->province = $request->get('province');
+            $district->city = $request->get('city');
             $district->contact = $request->get('contact');
             $district->phone = $request->get('phone');
             $district->address = $request->get('address');

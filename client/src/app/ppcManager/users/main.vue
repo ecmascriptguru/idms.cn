@@ -291,6 +291,7 @@
       <thead>
         <tr>
           <th>ID</th>
+          <th>小区名称</th>
           <th>用户</th>
           <th>姓名</th>
           <th>手机</th>
@@ -301,6 +302,7 @@
       <tbody>
         <tr v-for="(user, index) in users">
           <td width="1%" nowrap>{{ index + 1 }}</td>
+          <td>{{ user.organization.name }}</td>
           <td>{{ user.username }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.phone }}</td>
