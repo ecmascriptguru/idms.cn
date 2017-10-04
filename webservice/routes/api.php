@@ -42,6 +42,11 @@ Route::group([
             'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/admin/houseTypes/full-list', 'Admin\HouseTypesController@fullList');         
+        Route::resource('/admin/houseTypes', 'Admin\HouseTypesController', [
+            'except' => ['create', 'edit'],
+        ]);
+
 
         Route::get('/admin/ops/full-list', 'Admin\OperatingCompaniesController@fullList');        
         Route::resource('/admin/ops', 'Admin\OperatingCompaniesController', [

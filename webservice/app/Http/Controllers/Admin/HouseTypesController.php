@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\UserRequest;
-use App\Transformers\UserTransformer;
+use App\Models\HouseType;
+use App\Http\Requests\HouseTypeRequest;
+use App\Transformers\HouseTypeTransformer;
 use App\Http\Controllers\ApiController;
-use Illuminate\Support\Facades\Hash;
-use App\User;
 
-class UsersController extends ApiController
+
+class HouseTypesController extends ApiController
 {
     public function isAdmin() {
         $user = Auth::guard('api')->user();
@@ -28,16 +28,16 @@ class UsersController extends ApiController
         $order = $this->getOrder();
         $limit = $this->getLimit();
         
-        $users = User::orderBy($sort, $order)->where(['role_id' => 2])->paginate($limit);
+        $types = HouseType::orderBy($sort, $order)->paginate($limit);
 
         if ($this->isAdmin()) {
             return $this->response(
-                $this->transform->collection($users, new UserTransformer)
+                $this->transform->collection($types, new HouseTypeTransformer)
             );
         } else {
-            $users = User::where(['id' => null])->paginate($limit);
+            $types = HouseType::where(['id' => null])->paginate($limit);
             return $this->response(
-                $this->transform->collection($users, new UserTransformer)
+                $this->transform->collection($types, new HouseTypeTransformer)
             );
         }
     }
@@ -45,7 +45,7 @@ class UsersController extends ApiController
     public function fullList()
     {
         return $this->response(
-            $this->transform->collection(User::where(['role_id' => 2]), new UserTransformer)
+            $this->transform->collection(HouseType::all(), new HouseTypeTransformer)
         );
     }
 
@@ -55,12 +55,11 @@ class UsersController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(HouseTypeRequest $request)
     {
         if ($this->isAdmin()) {
-            $params = $request->only('name', 'username', 'phone', 'address', 'role_id', 'operating_company_id');
-            $params['password'] = Hash::make($request->input('password'));
-            User::create($params);
+        
+            HouseType::create($request->only('name'));
 
             return $this->response(['result' => 'success']);
         } else {
@@ -76,14 +75,14 @@ class UsersController extends ApiController
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $type = HouseType::find($id);
 
-        if (! $user) {
-            return $this->responseWithNotFound('User not found');
+        if (! $type) {
+            return $this->responseWithNotFound('HouseType not found');
         }
 
         return $this->response(
-            $this->transform->item($user, new UserTransformer)
+            $this->transform->item($type, new HouseTypeTransformer)
         );
     }
 
@@ -94,26 +93,17 @@ class UsersController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(HouseTypeRequest $request, $id)
     {
-        $user = User::find($id);
+        $type = HouseType::find($id);
 
-        if (! $user) {
-            return $this->responseWithNotFound('User not found');
+        if (! $type) {
+            return $this->responseWithNotFound('HouseType not found');
         }
 
         if ($this->isAdmin()) {
-            $user->name = $request->get('name');
-            $user->username = $request->get('username');
-            $user->phone = $request->get('phone');
-            $user->address = $request->get('address');
-            $user->role_id = $request->get('role_id');
-            $user->operating_company_id = $request->get('operating_company_id');
-
-            if (!empty($request->get('password'))) {
-                $user->password = Hash::make($request->get('password'));
-            }
-            $user->save();
+            $type->name = $request->get('name');
+            $type->save();
 
             return $this->response(['result' => 'success']);
         }
@@ -131,15 +121,15 @@ class UsersController extends ApiController
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $type = HouseType::find($id);
 
-        if (! $user) {
-            return $this->responseWithNotFound('User not found');
+        if (! $type) {
+            return $this->responseWithNotFound('HouseType not found');
         }
 
         if ($this->isAdmin()) 
         {
-            $user->delete();
+            $type->delete();
             
             return $this->response(['result' => 'success']);
         }

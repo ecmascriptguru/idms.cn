@@ -6,6 +6,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  HouseTypes: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   OperatingCompanies: {
     list: [],
     full_list: [],
@@ -58,6 +63,17 @@ const mutations = {
       st.Users.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_HOUSE_TYPES_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.HouseTypes.list = obj.list
+    }
+    if (obj.full_list) {
+      st.HouseTypes.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.HouseTypes.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -69,6 +85,9 @@ const actions = {
   },
   usersSetData({ commit }, obj) {
     commit(TYPES.ADMIN_USERS_SET_DATA, obj)
+  },
+  houseTypesSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_HOUSE_TYPES_SET_DATA, obj)
   },
 }
 

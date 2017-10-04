@@ -15,15 +15,14 @@ class UsersController extends ApiController
 {
     public function isPropertyCompanyAdmin() {
         $user = Auth::guard('api')->user();
-        $role = $user->role;
 
-        return $role->id === 3;
+        return ($user && $user->role) ? $user->role->id === 3 : false;
     }
 
     private function getPropertyCompanyId() {
         $user = Auth::guard('api')->user();
         
-        if ($user->property_company_id) {
+        if ($user && $user->property_company_id) {
             return $user->property_company_id;
         } else {
             return null;
