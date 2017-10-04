@@ -29,7 +29,7 @@ class CreateParamaters extends Migration
             $table->integer('call_sound_volumn')->default(8);
             $table->integer('dial_ring_tones')->default(5);
             $table->integer('system_sound_volumn')->default(2);
-            $table->string('video_quality', 5)->default('720p');
+            $table->integer('video_quality')->default(4);
             $table->integer('video_auto_adaption_network')->default(1);
         });
     }

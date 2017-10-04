@@ -80,6 +80,10 @@ Route::group([
            'except' => ['create', 'edit'],
         ]);
 
+        Route::resource('/oca/parameter', 'Op\ParametersController', [
+            'except' => ['index', 'store', 'destroy', 'create', 'edit'],
+        ]);
+
         /**
          *  For Property Company admin
          */
