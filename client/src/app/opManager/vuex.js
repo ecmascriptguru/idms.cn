@@ -16,6 +16,9 @@ const state = {
   OperatingCompany: {
     //
   },
+  Parameter: {
+    //
+  },
   AppAdvs: {
     list: [],
     full_list: [],
@@ -59,7 +62,16 @@ const mutations = {
     if (obj) {
       st.OperatingCompany.shop = obj.shop
     }
-  },[TYPES.OP_APP_ADVS_SET_DATA](st, obj) {
+  },
+  [TYPES.OP_PARAMETER_SET_DATA](st, obj) {
+    if (obj) {
+      // st.Parameter = obj.parameter
+      for (let key in obj.parameter) {
+        st.Parameter[key] = obj.parameter[key]
+      }
+    }
+  },
+  [TYPES.OP_APP_ADVS_SET_DATA](st, obj) {
     if (obj.list) {
       st.AppAdvs.list = obj.list
     }
@@ -69,7 +81,8 @@ const mutations = {
     if (obj.pagination) {
       st.AppAdvs.pagination = obj.pagination
     }
-  },[TYPES.OP_DEVICE_ADVS_SET_DATA](st, obj) {
+  },
+  [TYPES.OP_DEVICE_ADVS_SET_DATA](st, obj) {
     if (obj.list) {
       st.DeviceAdvs.list = obj.list
     }
@@ -94,6 +107,9 @@ const actions = {
   },
   appAdvsSetData({ commit }, obj) {
     commit(TYPES.OP_APP_ADVS_SET_DATA, obj)
+  },
+  parameterSetData({ commit }, obj) {
+    commit(TYPES.OP_PARAMETER_SET_DATA, obj)
   },
   deviceAdvsSetData({ commit }, obj) {
     commit(TYPES.OP_DEVICE_ADVS_SET_DATA, obj)

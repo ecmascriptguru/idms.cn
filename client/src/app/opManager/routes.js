@@ -4,7 +4,8 @@ import { routes as Users } from './users'
 import { routes as Shop } from './shop'
 import { routes as appAdvs} from './appAdvs'
 import { routes as deviceAdvs } from './deviceAdvs'
+import { routes as param } from './parameter'
 
-const routes = [ ...Dashboard, ...PropertyCompanies, ...Users, ...appAdvs, ...deviceAdvs, ...Shop ]
+const routes = [ ...Dashboard, ...PropertyCompanies, ...Users, ...appAdvs, ...deviceAdvs, ...Shop, ...param ]
 
 export { routes }
