@@ -74,6 +74,12 @@
         }
         return true
       },
+      currentPage() {
+        return parseInt(this.$route.query.page, 10)
+      },
+      districtId() {
+        return this.$route.query.dctId || 0
+      },
     },
 
     methods: {
@@ -253,6 +259,10 @@
           * Sets the global feedback message
           */
           this.setMessage({ type: 'success', message: 'FeeStandard was updated' })
+          this.$router.push({ 
+            name: 'ppcManager.feeStandards.index',
+            query: { page: this.currentPage, dctId: this.districtId }
+          })
         })
       },
       reset() {
@@ -323,7 +333,7 @@
           <label for="property_management_fee" class="control-label">物业管理费（元/月/平米）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="property_management_fee" class="form-control" v-model="feeStandard.property_management_fee">
+          <input type="number" step="0.1" id="property_management_fee" class="form-control" v-model="feeStandard.property_management_fee">
         </div>
       </div>
     </div>
@@ -333,7 +343,7 @@
           <label for="water_fee" class="control-label">水费（元/每立方）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="water_fee" class="form-control" v-model="feeStandard.water_fee">
+          <input type="number" step="0.1" id="water_fee" class="form-control" v-model="feeStandard.water_fee">
         </div>
       </div>
     </div>
@@ -343,7 +353,7 @@
           <label for="electricity_fee" class="control-label">电费（元/度）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="electricity_fee" class="form-control" v-model="feeStandard.electricity_fee">
+          <input type="number" step="0.1" id="electricity_fee" class="form-control" v-model="feeStandard.electricity_fee">
         </div>
       </div>
     </div>
@@ -353,7 +363,7 @@
           <label for="parking_fee" class="control-label">停车费（元/月/车）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="parking_fee" class="form-control" v-model="feeStandard.parking_fee">
+          <input type="number" step="0.1" id="parking_fee" class="form-control" v-model="feeStandard.parking_fee">
         </div>
       </div>
     </div>
@@ -363,7 +373,7 @@
           <label for="gas_fee" class="control-label">煤气费（元/立方）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="gas_fee" class="form-control" v-model="feeStandard.gas_fee">
+          <input type="number" step="0.1" id="gas_fee" class="form-control" v-model="feeStandard.gas_fee">
         </div>
       </div>
     </div>
@@ -373,7 +383,7 @@
           <label for="heating_fee" class="control-label">暖气费（元/月/平米）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="heating_fee" class="form-control" v-model="feeStandard.heating_fee">
+          <input type="number" step="0.1" id="heating_fee" class="form-control" v-model="feeStandard.heating_fee">
         </div>
       </div>
     </div>
@@ -383,7 +393,7 @@
           <label for="internet_fee" class="control-label">宽带费（元/月）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="internet_fee" class="form-control" v-model="feeStandard.internet_fee">
+          <input type="number" step="0.1" id="internet_fee" class="form-control" v-model="feeStandard.internet_fee">
         </div>
       </div>
     </div>
@@ -418,7 +428,7 @@
           <label for="custom_fee_1_rate" class="control-label">其他费用设置一（费率）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="custom_fee_1_rate" class="form-control" v-model="feeStandard.custom_fee_1_rate">
+          <input type="number" step="0.1" id="custom_fee_1_rate" class="form-control" v-model="feeStandard.custom_fee_1_rate">
         </div>
       </div>
     </div>
@@ -453,7 +463,7 @@
           <label for="custom_fee_2_rate" class="control-label">其他费用设置一（费率）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="custom_fee_2_rate" class="form-control" v-model="feeStandard.custom_fee_2_rate">
+          <input type="number" step="0.1" id="custom_fee_2_rate" class="form-control" v-model="feeStandard.custom_fee_2_rate">
         </div>
       </div>
     </div>
@@ -488,7 +498,7 @@
           <label for="custom_fee_3_rate" class="control-label">其他费用设置一（费率）</label>
         </div>
         <div class="col-lg-3 col-lg-offset-1 col-md-5 col-md-6 col-sm-5 col-xs-4">
-          <input type="number" id="custom_fee_3_rate" class="form-control" v-model="feeStandard.custom_fee_3_rate">
+          <input type="number" step="0.1" id="custom_fee_3_rate" class="form-control" v-model="feeStandard.custom_fee_3_rate">
         </div>
       </div>
     </div>

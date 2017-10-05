@@ -212,7 +212,7 @@
 
         <router-link tag="li" active-class="active" :to="{ path: '/ppc/parkings', query: { page: 1} }">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>社区停车场</span>
+            <i class="glyphicon glyphicon-home"></i> <span>小区停车场</span>
           </a>
         </router-link>
 

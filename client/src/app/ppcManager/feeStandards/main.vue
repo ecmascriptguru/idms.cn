@@ -208,6 +208,16 @@
           swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
+
+      fixLayout() {
+        if (jQuery.AdminLTE.layout) {
+          jQuery.AdminLTE.layout.fix()
+        } else {
+          jQuery(document).ready(() => {
+            jQuery.AdminLTE.layout.fix()
+          })
+        }
+      },
     },
 
     /**
@@ -261,15 +271,9 @@
       * Fetch data immediately after component is mounted
       */
       this.fetchPaginated()
-      if (jQuery.AdminLTE.layout) {
-        jQuery.AdminLTE.layout.fix()
-      } else {
-        jQuery(document).ready(() => {
-          jQuery.AdminLTE.layout.fix()
-        })
-      }
       this.fetchDistricts()
       this.setDistrictId()
+      this.fixLayout()
     },
     /**
     * This hook is called every time DOM
@@ -279,15 +283,8 @@
       /**
       * start Bootstrap Tooltip
       */
-      jQuery('[data-toggle="tooltip"]').tooltip()
-      if (jQuery.AdminLTE.layout) {
-        jQuery.AdminLTE.layout.fix()
-      } else {
-        jQuery(document).ready(() => {
-          jQuery.AdminLTE.layout.fix()
-        })
-      }
       this.setDistrictId()
+      this.fixLayout()
     },
   }
 </script>
