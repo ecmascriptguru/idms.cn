@@ -96,7 +96,6 @@
         }
       },
       fetchPropertyCompanies() {
-        console.log("Here 1");
         if (!this.propertyCompanies.length) {
           this.setFetching({ fetching: true })
           this.$http.get('oca/ppcs/full-list').then(({ data }) => {

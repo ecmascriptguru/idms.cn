@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Ppc;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 use App\Http\Requests\UserRequest;
 use App\Transformers\UserTransformer;
 use App\Http\Controllers\ApiController;
-use Illuminate\Support\Facades\Hash;
-
 use App\Models\PropertyCompany;
 use App\User;
 
@@ -34,11 +34,13 @@ class UsersController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $sort = $this->getSort();
         $order = $this->getOrder();
         $limit = $this->getLimit();
+
+        $districtId = $request->input('dct_id');
         
         $users = User::orderBy($sort, $order)
                 ->where([
