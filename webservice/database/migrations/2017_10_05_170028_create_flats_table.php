@@ -24,14 +24,14 @@ class CreateFlatsTable extends Migration
             $table->string('name', 20);
             $table->string('number', 10);
             $table->float('area');
-            $table->string('owner_1_name', 10);
-            $table->string('owner_1_document_type', 20);
-            $table->string('owner_1_document_number', 20);
-            $table->string('owner_1_phone', 20);
-            $table->string('owner_2_name', 20);
-            $table->string('owner_2_document_type', 20);
-            $table->string('owner_2_document_number', 20);
-            $table->string('owner_2_phone', 20);
+            $table->string('owner_1_name', 10)->nullable();
+            $table->string('owner_1_document_type', 20)->nullable();
+            $table->string('owner_1_document_number', 20)->nullable();
+            $table->string('owner_1_phone', 20)->nullable();
+            $table->string('owner_2_name', 20)->nullable();
+            $table->string('owner_2_document_type', 20)->nullable();
+            $table->string('owner_2_document_number', 20)->nullable();
+            $table->string('owner_2_phone', 20)->nullable();
 
             $table->timestamps();
         });

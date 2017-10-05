@@ -255,7 +255,7 @@
             <router-link tag="li" active-class="active"  :to="{ path: '/dct/buildings', query: { page: 1} }">
               <a href="#"><i class="fa fa-circle-o"></i> 楼栋档案</a>
             </router-link>
-            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/flats', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 房屋档案</a>
             </router-link>
             <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">

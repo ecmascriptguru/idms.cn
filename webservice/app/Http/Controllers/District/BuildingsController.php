@@ -48,11 +48,17 @@ class BuildingsController extends ApiController
 
     public function fullList(Request $request)
     {
-        $districtId = $request->input('district_id');
+        $user = Auth::guard('api')->user();
 
-        return $this->response(
-            $this->transform->collection(Building::where(['district_id' => $districtId])->get(), new BuildingTransformer)
-        );
+        if ($user && $user->district_id) {
+            return $this->response(
+                $this->transform->collection(Building::where(['district_id' => $user->district_id])->get(), new BuildingTransformer)
+            );
+        } else {
+            return $this->response(
+                $this->transform->collection(Building::where(['district_id' => null])->get(), new BuildingTransformer)
+            );
+        }
     }
 
     /**
