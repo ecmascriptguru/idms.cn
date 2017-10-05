@@ -68,6 +68,11 @@ Route::group([
            'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/admin/provinces/full-list', 'Admin\ProvincesController@fullList');         
+        Route::resource('/admin/provinces', 'Admin\ProvincesController', [
+            'except' => ['create', 'edit'],
+        ]);
+
         /**
          *  For Operating Company Admin
          */
