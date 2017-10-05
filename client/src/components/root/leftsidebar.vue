@@ -90,6 +90,9 @@
             <router-link tag="li" active-class="active" :to="{ path: '/admin/houseTypes', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> House Types</a>
             </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/admin/customFeeTypes', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> Custom Fee Types</a>
+            </router-link>
           </ul>
         </li>
 

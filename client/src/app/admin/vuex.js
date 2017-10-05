@@ -11,6 +11,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  CustomFeeTypes: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   OperatingCompanies: {
     list: [],
     full_list: [],
@@ -74,6 +79,17 @@ const mutations = {
       st.HouseTypes.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_CUSTOM_FEE_TYPES_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.CustomFeeTypes.list = obj.list
+    }
+    if (obj.full_list) {
+      st.CustomFeeTypes.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.CustomFeeTypes.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -89,6 +105,9 @@ const actions = {
   houseTypesSetData({ commit }, obj) {
     commit(TYPES.ADMIN_HOUSE_TYPES_SET_DATA, obj)
   },
+  customFeeTypesSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_CUSTOM_FEE_TYPES_SET_DATA, obj)
+  }
 }
 
 const module = {
