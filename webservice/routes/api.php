@@ -47,6 +47,11 @@ Route::group([
             'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/admin/customFeeTypes/full-list', 'Admin\CustomFeeTypesController@fullList');         
+        Route::resource('/admin/customFeeTypes', 'Admin\CustomFeeTypesController', [
+            'except' => ['create', 'edit'],
+        ]);
+
 
         Route::get('/admin/ops/full-list', 'Admin\OperatingCompaniesController@fullList');        
         Route::resource('/admin/ops', 'Admin\OperatingCompaniesController', [
