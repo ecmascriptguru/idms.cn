@@ -38,11 +38,15 @@
     * Fetch feeStandard when component is first mounted
     */
     mounted() {
-      this.fetch()
       this.fetchDistricts()
       this.fetchHouseTypes()
+      this.fetch()
       this.fetchCustomFeeTypes()
       this.setDistrictId()
+    },
+
+    updated() {
+      // this.setDistrictId()
     },
 
     /**
@@ -166,7 +170,7 @@
         }
       },
       fetchHouseTypes() {
-        if (!this.districts.length) {
+        if (!this.houseTypes.length) {
           this.setFetching({ fetching: true })
           this.$http.get('admin/houseTypes/full-list').then(({ data }) => {
             /**
