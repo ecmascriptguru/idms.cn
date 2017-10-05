@@ -38,6 +38,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  Cities: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
 
   }
@@ -122,6 +127,17 @@ const mutations = {
       st.Provinces.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_CITIES_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.Cities.list = obj.list
+    }
+    if (obj.full_list) {
+      st.Cities.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.Cities.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -145,7 +161,10 @@ const actions = {
   },
   provincesSetData({ commit }, obj) {
     commit(TYPES.ADMIN_PROVINCES_SET_DATA, obj)
-  }
+  },
+  citiesSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_CITIES_SET_DATA, obj)
+  },
 }
 
 const module = {

@@ -73,6 +73,11 @@ Route::group([
             'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/admin/cities/full-list', 'Admin\CitiesController@fullList');         
+        Route::resource('/admin/cities', 'Admin\CitiesController', [
+            'except' => ['create', 'edit'],
+        ]);
+
         /**
          *  For Operating Company Admin
          */

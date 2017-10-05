@@ -136,7 +136,10 @@
       },
 
       addCity(provinceId) {
-        //
+        this.$router.push({
+          name: "admin.cities.new",
+          query: { page: this.currentPage, province_id: provinceId }
+        })
       },
 
       /**

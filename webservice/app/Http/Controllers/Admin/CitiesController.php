@@ -30,7 +30,7 @@ class CitiesController extends ApiController
         $limit = $this->getLimit();
         $provinceId = $request->input('province_id');
 
-        if ($provinceId) {
+        if ($provinceId || $provinceId > 0) {
             $cities = City::orderBy($sort, $order)->where(['province_id' => $provinceId])->paginate($limit);
         } else {
             $cities = City::orderBy($sort, $order)->paginate($limit);

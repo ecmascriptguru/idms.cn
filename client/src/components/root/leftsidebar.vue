@@ -110,6 +110,9 @@
             <router-link tag="li" active-class="active" :to="{ path: '/admin/provinces', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Provinces</a>
             </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/admin/cities', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> Cities</a>
+            </router-link>
           </ul>
         </li>
 

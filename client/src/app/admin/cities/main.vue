@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'JdPpcFeeStandards',
+    name: 'JdAdminCities',
 
     /**
     * Components registered with
@@ -22,30 +22,29 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'ppcManager.feeStandards.edit',
+          name: 'admin.cities.edit',
           params: { id },
-          query: { page: this.currentPage, dctId: this.districtId } })
+          query: { page: this.currentPage, province_id: this.provinceId } })
       },
       create() {
-        this.$router.push({ name: 'ppcManager.feeStandards.new', query: { page: this.currentPage, dctId: this.districtId } })
+        this.$router.push({ name: 'admin.cities.new', query: { page: this.currentPage, province_id: this.provinceId } })
       },
       hide() {
-        this.$router.push({ name: 'ppcManager.feeStandards.index', query: { page: this.currentPage, dctId: this.districtId } })
+        this.$router.push({ name: 'admin.cities.index', query: { page: this.currentPage, province_id: this.provinceId } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['feeStandardsSetData', 'setFetching', 'districtsSetData']),
+      ...mapActions(['citiesSetData', 'provincesSetData', 'setFetching']),
 
       fetch() {
         this.fetchPaginated()
         this.fetchFullList()
-        this.setDistrictId()
       },
 
       /**
-      * Fetch a new set of feeStandards
+      * Fetch a new set of cities
       * based on the current page
       */
       fetchPaginated() {
@@ -62,12 +61,12 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`pca/feeStandards?page=${this.currentPage}&dct_id=${this.districtId}`).then(({ data }) => {
+        this.$http.get(`admin/cities?page=${this.currentPage}&province_id=${this.provinceId}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
-          * the Vuex FeeStandards module
+          * the Vuex Cities module
           */
-          this.feeStandardsSetData({
+          this.citiesSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
@@ -83,22 +82,21 @@
 
       /**
       * Differente from fetch() which always
-      * return a paginated set of feeStandards
+      * return a paginated set of cities
       * this one returns the full set, which
       * is used by other components in the app.
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('pca/feeStandards/full-list').then(({ data }) => {
+        this.$http.get('admin/cities/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
-          * the Vuex FeeStandards module
+          * the Vuex Cities module
           */
-          this.feeStandardsSetData({
+          this.citiesSetData({
             full_list: data.data,
           })
           this.setFetching({ fetching: false })
-          this.setDistrictId()
         })
       },
 
@@ -110,10 +108,10 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'ppcManager.feeStandards.index', query: { page: obj.page } })
+        this.$router.push({ name: 'admin.cities.index', query: { page: obj.page } })
 
         /**
-        * Fetch a new set of FeeStandards based on
+        * Fetch a new set of Cities based on
         * current page number. Mind the nextTick()
         * which delays a the request a fraction
         * of a second. This ensures the currentPage
@@ -123,12 +121,46 @@
       },
 
       /**
+       * Fetching Provinces to render province drop down
+       */
+      fetchProvinces() {
+        if (!this.provinces.length) {
+          this.setFetching({ fetching: true })
+          this.$http.get('admin/provinces/full-list').then(({ data }) => {
+            /**
+            * Vuex action to set full list array in
+            * the Vuex OperatingCompanies module
+            */
+            this.provincesSetData({
+              full_list: data.data,
+            })
+            this.setFetching({ fetching: false })
+            this.setProvinceId()
+          })
+        } else {
+          this.setProvinceId()
+        }
+      },
+
+      provinceChanged(event) {
+        this.$router.push({
+          name: this.$route.name,
+          query: { page: this.currentPage, province_id: event.target.value }
+        })
+        this.fetch()
+      },
+
+      setProvinceId() {
+        this.$refs.cities_province_id.value = this.$route.query.province_id || 0
+      },
+
+      /**
       * Shows a confirmation dialog
       */
       askRemove(item) {
         swal({
           title: 'Are you sure?',
-          text: `User ${item.name} will be permanently removed.`,
+          text: `City ${item.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
@@ -137,44 +169,13 @@
         }, () => this.remove(item)) // callback executed when OK is pressed
       },
 
-      fetchDistricts() {
-        if (!this.districts.length) {
-          this.setFetching({ fetching: true })
-          this.$http.get('pca/districts/full-list').then(({ data }) => {
-            /**
-            * Vuex action to set full list array in
-            * the Vuex OperatingCompanies module
-            */
-            this.districtsSetData({
-              full_list: data.data,
-            })
-            this.setFetching({ fetching: false })
-            this.setDistrictId()
-          })
-        } else {
-          this.setDistrictId()
-        }
-      },
-      
-      setDistrictId() {
-        this.$refs.feeStandards_district_selector.value = this.$route.query.dctId || 0
-      },
-
-      changeDistrict(event) {
-        this.$router.push({ 
-          name: this.$route.name,
-          query: { page: this.currentPage, dctId: event.target.value }
-        })
-        this.fetch()
-      },
-
       /**
       * Makes the HTTP requesto to the API
       */
       remove(item) {
-        this.$http.delete(`pca/feeStandards/${item.id}`).then(() => {
+        this.$http.delete(`cities/${item.id}`).then(() => {
           /**
-          * On success fetch a new set of FeeStandards
+          * On success fetch a new set of Cities
           * based on current page number
           */
           this.fetchPaginated()
@@ -188,14 +189,14 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'User removed.', 'success')
+          swal('Done!', 'City removed.', 'success')
 
           /**
           * Redirects back to the main list,
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'ppcManager.feeStandards.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'admin.cities.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -208,16 +209,6 @@
           swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
-
-      fixLayout() {
-        if (jQuery.AdminLTE.layout) {
-          jQuery.AdminLTE.layout.fix()
-        } else {
-          jQuery(document).ready(() => {
-            jQuery.AdminLTE.layout.fix()
-          })
-        }
-      },
     },
 
     /**
@@ -227,21 +218,21 @@
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.PpcManager.FeeStandards.pagination,
-        list: state => state.PpcManager.FeeStandards.list,
-        districts: state => state.PpcManager.Districts.full_list,
+        pagination: state => state.Admin.Cities.pagination,
+        list: state => state.Admin.Cities.list,
+        provinces: state => state.Admin.Provinces.full_list
       }),
-      feeStandards() {
+      cities() {
         return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
-      districtId() {
-        return this.$route.query.dctId || 0
+      provinceId() {
+        return parseInt(this.$route.query.province_id || 0)
       },
       isFormVisible() {
-        return this.$route.name === 'ppcManager.feeStandards.new' || this.$route.name === 'ppcManager.feeStandards.edit'
+        return this.$route.name === 'admin.cities.new' || this.$route.name === 'admin.cities.edit'
       },
     },
     /**
@@ -252,8 +243,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('feeStandard.created')
-      this.$bus.$off('feeStandard.updated')
+      this.$bus.$off('city.created')
+      this.$bus.$off('city.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -263,17 +254,22 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * User was created or updated, refresh the list
+      * City was created or updated, refresh the list
       */
-      this.$bus.$on('feeStandard.created', this.fetch)
-      this.$bus.$on('feeStandard.updated', this.fetch)
+      this.$bus.$on('city.created', this.fetch)
+      this.$bus.$on('city.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
       this.fetchPaginated()
-      this.fetchDistricts()
-      this.setDistrictId()
-      this.fixLayout()
+      this.fetchProvinces()
+      if (jQuery.AdminLTE.layout) {
+        jQuery.AdminLTE.layout.fix()
+      } else {
+        jQuery(document).ready(() => {
+          jQuery.AdminLTE.layout.fix()
+        })
+      }
     },
     /**
     * This hook is called every time DOM
@@ -283,8 +279,15 @@
       /**
       * start Bootstrap Tooltip
       */
-      this.setDistrictId()
-      this.fixLayout()
+      jQuery('[data-toggle="tooltip"]').tooltip()
+      if (jQuery.AdminLTE.layout) {
+        jQuery.AdminLTE.layout.fix()
+      } else {
+        jQuery(document).ready(() => {
+          jQuery.AdminLTE.layout.fix()
+        })
+      }
+      this.setProvinceId()
     },
   }
 </script>
@@ -293,7 +296,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>费用标准管理</h1>
+        <h1>City Management</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -302,7 +305,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New User">
+            title="New City">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -310,18 +313,18 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New User">
+            title="New City">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-4 col-xs-6">
-        <select ref="feeStandards_district_selector" @change.prevent="changeDistrict" class="form-control" id="feeStandards_district_selector">
+      <div class="col-sm-4 col-xs-12">
+        <select @change.prevent="provinceChanged" ref="cities_province_id" class="form-control" id="cities_province_id">
           <option value="0">全部</option>
-          <option v-for="district in districts" :value="district.id">
-            {{ district.name }}
+          <option v-for="province in provinces" :value="province.id">
+            {{ province.name }}
           </option>
         </select>
       </div>
@@ -329,31 +332,22 @@
 
     <!-- Form to create/edit will be inserted here  -->
     <!-- when navigate to /nova or /editar/{id}  -->
-    <!-- see /src/modules/feeStandards/routes.js  -->
+    <!-- see /src/modules/cities/routes.js  -->
     <transition name="fade">
       <router-view></router-view>
     </transition>
-
     <table class="table table-bordered table-striped" style="margin-bottom:0;">
       <thead>
         <tr>
           <th>ID</th>
-          <th>房屋类型</th>
-          <th>物业管理费</th>
-          <th>水　　费</th>
-          <th>电　　费</th>
-          <th>停车费</th>
-          <th>操　　作</th>
+          <th>Name</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in feeStandards">
+        <tr v-for="(item, index) in cities">
           <td width="1%" nowrap>{{ index + 1 }}</td>
-          <td>{{ item.houseType.data.name }}</td>
-          <td>{{ item.property_management_fee }}</td>
-          <td>{{ item.water_fee }}</td>
-          <td>{{ item.electricity_fee }}</td>
-          <td>{{ item.parking_fee }}</td>
+          <td>{{ item.name }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
               @click.prevent="edit(item.id)"
