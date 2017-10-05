@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\District;
+use App\Models\Flat;
 
 class Building extends Model
 {
@@ -15,5 +16,9 @@ class Building extends Model
 
     public function district() {
         return $this->belongsTo(District::class);
+    }
+
+    public function flats() {
+        return $this->hasMany(Flat::class);
     }
 }

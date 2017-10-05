@@ -300,6 +300,7 @@
           <th>ID</th>
           <th>楼栋名称</th>
           <th>楼栋编号</th>
+          <th>房屋数量</th>
           <th>操作</th>
         </tr>
       </thead>
@@ -308,6 +309,7 @@
           <td width="1%" nowrap>{{ index +1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.number }}</td>
+          <td>{{ item.count }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
               @click.prevent="addFlat(item.id)"
