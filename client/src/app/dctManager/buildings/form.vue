@@ -3,20 +3,17 @@
   import { mapActions } from 'vuex'
 
   export default {
-    name: 'JdDistrictForm',
+    name: 'JdBuildingForm',
 
     /**
     * Component's local state
     */
     data() {
       return {
-        district: {
+        building: {
           id: 0,
           name: '',
-          short_name: '',
-          contact: '',
-          phone: '',
-          address: '',
+          number: '',
         },
       }
     },
@@ -42,28 +39,16 @@
     */
     computed: {
       isEditing() {
-        return this.district.id > 0
+        return this.building.id > 0
       },
       isValid() {
         this.resetMessages()
-        if (this.district.name === '') {
-          this.setMessage({ type: 'error', message: ['Please fill district name'] })
+        if (this.building.name === '') {
+          this.setMessage({ type: 'error', message: ['Please fill building name'] })
           return false
         }
-        if (this.district.short_name === '') {
-          this.setMessage({ type: 'error', message: ['Please fill district short name'] })
-          return false
-        }
-        if (this.district.contact === '') {
-          this.setMessage({ type: 'error', message: ['Please fill district contact'] })
-          return false
-        }
-        if (this.district.phone === '') {
-          this.setMessage({ type: 'error', message: ['Please fill district phone'] })
-          return false
-        }
-        if (this.district.address === '') {
-          this.setMessage({ type: 'error', message: ['Please fill district address'] })
+        if (this.building.number === '') {
+          this.setMessage({ type: 'error', message: ['Please fill building name'] })
           return false
         }
         return true
@@ -92,14 +77,11 @@
           * Fetch the op from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`pca/districts/${id}`).then((res) => {
-            const { id: _id, name, short_name, contact, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
-            this.district.id = _id
-            this.district.name = name
-            this.district.short_name = short_name
-            this.district.contact = contact
-            this.district.phone = phone
-            this.district.address = address
+          this.$http.get(`dct/buildings/${id}`).then((res) => {
+            const { id: _id, name, number, contact, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
+            this.building.id = _id
+            this.building.name = name
+            this.building.number = number
             this.setFetching({ fetching: false })
           })
         }
@@ -122,21 +104,14 @@
         }
       },
       save() {
-        this.$http.post('pca/districts', 
-          { 
-            name: this.district.name,
-            short_name: this.district.short_name,
-            contact: this.district.contact,
-            phone: this.district.phone,
-            address: this.district.address,
-          }).then(() => {
+        this.$http.post('dct/buildings', this.building).then(() => {
           /**
           * This event will notify the world about
           * the op creation. In this case
           * the Op main component will intercept
           * the event and refresh the list.
           */
-          this.$bus.$emit('district.created')
+          this.$bus.$emit('building.created')
 
           /**
           * Hides the global spinner
@@ -146,7 +121,7 @@
           /**
           * Sets the global feedback message
           */
-          this.setMessage({ type: 'success', message: 'New operating District was created' })
+          this.setMessage({ type: 'success', message: 'Building was created' })
 
           /**
           * Resets component's state
@@ -155,14 +130,14 @@
         })
       },
       update() {
-        this.$http.put(`pca/districts/${this.district.id}`, this.district).then(() => {
+        this.$http.put(`dct/buildings/${this.building.id}`, this.building).then(() => {
           /**
           * This event will notify the world about
           * the op creation. In this case
           * the Op main component will intercept
           * the event and refresh the list.
           */
-          this.$bus.$emit('district.updated')
+          this.$bus.$emit('building.updated')
 
           /**
           * Hides the global spinner
@@ -172,16 +147,13 @@
           /**
           * Sets the global feedback message
           */
-          this.setMessage({ type: 'success', message: 'District was updated' })
+          this.setMessage({ type: 'success', message: 'Building was updated' })
         })
       },
       reset() {
-        this.district.id = 0
-        this.district.name = ''
-        this.district.short_name = ''
-        this.district.contact = ''
-        this.district.phone = ''
-        this.district.address = ''
+        this.building.id = 0
+        this.building.name = ''
+        this.building.number = ''
       },
     },
   }
@@ -190,25 +162,13 @@
 <template>
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
-      <label for="name" class="control-label">District Name</label>
-      <input ref="firstInput" type="text" id="name" class="form-control" v-model="district.name">
+      <label for="name" class="control-label">Building Name</label>
+      <input ref="firstInput" type="text" id="name" class="form-control" v-model="building.name">
     </div>
     <div class="form-group">
-      <label for="short_name" class="control-label">Short Name</label>
-      <input type="text" id="short_name" class="form-control" v-model="district.short_name">
+      <label for="number" class="control-label">Building Number</label>
+      <input type="text" id="number" class="form-control" v-model="building.number">
     </div>
-    <div class="form-group">
-      <label for="contact" class="control-label">Contact</label>
-      <input type="text" id="contact" class="form-control" v-model="district.contact">
-    </div>
-    <div class="form-group">
-      <label for="phone" class="control-label">Phone</label>
-      <input type="text" id="phone" class="form-control" v-model="district.phone">
-    </div>
-    <div class="form-group">
-      <label for="address" class="control-label">Address</label>
-      <input type="text" id="address" class="form-control" v-model="district.address">
-    </div>
-    <button class="btn btn-primary btn-xs" type="submit">Save</button>
+    <button class="btn btn-primary" type="submit">保存</button>
   </form>
 </template>

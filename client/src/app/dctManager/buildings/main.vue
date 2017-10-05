@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'CcDistricts',
+    name: 'CcDctBuildings',
 
     /**
     * Components registered with
@@ -22,21 +22,21 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'ppcManager.districts.edit',
+          name: 'dctManager.buildings.edit',
           params: { id },
           query: { page: this.currentPage } })
       },
       create() {
-        this.$router.push({ name: 'ppcManager.districts.new', query: { page: this.currentPage } })
+        this.$router.push({ name: 'dctManager.buildings.new', query: { page: this.currentPage } })
       },
       hide() {
-        this.$router.push({ name: 'ppcManager.districts.index', query: { page: this.currentPage } })
+        this.$router.push({ name: 'dctManager.buildings.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['districtsSetData', 'setFetching']),
+      ...mapActions(['buildingsSetData', 'setFetching']),
 
       fetch() {
         this.fetchPaginated()
@@ -44,12 +44,12 @@
       },
 
       /**
-      * Fetch a new set of districts
+      * Fetch a new set of buildings
       * based on the current page
       */
       fetchPaginated() {
         /**
-        * Vuex action to set fetching districts
+        * Vuex action to set fetching buildings
         * to true, thus showing the spinner
         * that is part of navbar.vue
         */
@@ -61,18 +61,18 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`pca/districts?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`dct/buildings?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
           * the Vuex OpratingCompany module
           */
-          this.districtsSetData({
+          this.buildingsSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
 
           /**
-          * Vuex action to set fetching districty
+          * Vuex action to set fetching buildingy
           * to false, thus hiding the spinner
           * that is part of navbar.vue
           */
@@ -82,18 +82,18 @@
 
       /**
       * Differente from fetch() which always
-      * return a paginated set of districts
+      * return a paginated set of buildings
       * this one returns the full set, which
       * is used by other components in the app.
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('pca/districts/full-list').then(({ data }) => {
+        this.$http.get('dct/buildings/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
-          * the Vuex District module
+          * the Vuex Building module
           */
-          this.districtsSetData({
+          this.buildingsSetData({
             full_list: data.data,
           })
           this.setFetching({ fetching: false })
@@ -108,14 +108,14 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'ppcManager.districts.index', query: { page: obj.page } })
+        this.$router.push({ name: 'dctManager.buildings.index', query: { page: obj.page } })
 
         /**
-        * Fetch a new set of District based on
+        * Fetch a new set of Building based on
         * current page number. Mind the nextTick()
         * which delays a the request a fraction
         * of a second. This ensures the currentPage
-        * district is set before making the request.
+        * building is set before making the request.
         */
         Vue.nextTick(() => this.fetchPaginated())
       },
@@ -126,7 +126,7 @@
       askRemove(item) {
         swal({
           title: 'Are you sure?',
-          text: `District ${item.name} will be permanently removed.`,
+          text: `Building ${item.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
@@ -139,9 +139,9 @@
       * Makes the HTTP requesto to the API
       */
       remove(item) {
-        this.$http.delete(`pca/districts/${item.id}`).then(() => {
+        this.$http.delete(`dct/buildings/${item.id}`).then(() => {
           /**
-          * On success fetch a new set of Districts
+          * On success fetch a new set of Buildings
           * based on current page number
           */
           this.fetchPaginated()
@@ -155,14 +155,14 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'District removed.', 'success')
+          swal('Done!', 'Building removed.', 'success')
 
           /**
           * Redirects back to the main list,
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'ppcManager.districts.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'dctManager.buildings.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -179,22 +179,22 @@
 
     /**
     * mapState will bring indicated Vuex
-    * state districts to the scope of this component.
+    * state buildings to the scope of this component.
     */
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.PpcManager.Districts.pagination,
-        list: state => state.PpcManager.Districts.list,
+        pagination: state => state.DctManager.Buildings.pagination,
+        list: state => state.DctManager.Buildings.list,
       }),
-      districts() {
+      buildings() {
         return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
       isFormVisible() {
-        return this.$route.name === 'ppcManager.districts.new' || this.$route.name === 'ppcManager.districts.edit'
+        return this.$route.name === 'dctManager.buildings.new' || this.$route.name === 'dctManager.buildings.edit'
       },
     },
     /**
@@ -205,8 +205,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('district.created')
-      this.$bus.$off('district.updated')
+      this.$bus.$off('building.created')
+      this.$bus.$off('building.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -216,10 +216,10 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * District was created or updated, refresh the list
+      * Building was created or updated, refresh the list
       */
-      this.$bus.$on('district.created', this.fetch)
-      this.$bus.$on('district.updated', this.fetch)
+      this.$bus.$on('building.created', this.fetch)
+      this.$bus.$on('building.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
@@ -256,7 +256,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>物业公司管理</h1>
+        <h1>楼栋管理</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -265,7 +265,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New District">
+            title="New Building">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -273,7 +273,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New District">
+            title="New Building">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -291,23 +291,16 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
-          <th>Short Name</th>
-          <th>Contact</th>
-          <th>Address</th>
-          <th>Phone</th>
-          <th colspan="2">Users</th>
+          <th>楼栋名称</th>
+          <th>楼栋编号</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in districts">
+        <tr v-for="(item, index) in buildings">
           <td width="1%" nowrap>{{ index +1 }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.short_name }}</td>
-          <td>{{ item.contact }}</td>
-          <td>{{ item.address }}</td>
-          <td>{{ item.phone }}</td>
-          <td>{{ item.count }}</td>
+          <td>{{ item.number }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
               @click.prevent="edit(item.id)"

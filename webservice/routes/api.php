@@ -126,5 +126,13 @@ Route::group([
         Route::resource('/pca/feeStandards', 'Ppc\FeeStandardsController', [
            'except' => ['create', 'edit'],
         ]);
+
+        /**
+         *  For District Employee
+         */
+        Route::get('/dct/buildings/full-list', 'District\BuildingsController@fullList');        
+        Route::resource('/dct/buildings', 'District\BuildingsController', [
+            'except' => ['create', 'edit'],
+        ]);
     });
 });
