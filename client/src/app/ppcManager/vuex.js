@@ -13,6 +13,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  FeeStandards: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
 
   }
@@ -42,6 +47,17 @@ const mutations = {
       st.Users.pagination = obj.pagination
     }
   },
+  [TYPES.PPC_FEE_STANDARDS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.FeeStandards.list = obj.list
+    }
+    if (obj.full_list) {
+      st.FeeStandards.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.FeeStandards.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -50,6 +66,9 @@ const actions = {
   },
   usersSetData({ commit }, obj) {
     commit(TYPES.PPC_USERS_SET_DATA, obj)
+  },
+  feeStandardsSetData({ commit }, obj) {
+    commit(TYPES.PPC_FEE_STANDARDS_SET_DATA, obj)
   },
 }
 

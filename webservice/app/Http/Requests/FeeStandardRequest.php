@@ -33,15 +33,6 @@ class FeeStandardRequest extends FormRequest
             'gas_fee' => 'required',
             'heating_fee' => 'required',
             'internet_fee' => 'required',
-            'custom_fee_1_type_id' => 'required',
-            'custom_fee_1_name' => 'required',
-            'custom_fee_1_rate' => 'required',
-            'custom_fee_2_type_id' => 'required',
-            'custom_fee_2_name' => 'required',
-            'custom_fee_2_rate' => 'required',
-            'custom_fee_3_type_id' => 'required',
-            'custom_fee_3_name' => 'required',
-            'custom_fee_3_rate' => 'required',
         ];
     }
 }

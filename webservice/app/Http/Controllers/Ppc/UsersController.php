@@ -42,11 +42,19 @@ class UsersController extends ApiController
 
         $districtId = $request->input('dct_id');
         
-        $users = User::orderBy($sort, $order)
+        if ($districtId) {
+            $users = User::orderBy($sort, $order)
+                ->where([
+                    'role_id' => 4,
+                    'district_id' => $districtId,
+                ])->paginate($limit);
+        } else {
+            $users = User::orderBy($sort, $order)
                 ->where([
                     'role_id' => 4,
                     'property_company_id' => $this->getPropertyCompanyId()
                 ])->paginate($limit);
+        }
 
         if ($this->isPropertyCompanyAdmin()) {
             return $this->response(
@@ -60,14 +68,25 @@ class UsersController extends ApiController
         }
     }
 
-    public function fullList()
+    public function fullList(Request $request)
     {
-        return $this->response(
-            $this->transform->collection(User::where([
-                'role_id' => 3,
-                'property_company_id' => $this->getPropertyCompanyId()
-            ]), new UserTransformer)
-        );
+        $districtId = $request->input('dct_id');
+
+        if ($districtId) {
+            return $this->response(
+                $this->transform->collection(User::where([
+                    'role_id' => 3,
+                    'district_id' => $districtId,
+                ]), new UserTransformer)
+            );
+        } else {
+            return $this->response(
+                $this->transform->collection(User::where([
+                    'role_id' => 3,
+                    'property_company_id' => $this->getPropertyCompanyId()
+                ]), new UserTransformer)
+            );
+        }
     }
 
     /**

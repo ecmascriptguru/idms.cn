@@ -198,7 +198,7 @@
           </ul>
         </li>
 
-        <router-link tag="li" active-class="active" :to="{ path: '/ppc/costs', query: { page: 1} }">
+        <router-link tag="li" active-class="active" :to="{ path: '/ppc/feeStandards', query: { page: 1} }">
           <a href="#">
             <i class="glyphicon glyphicon-home"></i> <span>费用标准</span>
           </a>

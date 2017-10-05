@@ -106,5 +106,10 @@ Route::group([
         Route::resource('/pca/users', 'Ppc\UsersController', [
            'except' => ['create', 'edit'],
         ]);
+
+        Route::get('/pca/feeStandards/full-list', 'Ppc\FeeStandardsController@fullList');        
+        Route::resource('/pca/feeStandards', 'Ppc\FeeStandardsController', [
+           'except' => ['create', 'edit'],
+        ]);
     });
 });
