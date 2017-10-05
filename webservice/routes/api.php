@@ -134,5 +134,10 @@ Route::group([
         Route::resource('/dct/buildings', 'District\BuildingsController', [
             'except' => ['create', 'edit'],
         ]);
+
+        Route::get('/dct/flats/full-list', 'District\FlatsController@fullList');        
+        Route::resource('/dct/flats', 'District\FlatsController', [
+            'except' => ['create', 'edit'],
+        ]);
     });
 });
