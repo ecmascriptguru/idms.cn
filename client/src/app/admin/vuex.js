@@ -28,6 +28,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  ParkingLots: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
 
   }
@@ -90,6 +95,17 @@ const mutations = {
       st.CustomFeeTypes.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_PARKING_LOTS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.ParkingLots.list = obj.list
+    }
+    if (obj.full_list) {
+      st.ParkingLots.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.ParkingLots.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -107,7 +123,10 @@ const actions = {
   },
   customFeeTypesSetData({ commit }, obj) {
     commit(TYPES.ADMIN_CUSTOM_FEE_TYPES_SET_DATA, obj)
-  }
+  },
+  parkingLotsSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_PARKING_LOTS_SET_DATA, obj)
+  },
 }
 
 const module = {

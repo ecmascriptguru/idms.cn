@@ -93,6 +93,9 @@
             <router-link tag="li" active-class="active" :to="{ path: '/admin/customFeeTypes', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> Custom Fee Types</a>
             </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/admin/parkingLots', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> ParkingLots</a>
+            </router-link>
           </ul>
         </li>
 
