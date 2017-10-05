@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OperatingCompany;
 use App\Models\PropertyCompany;
+use App\Models\ParkingLot;
 use App\Models\Role;
 use App\User;
 
@@ -19,7 +20,8 @@ class District extends Model
         'city',
         'address',
         'phone',
-        'contact'
+        'contact',
+        'parking_lot_id',
     ];
 
     public function users()
@@ -34,5 +36,9 @@ class District extends Model
 
     public function propertyCompany() {
         return $this->belongsTo(PropertyCompany::class);
+    }
+
+    public function parkingLot() {
+        return $this->belongsTo(ParkingLot::class);
     }
 }

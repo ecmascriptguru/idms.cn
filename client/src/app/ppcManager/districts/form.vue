@@ -1,6 +1,6 @@
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     name: 'JdDistrictForm',
@@ -18,6 +18,7 @@
           city: '',
           contact: '',
           phone: '',
+          parking_lot_id: '',
           address: '',
         },
       }
@@ -27,7 +28,13 @@
     * Fetch op when component is first mounted
     */
     mounted() {
+      this.fetchParkingLots()
       this.fetch()
+      this.setParkingLotId()
+    },
+
+    updated() {
+      this.setParkingLotId()
     },
 
     /**
@@ -43,6 +50,9 @@
     * is editing instead of creating.
     */
     computed: {
+      ...mapState({
+        parkingLots: state => state.Admin.ParkingLots.full_list
+      }),
       isEditing() {
         return this.district.id > 0
       },
@@ -73,7 +83,7 @@
     },
 
     methods: {
-      ...mapActions(['setFetching', 'resetMessages', 'setMessage']),
+      ...mapActions(['parkingLotsSetData', 'setFetching', 'resetMessages', 'setMessage']),
 
       /**
       * If there's an ID in the route params
@@ -95,7 +105,7 @@
           */
           this.setFetching({ fetching: true })
           this.$http.get(`pca/districts/${id}`).then((res) => {
-            const { id: _id, name, province, city, short_name, contact, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
+            const { id: _id, name, province, city, short_name, contact, phone, address, parking_lot_id } = res.data.data // http://wesbos.com/destructuring-renaming/
             this.district.id = _id
             this.district.name = name
             this.district.province = province
@@ -104,6 +114,7 @@
             this.district.contact = contact
             this.district.phone = phone
             this.district.address = address
+            this.district.parking_lot_id = parking_lot_id
             this.setFetching({ fetching: false })
           })
         }
@@ -125,6 +136,27 @@
           }
         }
       },
+      setParkingLotId() {
+        $("#parking_lot_id").val(this.district.parking_lot_id)
+      },
+      fetchParkingLots() {
+        if (!this.parkingLots.length) {
+          this.setFetching({ fetching: true })
+          this.$http.get('admin/parkingLots/full-list').then(({ data }) => {
+            /**
+            * Vuex action to set full list array in
+            * the Vuex OperatingCompanies module
+            */
+            this.parkingLotsSetData({
+              full_list: data.data,
+            })
+            this.setFetching({ fetching: false })
+            this.setParkingLotId()
+          })
+        } else {
+          this.setParkingLotId()
+        }
+      },
       save() {
         this.$http.post('pca/districts', 
           { 
@@ -134,6 +166,7 @@
             province: this.district.province,
             city: this.district.city,
             phone: this.district.phone,
+            parking_lot_id: this.district.parking_lot_id,
             address: this.district.address,
           }).then(() => {
           /**
@@ -190,6 +223,7 @@
         this.district.contact = ''
         this.district.phone = ''
         this.district.address = ''
+        this.parking_lot_id = ''
       },
     },
   }
@@ -224,6 +258,14 @@
     <div class="form-group">
       <label for="address" class="control-label">地址</label>
       <input type="text" id="address" class="form-control" v-model="district.address">
+    </div>
+    <div class="form-group">
+      <label for="parking_lot_id" class="control-label">停车场</label>
+      <select id="parking_lot_id" name="parking_lot_id" class="form-control" v-model="district.parking_lot_id">
+        <option v-for="parkingLot in parkingLots" :value="parkingLot.id">
+          {{ parkingLot.name }}
+        </option>
+      </select>
     </div>
     <button class="btn btn-primary" type="submit">保存</button>
   </form>

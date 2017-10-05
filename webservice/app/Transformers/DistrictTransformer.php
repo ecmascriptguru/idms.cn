@@ -8,6 +8,24 @@ use League\Fractal\TransformerAbstract;
 class DistrictTransformer extends TransformerAbstract
 {
     /**
+     * List of resources possible to include.
+     *
+     * @var array
+     */
+    //  protected $availableIncludes = [
+    //     'parkingLot',
+    // ];
+
+    /**
+     * List of default includes.
+     *
+     * @var array
+     */
+    // protected $defaultIncludes = [
+    //     'parkingLot',
+    // ];
+
+    /**
      * Transform a operating company.
      *
      * @param  District $district
@@ -28,8 +46,22 @@ class DistrictTransformer extends TransformerAbstract
             'operatingCompany' => $district->operatingCompany,
             'propertyCompany' => $district->propertyCompany,
             'count' => count($district->users()),
+            'parking_lot_id' => $district->parking_lot_id,
+            'parkingLot' => $district->parkingLot,
             'created_at' => $district->created_at->toIso8601String(),
             'updated_at' => $district->updated_at->toIso8601String(),
         ];
     }
+
+    /**
+     * Include parkingLot.
+     *
+     * @param  District $district
+     *
+     * @return \League\Fractal\Resource\Item
+     */
+    // public function includeParkingLot(District $district)
+    // {
+    //     return $this->item($district->parkingLot, new ParkingLotTransformer);
+    // }
 }
