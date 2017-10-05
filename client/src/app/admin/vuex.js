@@ -33,6 +33,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  Provinces: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
 
   }
@@ -106,6 +111,17 @@ const mutations = {
       st.ParkingLots.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_PROVINCES_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.Provinces.list = obj.list
+    }
+    if (obj.full_list) {
+      st.Provinces.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.Provinces.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -127,6 +143,9 @@ const actions = {
   parkingLotsSetData({ commit }, obj) {
     commit(TYPES.ADMIN_PARKING_LOTS_SET_DATA, obj)
   },
+  provincesSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_PROVINCES_SET_DATA, obj)
+  }
 }
 
 const module = {

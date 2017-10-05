@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'JdAdminParkingLots',
+    name: 'JdAdminProvinces',
 
     /**
     * Components registered with
@@ -22,21 +22,21 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'admin.parkingLots.edit',
+          name: 'admin.provinces.edit',
           params: { id },
           query: { page: this.currentPage } })
       },
       create() {
-        this.$router.push({ name: 'admin.parkingLots.new', query: { page: this.currentPage } })
+        this.$router.push({ name: 'admin.provinces.new', query: { page: this.currentPage } })
       },
       hide() {
-        this.$router.push({ name: 'admin.parkingLots.index', query: { page: this.currentPage } })
+        this.$router.push({ name: 'admin.provinces.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['parkingLotsSetData', 'setFetching']),
+      ...mapActions(['provincesSetData', 'setFetching']),
 
       fetch() {
         this.fetchPaginated()
@@ -44,7 +44,7 @@
       },
 
       /**
-      * Fetch a new set of parkingLots
+      * Fetch a new set of provinces
       * based on the current page
       */
       fetchPaginated() {
@@ -61,12 +61,12 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`admin/parkingLots?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`admin/provinces?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
-          * the Vuex ParkingLots module
+          * the Vuex Provinces module
           */
-          this.parkingLotsSetData({
+          this.provincesSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
@@ -82,18 +82,18 @@
 
       /**
       * Differente from fetch() which always
-      * return a paginated set of parkingLots
+      * return a paginated set of provinces
       * this one returns the full set, which
       * is used by other components in the app.
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('admin/parkingLots/full-list').then(({ data }) => {
+        this.$http.get('admin/provinces/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
-          * the Vuex ParkingLots module
+          * the Vuex Provinces module
           */
-          this.parkingLotsSetData({
+          this.provincesSetData({
             full_list: data.data,
           })
           this.setFetching({ fetching: false })
@@ -108,10 +108,10 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'admin.parkingLots.index', query: { page: obj.page } })
+        this.$router.push({ name: 'admin.provinces.index', query: { page: obj.page } })
 
         /**
-        * Fetch a new set of ParkingLots based on
+        * Fetch a new set of Provinces based on
         * current page number. Mind the nextTick()
         * which delays a the request a fraction
         * of a second. This ensures the currentPage
@@ -126,7 +126,7 @@
       askRemove(item) {
         swal({
           title: 'Are you sure?',
-          text: `Parking Lot ${item.name} will be permanently removed.`,
+          text: `Province ${item.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
@@ -135,13 +135,17 @@
         }, () => this.remove(item)) // callback executed when OK is pressed
       },
 
+      addCity(provinceId) {
+        //
+      },
+
       /**
       * Makes the HTTP requesto to the API
       */
       remove(item) {
-        this.$http.delete(`parkingLots/${item.id}`).then(() => {
+        this.$http.delete(`provinces/${item.id}`).then(() => {
           /**
-          * On success fetch a new set of ParkingLots
+          * On success fetch a new set of Provinces
           * based on current page number
           */
           this.fetchPaginated()
@@ -155,14 +159,14 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'Parking Lot removed.', 'success')
+          swal('Done!', 'Province removed.', 'success')
 
           /**
           * Redirects back to the main list,
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'admin.parkingLots.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'admin.provinces.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -184,17 +188,17 @@
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.Admin.ParkingLots.pagination,
-        list: state => state.Admin.ParkingLots.list,
+        pagination: state => state.Admin.Provinces.pagination,
+        list: state => state.Admin.Provinces.list,
       }),
-      parkingLots() {
+      provinces() {
         return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
       isFormVisible() {
-        return this.$route.name === 'admin.parkingLots.new' || this.$route.name === 'admin.parkingLots.edit'
+        return this.$route.name === 'admin.provinces.new' || this.$route.name === 'admin.provinces.edit'
       },
     },
     /**
@@ -205,8 +209,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('parkingLot.created')
-      this.$bus.$off('parkingLot.updated')
+      this.$bus.$off('province.created')
+      this.$bus.$off('province.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -216,10 +220,10 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * ParkingLot was created or updated, refresh the list
+      * Province was created or updated, refresh the list
       */
-      this.$bus.$on('parkingLot.created', this.fetch)
-      this.$bus.$on('parkingLot.updated', this.fetch)
+      this.$bus.$on('province.created', this.fetch)
+      this.$bus.$on('province.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
@@ -256,7 +260,7 @@
   <div class="content-wrapper">
     <div class="">
       <div class="col-md-6">
-        <h1>ParkingLot Management</h1>
+        <h1>Province Management</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -265,7 +269,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New ParkingLot">
+            title="New Province">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -273,7 +277,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New ParkingLot">
+            title="New Province">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -282,7 +286,7 @@
 
     <!-- Form to create/edit will be inserted here  -->
     <!-- when navigate to /nova or /editar/{id}  -->
-    <!-- see /src/modules/parkingLots/routes.js  -->
+    <!-- see /src/modules/provinces/routes.js  -->
     <transition name="fade">
       <router-view></router-view>
     </transition>
@@ -292,20 +296,22 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
-          <th>Address</th>
-          <th>Contact</th>
-          <th>Phone</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in parkingLots">
+        <tr v-for="(item, index) in provinces">
           <td width="1%" nowrap>{{ index + 1 }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.address }}</td>
-          <td>{{ item.contact }}</td>
-          <td>{{ item.phone }}</td>
           <td width="1%" nowrap="nowrap">
+            <a href="#"
+              @click.prevent="addCity(item.id)"
+              class="btn btn-xs btn-default"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Add City">
+              <i class="fa fa-fw fa-plus"></i>
+            </a>
             <a href="#"
               @click.prevent="edit(item.id)"
               class="btn btn-xs btn-default"
