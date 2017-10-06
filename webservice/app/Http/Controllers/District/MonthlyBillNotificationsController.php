@@ -140,22 +140,23 @@ class MonthlyBillNotificationsController extends ApiController
      */
     public function update(MonthlyBillNotificationRequest $request, $id)
     {
-        $notification = MonthlyBillNotification::find($id);
+        // $notification = MonthlyBillNotification::find($id);
 
-        if (! $notification) {
-            return $this->responseWithNotFound('MonthlyBillNotification not found');
-        }
+        // if (! $notification) {
+        //     return $this->responseWithNotFound('MonthlyBillNotification not found');
+        // }
 
-        if ($this->isDistrictAdmin()) {
-            $notification->is_released = $request->get('is_released');
-            $notification->save();
+        // if ($this->isDistrictAdmin()) {
+        //     $notification->is_released = $request->get('is_released');
+        //     $notification->save();
 
-            return $this->response(['result' => 'success']);
-        }
-        else 
-        {
-            return $this->response(['result' => 'failure']);
-        }
+        //     return $this->response(['result' => 'success']);
+        // }
+        // else 
+        // {
+        //     return $this->response(['result' => 'failure']);
+        // }
+        return $this->response(['result' => 'failure']);
     }
 
     /**
@@ -166,20 +167,35 @@ class MonthlyBillNotificationsController extends ApiController
      */
     public function destroy($id)
     {
-        $notification = MonthlyBillNotification::find($id);
+        // $notification = MonthlyBillNotification::find($id);
 
-        if (! $notification) {
-            return $this->responseWithNotFound('MonthlyBillNotification not found');
-        }
+        // if (! $notification) {
+        //     return $this->responseWithNotFound('MonthlyBillNotification not found');
+        // }
 
-        if ($this->isDistrictAdmin()) 
-        {
-            $notification->delete();
+        // if ($this->isDistrictAdmin()) 
+        // {
+        //     $notification->delete();
             
+        //     return $this->response(['result' => 'success']);
+        // }
+        // else{
+        //     return $this->response(['result' => 'failure']);
+        // }
+        return $this->response(['result' => 'failure']);
+    }
+
+
+    public function release(Request $request) {
+        $notification = MonthlyBillNotification::find($request->get('id'));
+
+        if ($notification) {
+            $notification->is_released = true;
+            $notification->save();
+
             return $this->response(['result' => 'success']);
-        }
-        else{
-            return $this->response(['result' => 'failure']);
+        } else {
+            return $this->responseWithNotFound('MonthlyBillNotification not found');
         }
     }
 }

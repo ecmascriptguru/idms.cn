@@ -24,11 +24,6 @@ export default [
         path: 'create',
         component: Form,
         meta,
-      }, {
-        name: 'dctManager.billTerms.edit',
-        path: ':id/edit',
-        component: Form,
-        meta,
       },
     ],
   },

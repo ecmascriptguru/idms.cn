@@ -20,10 +20,9 @@
     },
 
     methods: {
-      edit(id) {
+      editBills(item) {
         this.$router.push({
           name: 'dctManager.billTerms.edit',
-          params: { id },
           query: { page: this.currentPage } })
       },
       create() {
@@ -130,23 +129,23 @@
       /**
       * Shows a confirmation dialog
       */
-      askRemove(item) {
+      askRelease(item) {
         swal({
           title: 'Are you sure?',
-          text: `BillTerm ${item.name} will be permanently removed.`,
+          text: `BillTerm for ${item.date} will be released.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
           confirmButtonText: 'Yes, do it!',
           closeOnConfirm: false,
-        }, () => this.remove(item)) // callback executed when OK is pressed
+        }, () => this.release(item)) // callback executed when OK is pressed
       },
 
       /**
       * Makes the HTTP requesto to the API
       */
-      remove(item) {
-        this.$http.delete(`dct/billTerms/${item.id}`).then(() => {
+      release(item) {
+        this.$http.post(`dct/billTerms/release`, {id: item.id}).then(() => {
           /**
           * On success fetch a new set of BillTerms
           * based on current page number
@@ -162,7 +161,7 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'BillTerm removed.', 'success')
+          swal('Done!', 'BillTerm Released.', 'success')
 
           /**
           * Redirects back to the main list,
@@ -201,7 +200,7 @@
         return parseInt(this.$route.query.page, 10)
       },
       isFormVisible() {
-        return this.$route.name === 'dctManager.billTerms.new' || this.$route.name === 'dctManager.billTerms.edit'
+        return this.$route.name === 'dctManager.billTerms.new'
       },
     },
     /**
@@ -313,20 +312,27 @@
           <td v-else>未发布</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
-              @click.prevent="edit(item.id)"
-              class="btn btn-xs btn-default"
+              @click.prevent="editBills(item)"
+              class="btn btn-xs btn-primary"
               data-toggle="tooltip"
               data-placement="top"
-              title="Edit">
+              title="Check Bills">
               <i class="fa fa-fw fa-pencil"></i>
             </a>
-            <a href="#"
-              @click="askRemove(item)"
+            <a v-if="item.is_released" href="#"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
-              title="Remove">
-              <i class="fa fa-fw fa-times"></i>
+              disabled>
+              <i class="fa fa-fw fa-check"></i>
+            </a>
+            <a v-else href="#"
+              @click="askRelease(item)"
+              class="btn btn-xs btn-primary"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Release">
+              <i class="fa fa-fw fa-check"></i>
             </a>
           </td>
         </tr>

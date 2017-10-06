@@ -37,22 +37,22 @@ Route::group([
          *  Created by Alex
          *  For administrator
          */
-        Route::get('/admin/roles/full-list', 'Admin\RolesController@fullList');         
+        Route::get('/admin/roles/full-list', 'Admin\RolesController@fullList');
         Route::resource('/admin/roles', 'Admin\RolesController', [
             'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/admin/parkingLots/full-list', 'Admin\ParkingLotsController@fullList');         
+        Route::get('/admin/parkingLots/full-list', 'Admin\ParkingLotsController@fullList');
         Route::resource('/admin/parkingLots', 'Admin\ParkingLotsController', [
             'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/admin/houseTypes/full-list', 'Admin\HouseTypesController@fullList');         
+        Route::get('/admin/houseTypes/full-list', 'Admin\HouseTypesController@fullList');
         Route::resource('/admin/houseTypes', 'Admin\HouseTypesController', [
             'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/admin/customFeeTypes/full-list', 'Admin\CustomFeeTypesController@fullList');         
+        Route::get('/admin/customFeeTypes/full-list', 'Admin\CustomFeeTypesController@fullList');
         Route::resource('/admin/customFeeTypes', 'Admin\CustomFeeTypesController', [
             'except' => ['create', 'edit'],
         ]);
@@ -68,12 +68,12 @@ Route::group([
            'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/admin/provinces/full-list', 'Admin\ProvincesController@fullList');         
+        Route::get('/admin/provinces/full-list', 'Admin\ProvincesController@fullList');
         Route::resource('/admin/provinces', 'Admin\ProvincesController', [
             'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/admin/cities/full-list', 'Admin\CitiesController@fullList');         
+        Route::get('/admin/cities/full-list', 'Admin\CitiesController@fullList');
         Route::resource('/admin/cities', 'Admin\CitiesController', [
             'except' => ['create', 'edit'],
         ]);
@@ -142,6 +142,7 @@ Route::group([
         ]);
 
         Route::get('/dct/billTerms/full-list', 'District\MonthlyBillNotificationsController@fullList');        
+        Route::post('/dct/billTerms/release', 'District\MonthlyBillNotificationsController@release');        
         Route::resource('/dct/billTerms', 'District\MonthlyBillNotificationsController', [
             'except' => ['create', 'edit'],
         ]);

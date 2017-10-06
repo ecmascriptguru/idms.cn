@@ -77,6 +77,9 @@
         }
         return true
       },
+      currentPage() {
+        return parseInt(this.$route.query.page, 10)
+      },
     },
 
     methods: {
@@ -156,7 +159,11 @@
           /**
           * Resets component's state
           */
-          this.reset()
+          // this.reset()
+          this.$router.push({
+            name: 'dctManager.billTerms.index',
+            query: { page: this.currentPage }
+          })
         })
       },
       update() {
