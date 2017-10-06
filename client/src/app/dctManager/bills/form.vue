@@ -373,7 +373,8 @@
         <div class="row">
           <div class="col-xs-12">
             <a class="btn btn-default pull-left" @click="hide">返回</a>
-            <button ref="firstInput" class="btn btn-primary pull-right" type="submit">保存</button>
+            <button v-if="bill.is_paid" class="btn btn-primary pull-right" ref="firstInput" disabled>保存</button>
+            <button v-else ref="firstInput" class="btn btn-primary pull-right" type="submit">保存</button>
           </div>
         </div>
       </div>

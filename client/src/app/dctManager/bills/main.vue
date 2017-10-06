@@ -205,23 +205,33 @@
       /**
       * Shows a confirmation dialog
       */
-      askRelease(item) {
+      askPay(item) {
         swal({
           title: 'Are you sure?',
-          text: `Bill for ${item.date} will be released.`,
+          text: `Bill for ${item.date} will be marked as Paid.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
           confirmButtonText: 'Yes, do it!',
           closeOnConfirm: false,
-        }, () => this.release(item)) // callback executed when OK is pressed
+        }, () => this.pay(item)) // callback executed when OK is pressed
+      },
+
+      fixLayout() {
+        if (jQuery.AdminLTE.layout) {
+          jQuery.AdminLTE.layout.fix()
+        } else {
+          jQuery(document).ready(() => {
+            jQuery.AdminLTE.layout.fix()
+          })
+        }
       },
 
       /**
       * Makes the HTTP requesto to the API
       */
-      release(item) {
-        this.$http.post(`dct/bills/release`, {id: item.id}).then(() => {
+      pay(item) {
+        this.$http.post(`dct/bills/pay`, {id: item.id}).then(() => {
           /**
           * On success fetch a new set of Bills
           * based on current page number
@@ -237,7 +247,7 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'Bill Released.', 'success')
+          swal('Done!', 'Bill paid.', 'success')
 
           /**
           * Redirects back to the main list,
@@ -325,13 +335,7 @@
       */
       this.fetchBuildings()
       this.fetchPaginated()
-      if (jQuery.AdminLTE.layout) {
-        jQuery.AdminLTE.layout.fix()
-      } else {
-        jQuery(document).ready(() => {
-          jQuery.AdminLTE.layout.fix()
-        })
-      }
+      this.fixLayout()
     },
     /**
     * This hook is called every time DOM
@@ -342,13 +346,7 @@
       * start Bootstrap Tooltip
       */
       jQuery('[data-toggle="tooltip"]').tooltip();
-      if (jQuery.AdminLTE.layout) {
-        jQuery.AdminLTE.layout.fix()
-      } else {
-        jQuery(document).ready(() => {
-          jQuery.AdminLTE.layout.fix()
-        })
-      }
+      this.fixLayout()
     },
   }
 </script>
@@ -413,7 +411,7 @@
                 title="Check Bills">
                 <i class="fa fa-fw fa-pencil"></i>修改
               </a>
-              <a v-if="item.is_released" href="#"
+              <a v-if="item.is_paid" href="#"
                 class="btn btn-xs btn-default"
                 data-toggle="tooltip"
                 data-placement="top"
@@ -421,11 +419,11 @@
                 <i class="fa fa-fw fa-check"></i>缴费
               </a>
               <a v-else href="#"
-                @click="askRelease(item)"
+                @click="askPay(item)"
                 class="btn btn-xs btn-primary"
                 data-toggle="tooltip"
                 data-placement="top"
-                title="Release">
+                title="Mark as Paid">
                 <i class="fa fa-fw fa-check"></i>缴费
               </a>
             </td>
