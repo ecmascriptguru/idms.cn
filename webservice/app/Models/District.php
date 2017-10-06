@@ -7,6 +7,8 @@ use App\Models\OperatingCompany;
 use App\Models\PropertyCompany;
 use App\Models\ParkingLot;
 use App\Models\Role;
+use App\Models\Building;
+use App\Models\Flat;
 use App\User;
 
 class District extends Model
@@ -41,5 +43,13 @@ class District extends Model
 
     public function parkingLot() {
         return $this->belongsTo(ParkingLot::class);
+    }
+
+    public function buildings() {
+        return $this->hasMany(Building::class);
+    }
+
+    public function flats() {
+        return $this->hasMany(Flat::class);
     }
 }

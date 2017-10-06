@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\District;
 use App\Models\Building;
 use App\Models\HouseType;
+use App\Models\FeeStandard;
 
 class Flat extends Model
 {
@@ -38,5 +39,15 @@ class Flat extends Model
 
     public function houseType() {
         return $this->belongsTo(HouseType::class);
+    }
+
+    public function feeStandard() {
+        $feeStandards = FeeStandard::where(['district_id' => $this->district->id, 'house_type_id' => $this->houseType->id])->get();
+
+        if ($feeStandards->count() > 0) {
+            return $feeStandards[0];
+        } else {
+            return null;
+        }
     }
 }

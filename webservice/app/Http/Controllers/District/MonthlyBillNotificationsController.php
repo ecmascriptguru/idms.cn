@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use App\Models\MonthlyBillNotification;
+use App\Models\Bill;
+
 use App\Http\Requests\MonthlyBillNotificationRequest;
 use App\Transformers\MonthlyBillNotificationTransformer;
 use App\Http\Controllers\ApiController;
@@ -76,7 +78,7 @@ class MonthlyBillNotificationsController extends ApiController
     {
         if ($this->isDistrictAdmin()) {
             $districtId = Auth::guard('api')->user()->district_id;
-            $notifications = MonthlyyBillNotification::where(['district_id' => $districtId, 'date' => $request->get('date')])->get();
+            $notifications = MonthlyBillNotification::where(['district_id' => $districtId, 'date' => $request->get('date')])->get();
 
             if ($notifications->count() > 0) {
                 return $this->response(['result' => 'failure']);
@@ -87,7 +89,24 @@ class MonthlyBillNotificationsController extends ApiController
             $notification->date = $request->get('date');
             $notification->save();
 
-            return $this->response(['result' => 'success']);
+            $district = $notification->district;
+            $flats = $district->flats;
+
+            foreach ($flats as $flat) {
+                $building = $flat->building;
+                $feeStandard = $flat->feeStandard();
+                $bill = new Bill;
+                $bill->district_id = $district->id;
+                $bill->building_id = $building->id;
+                $bill->flat_id = $flat->id;
+                $bill->monthly_bill_notification_id = $notification->id;
+                $bill->area = $flat->area;
+                $bill->total = $feeStandard->property_management_fee * $flat->area;
+
+                $bill->save();
+            }
+
+            return $this->response(['result' => 'success', 'flats' => $flats]);
         } else {
             return $this->response(['result' => 'failure']);
         }
