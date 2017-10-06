@@ -58,12 +58,12 @@ Route::group([
         ]);
 
 
-        Route::get('/admin/ops/full-list', 'Admin\OperatingCompaniesController@fullList');        
+        Route::get('/admin/ops/full-list', 'Admin\OperatingCompaniesController@fullList');
         Route::resource('/admin/ops', 'Admin\OperatingCompaniesController', [
            'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/admin/users/full-list', 'Admin\UsersController@fullList');        
+        Route::get('/admin/users/full-list', 'Admin\UsersController@fullList');
         Route::resource('/admin/users', 'Admin\UsersController', [
            'except' => ['create', 'edit'],
         ]);
@@ -81,7 +81,7 @@ Route::group([
         /**
          *  For Operating Company Admin
          */
-        Route::get('/oca/ppcs/full-list', 'Op\PropertyCompaniesController@fullList');        
+        Route::get('/oca/ppcs/full-list', 'Op\PropertyCompaniesController@fullList');
         Route::resource('/oca/ppcs', 'Op\PropertyCompaniesController', [
            'except' => ['create', 'edit'],
         ]);
@@ -90,17 +90,17 @@ Route::group([
            'except' => ['index', 'store', 'destroy', 'create', 'edit'],
         ]);
 
-        Route::get('/oca/users/full-list', 'Op\UsersController@fullList');        
+        Route::get('/oca/users/full-list', 'Op\UsersController@fullList');
         Route::resource('/oca/users', 'Op\UsersController', [
            'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/oca/app-advs/full-list', 'Op\AppAdvsController@fullList');        
+        Route::get('/oca/app-advs/full-list', 'Op\AppAdvsController@fullList');
         Route::resource('/oca/app-advs', 'Op\AppAdvsController', [
            'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/oca/device-advs/full-list', 'Op\DeviceAdvsController@fullList');        
+        Route::get('/oca/device-advs/full-list', 'Op\DeviceAdvsController@fullList');
         Route::resource('/oca/device-advs', 'Op\DeviceAdvsController', [
            'except' => ['create', 'edit'],
         ]);
@@ -118,12 +118,12 @@ Route::group([
            'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/pca/users/full-list', 'Ppc\UsersController@fullList');        
+        Route::get('/pca/users/full-list', 'Ppc\UsersController@fullList');
         Route::resource('/pca/users', 'Ppc\UsersController', [
            'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/pca/feeStandards/full-list', 'Ppc\FeeStandardsController@fullList');        
+        Route::get('/pca/feeStandards/full-list', 'Ppc\FeeStandardsController@fullList');
         Route::resource('/pca/feeStandards', 'Ppc\FeeStandardsController', [
            'except' => ['create', 'edit'],
         ]);
@@ -131,19 +131,25 @@ Route::group([
         /**
          *  For District Employee
          */
-        Route::get('/dct/buildings/full-list', 'District\BuildingsController@fullList');        
+        Route::get('/dct/buildings/full-list', 'District\BuildingsController@fullList');
         Route::resource('/dct/buildings', 'District\BuildingsController', [
             'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/dct/flats/full-list', 'District\FlatsController@fullList');        
+        Route::get('/dct/flats/full-list', 'District\FlatsController@fullList');
         Route::resource('/dct/flats', 'District\FlatsController', [
             'except' => ['create', 'edit'],
         ]);
 
-        Route::get('/dct/billTerms/full-list', 'District\MonthlyBillNotificationsController@fullList');        
-        Route::post('/dct/billTerms/release', 'District\MonthlyBillNotificationsController@release');        
+        Route::get('/dct/billTerms/full-list', 'District\MonthlyBillNotificationsController@fullList');
+        Route::post('/dct/billTerms/release', 'District\MonthlyBillNotificationsController@release');
         Route::resource('/dct/billTerms', 'District\MonthlyBillNotificationsController', [
+            'except' => ['create', 'edit'],
+        ]);
+
+        Route::get('/dct/bills/full-list', 'District\BillsController@fullList');
+        Route::post('/dct/bills/pay', 'District\BillsController@pay');
+        Route::resource('/dct/bills', 'District\BillsController', [
             'except' => ['create', 'edit'],
         ]);
     });

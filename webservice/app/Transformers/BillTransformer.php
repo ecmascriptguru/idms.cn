@@ -34,10 +34,11 @@ class BillTransformer extends TransformerAbstract
             'created_at' => $bill->created_at->toIso8601String(),
             'updated_at' => $bill->updated_at->toIso8601String(),
 
+            'date' => $bill->monthlyBillNotification->date,
             'district' => $bill->district,
             'building' => $bill->building,
             'flat' => $bill->flat,
-            'feeStandard' => $bill->feeStandard,
+            'feeStandard' => $bill->feeStandard(),
         ];
     }
 }

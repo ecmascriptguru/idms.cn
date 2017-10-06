@@ -5,7 +5,9 @@ namespace App\Http\Controllers\District;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
+use App\Models\MonthlyBillNotification;
 use App\Models\Bill;
+use App\Models\Flat;
 
 use App\Http\Requests\BillRequest;
 use App\Transformers\BillTransformer;
@@ -35,6 +37,7 @@ class BillsController extends ApiController
         $districtId = $request->input('district_id');
         $buildingId = $request->get('building_id');
         $date = $request->get('date');
+        $keyword = $request->get('keyword');
 
         $query = Bill::orderBy($sort, $order);
 
@@ -51,7 +54,21 @@ class BillsController extends ApiController
         }
 
         if ($date) {
-            $query = $query->where(['date' => $date]);
+            $notifications = MonthlyBillNotification::where(['date' => $date])->get();
+            $ids = [];
+            foreach($notifications as $notification) {
+                array_push($ids, $notification->id);
+            }
+            $query = $query->whereIn('monthly_bill_notification_id', $ids);
+        }
+
+        if ($keyword) {
+            $flats = Flat::where('number', 'LIKE', "%$keyword%")->get();
+            $ids = [];
+            foreach($flats as $flat) {
+                array_push($ids, $flat->id);
+            }
+            $query = $query->whereIn('flat_id', $ids);
         }
 
         $bills = $query->paginate($limit);

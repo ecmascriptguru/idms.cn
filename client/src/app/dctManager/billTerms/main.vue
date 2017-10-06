@@ -22,8 +22,8 @@
     methods: {
       editBills(item) {
         this.$router.push({
-          name: 'dctManager.billTerms.edit',
-          query: { page: this.currentPage } })
+          name: 'dctManager.bills.index',
+          query: { page: this.currentPage, date: item.date } })
       },
       create() {
         this.$router.push({ name: 'dctManager.billTerms.new', query: { page: this.currentPage } })
@@ -318,14 +318,14 @@
               data-toggle="tooltip"
               data-placement="top"
               title="Check Bills">
-              <i class="fa fa-fw fa-pencil"></i>
+              <i class="fa fa-fw fa-pencil"></i>修改账单
             </a>
             <a v-if="item.is_released" href="#"
               class="btn btn-xs btn-default"
               data-toggle="tooltip"
               data-placement="top"
               disabled>
-              <i class="fa fa-fw fa-check"></i>
+              <i class="fa fa-fw fa-check"></i>发布
             </a>
             <a v-else href="#"
               @click="askRelease(item)"
@@ -333,7 +333,7 @@
               data-toggle="tooltip"
               data-placement="top"
               title="Release">
-              <i class="fa fa-fw fa-check"></i>
+              <i class="fa fa-fw fa-check"></i>发布
             </a>
           </td>
         </tr>
