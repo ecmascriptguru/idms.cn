@@ -36,15 +36,15 @@ class MonthlyBillNotificationsController extends ApiController
         $districtId = $request->input('district_id');
 
         if ($districtId) {
-            $roles = MonthlyBillNotification::orderBy($sort, $order)->where(['district_id' => $districtId])->paginate($limit);
+            $notifications = MonthlyBillNotification::orderBy($sort, $order)->where(['district_id' => $districtId])->paginate($limit);
         } elseif ($user && $user->district_id) {
-            $roles = MonthlyBillNotification::orderBy($sort, $order)->where(['district_id' => $user->district_id])->paginate($limit);
+            $notifications = MonthlyBillNotification::orderBy($sort, $order)->where(['district_id' => $user->district_id])->paginate($limit);
         } else {
-            $roles = MonthlyBillNotification::orderBy($sort, $order)->paginate($limit);
+            $notifications = MonthlyBillNotification::orderBy($sort, $order)->paginate($limit);
         }
 
         return $this->response(
-            $this->transform->collection($roles, new MonthlyBillNotificationTransformer)
+            $this->transform->collection($notifications, new MonthlyBillNotificationTransformer)
         );
     }
 

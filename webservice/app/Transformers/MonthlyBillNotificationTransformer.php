@@ -19,6 +19,7 @@ class MonthlyBillNotificationTransformer extends TransformerAbstract
         return [
             'id' => $notification->id,
             'date' => $notification->date,
+            'bills_count' => $notification->bills->count(),
             'is_released' => $notification->is_released,
             'created_at' => $notification->created_at->toIso8601String(),
             'updated_at' => $notification->updated_at->toIso8601String(),

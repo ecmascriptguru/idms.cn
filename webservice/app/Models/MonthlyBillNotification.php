@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\District;
+use App\Models\Bill;
 
 class MonthlyBillNotification extends Model
 {
@@ -16,5 +17,9 @@ class MonthlyBillNotification extends Model
 
     public function district() {
         return $this->belongsTo(District::class);
+    }
+
+    public function bills() {
+        return $this->hasMany(Bill::class);
     }
 }

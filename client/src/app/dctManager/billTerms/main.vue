@@ -298,7 +298,7 @@
         <tr>
           <th>ID</th>
           <th>账单账期</th>
-          <!-- <th>账单总数</th> -->
+          <th>账单总数</th>
           <!-- <th>已修改账单数</th> -->
           <th>状态</th>
           <th>操作</th>
@@ -308,6 +308,7 @@
         <tr v-for="(item, index) in billTerms">
           <td width="1%" nowrap>{{ index +1 }}</td>
           <td>{{ item.date }}</td>
+          <td>{{ item.bills_count }}</td>
           <td v-if="item.is_released">已发布</td>
           <td v-else>未发布</td>
           <td width="1%" nowrap="nowrap">
