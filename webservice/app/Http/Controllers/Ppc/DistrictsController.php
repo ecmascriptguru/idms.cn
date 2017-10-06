@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Ppc;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use App\Models\District;
 use App\Models\PropertyCompany;
 use App\Http\Requests\DistrictRequest;
@@ -147,5 +148,18 @@ class DistrictsController extends ApiController
         } else {
             return $this->response(['result' => 'failure']);
         }
+    }
+    
+    public function reminder(Request $request) {
+        $district = District::find($request->get('id'));
+
+        if (! $district) {
+            return $this->responseWithNotFound('District not found');
+        }
+
+        $district->reminder = $request->get('reminder');
+        $district->save();
+
+        return $this->response(['result' => 'success']);
     }
 }

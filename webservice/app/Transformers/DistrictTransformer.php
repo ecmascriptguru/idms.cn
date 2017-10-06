@@ -40,6 +40,7 @@ class DistrictTransformer extends TransformerAbstract
             'short_name' => $district->short_name,
             'province' => $district->province,
             'city' => $district->city,
+            'reminder' => $district->reminder,
             'phone' => $district->phone,
             'contact' => $district->contact,
             'address' => $district->address,

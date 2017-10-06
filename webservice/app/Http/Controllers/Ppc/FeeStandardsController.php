@@ -47,7 +47,7 @@ class FeeStandardsController extends ApiController
                 ->where([
                     'district_id' => $districtId,
                 ])->paginate($limit);
-        } else {
+        } else if ($this->isPropertyCompanyAdmin()) {
             $districts = PropertyCompany::find($this->getPropertyCompanyId())->districts;
             $ids = [];
             foreach($districts as $district) {
@@ -55,18 +55,13 @@ class FeeStandardsController extends ApiController
             }
             $feeStandards = FeeStandard::orderBy($sort, $order)
                 ->whereIn('district_id', $ids)->paginate($limit);
-        }
-
-        if ($this->isPropertyCompanyAdmin()) {
-            return $this->response(
-                $this->transform->collection($feeStandards, new FeeStandardTransformer)
-            );
         } else {
             $feeStandards = FeeStandard::where(['id' => null])->paginate($limit);
-            return $this->response(
-                $this->transform->collection($feeStandards, new FeeStandardTransformer)
-            );
         }
+
+        return $this->response(
+            $this->transform->collection($feeStandards, new FeeStandardTransformer)
+        );
     }
 
     public function fullList(Request $request)

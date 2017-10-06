@@ -22,6 +22,7 @@ class District extends Model
         'phone',
         'contact',
         'parking_lot_id',
+        'reminder',
     ];
 
     public function users()

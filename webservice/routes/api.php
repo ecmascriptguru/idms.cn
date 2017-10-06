@@ -113,6 +113,7 @@ Route::group([
          *  For Property Company admin
          */
         Route::get('/pca/districts/full-list', 'Ppc\DistrictsController@fullList');
+        Route::post('/pca/districts/reminder', 'Ppc\DistrictsController@reminder');
         Route::resource('/pca/districts', 'Ppc\DistrictsController', [
            'except' => ['create', 'edit'],
         ]);
