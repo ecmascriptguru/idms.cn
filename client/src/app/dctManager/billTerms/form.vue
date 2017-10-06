@@ -3,18 +3,42 @@
   import { mapActions } from 'vuex'
 
   export default {
-    name: 'JdBuildingForm',
+    name: 'JdBillTermForm',
 
     /**
     * Component's local state
     */
     data() {
+      let year = (new Date).getFullYear()
+      let month = (new Date).getMonth() + 1
+      if (month < 10) {
+        month = `0${month}`
+      }
+
+      let years = [],
+          months = []
+      for (let i = year - 2; i < year + 4; i ++) {
+        years.push(i)
+      }
+
+      for (let i = 1; i < 13; i ++) {
+        if (i < 10) {
+          months.push(`0${i}`)
+        } else {
+          months.push(`${i}`)
+        }
+      }
+
       return {
-        building: {
+        billTerm: {
           id: 0,
-          name: '',
-          number: '',
+          date: '',
+          year: (new Date).getFullYear(),
+          month: month,
+          is_released: false,
         },
+        years,
+        months,
       }
     },
 
@@ -39,16 +63,16 @@
     */
     computed: {
       isEditing() {
-        return this.building.id > 0
+        return this.billTerm.id > 0
       },
       isValid() {
         this.resetMessages()
-        if (this.building.name === '') {
-          this.setMessage({ type: 'error', message: ['Please fill building name'] })
+        if (this.billTerm.name === '') {
+          this.setMessage({ type: 'error', message: ['Please fill billTerm name'] })
           return false
         }
-        if (this.building.number === '') {
-          this.setMessage({ type: 'error', message: ['Please fill building name'] })
+        if (this.billTerm.number === '') {
+          this.setMessage({ type: 'error', message: ['Please fill billTerm name'] })
           return false
         }
         return true
@@ -77,11 +101,16 @@
           * Fetch the op from the server
           */
           this.setFetching({ fetching: true })
-          this.$http.get(`dct/buildings/${id}`).then((res) => {
-            const { id: _id, name, number, contact, phone, address } = res.data.data // http://wesbos.com/destructuring-renaming/
-            this.building.id = _id
-            this.building.name = name
-            this.building.number = number
+          this.$http.get(`dct/billTerms/${id}`).then((res) => {
+            const { id: _id, date, is_released } = res.data.data // http://wesbos.com/destructuring-renaming/
+            this.billTerm.id = _id
+            this.billTerm.date = date
+            this.billTerm.is_released = is_released
+            let segs = date.split("-")
+            if (segs.length > 1) {
+              this.billTerm.year = segs[0]
+              this.billTerm.month = (segs[1].length < 2) ? ` ${segs[1]}` : segs[1]
+            }
             this.setFetching({ fetching: false })
           })
         }
@@ -104,14 +133,15 @@
         }
       },
       save() {
-        this.$http.post('dct/buildings', this.building).then(() => {
+        this.billTerm.date = `${this.billTerm.year}-${this.billTerm.month}`
+        this.$http.post('dct/billTerms', this.billTerm).then(() => {
           /**
           * This event will notify the world about
           * the op creation. In this case
           * the Op main component will intercept
           * the event and refresh the list.
           */
-          this.$bus.$emit('building.created')
+          this.$bus.$emit('billTerm.created')
 
           /**
           * Hides the global spinner
@@ -130,14 +160,14 @@
         })
       },
       update() {
-        this.$http.put(`dct/buildings/${this.building.id}`, this.building).then(() => {
+        this.$http.put(`dct/billTerms/${this.billTerm.id}`, this.billTerm).then(() => {
           /**
           * This event will notify the world about
           * the op creation. In this case
           * the Op main component will intercept
           * the event and refresh the list.
           */
-          this.$bus.$emit('building.updated')
+          this.$bus.$emit('billTerm.updated')
 
           /**
           * Hides the global spinner
@@ -151,9 +181,14 @@
         })
       },
       reset() {
-        this.building.id = 0
-        this.building.name = ''
-        this.building.number = ''
+        this.billTerm.id = 0
+        this.billTerm.year = (new Date()).getFullYear()
+        this.billTerm.month = (new Date()).getMonth() + 1
+        if (this.billTerm.month < 10) {
+          this.billTerm.month = `0${this.billTerm.month}`
+        }
+        this.billTerm.date = `${this.billTerm.year}-${this.billTerm.month}`
+        this.billTerm.is_released = false
       },
     },
   }
@@ -162,12 +197,20 @@
 <template>
   <form @submit.prevent="submit" class="well">
     <div class="form-group">
-      <label for="name" class="control-label">Building Name</label>
-      <input ref="firstInput" type="text" id="name" class="form-control" v-model="building.name">
+      <label for="year" class="control-label">Year</label>
+      <select ref="firstInput" id="year" class="form-control" v-model="billTerm.year">
+        <option v-for="year in years" :value="year">
+          {{ year }}
+        </option>
+      </select>
     </div>
     <div class="form-group">
-      <label for="number" class="control-label">Building Number</label>
-      <input type="text" id="number" class="form-control" v-model="building.number">
+      <label for="month" class="control-label">Month</label>
+      <select id="month" class="form-control" v-model="billTerm.month">
+        <option v-for="month in months" :value="month">
+          {{ month }}
+        </option>
+      </select>
     </div>
     <button class="btn btn-primary" type="submit">保存</button>
   </form>
