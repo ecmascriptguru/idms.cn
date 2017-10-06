@@ -281,7 +281,7 @@
             <router-link tag="li" active-class="active"  :to="{ path: '/dct/feeStandards', query: { page: 1} }">
               <a href="#"><i class="fa fa-circle-o"></i> 催缴管理</a>
             </router-link>
-            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/billTerms', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 账单管理</a>
             </router-link>
             <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">

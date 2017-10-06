@@ -140,5 +140,10 @@ Route::group([
         Route::resource('/dct/flats', 'District\FlatsController', [
             'except' => ['create', 'edit'],
         ]);
+
+        Route::get('/dct/billTerms/full-list', 'District\MonthlyBillNotificationsController@fullList');        
+        Route::resource('/dct/billTerms', 'District\MonthlyBillNotificationsController', [
+            'except' => ['create', 'edit'],
+        ]);
     });
 });

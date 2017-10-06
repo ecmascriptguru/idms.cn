@@ -6,6 +6,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  BillTerms: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Flats: {
     list: [],
     full_list: [],
@@ -40,6 +45,17 @@ const mutations = {
       st.Flats.pagination = obj.pagination
     }
   },
+  [TYPES.DCT_BILL_TERMS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.BillTerms.list = obj.list
+    }
+    if (obj.full_list) {
+      st.BillTerms.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.BillTerms.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -48,6 +64,9 @@ const actions = {
   },
   flatsSetData({ commit }, obj) {
     commit(TYPES.DCT_FLATS_SET_DATA, obj)
+  },
+  billTermsSetData({ commit }, obj) {
+    commit(TYPES.DCT_BILL_TERMS_SET_DATA, obj)
   },
 }
 

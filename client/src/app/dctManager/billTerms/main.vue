@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'JdDctBuildings',
+    name: 'JdDctBillTerms',
 
     /**
     * Components registered with
@@ -22,21 +22,21 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'dctManager.buildings.edit',
+          name: 'dctManager.billTerms.edit',
           params: { id },
           query: { page: this.currentPage } })
       },
       create() {
-        this.$router.push({ name: 'dctManager.buildings.new', query: { page: this.currentPage } })
+        this.$router.push({ name: 'dctManager.billTerms.new', query: { page: this.currentPage } })
       },
       hide() {
-        this.$router.push({ name: 'dctManager.buildings.index', query: { page: this.currentPage } })
+        this.$router.push({ name: 'dctManager.billTerms.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['buildingsSetData', 'setFetching']),
+      ...mapActions(['billTermsSetData', 'setFetching']),
 
       fetch() {
         this.fetchPaginated()
@@ -44,12 +44,12 @@
       },
 
       /**
-      * Fetch a new set of buildings
+      * Fetch a new set of billTerms
       * based on the current page
       */
       fetchPaginated() {
         /**
-        * Vuex action to set fetching buildings
+        * Vuex action to set fetching billTerms
         * to true, thus showing the spinner
         * that is part of navbar.vue
         */
@@ -61,18 +61,18 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`dct/buildings?page=${this.currentPage}`).then(({ data }) => {
+        this.$http.get(`dct/billTerms?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
           * the Vuex OpratingCompany module
           */
-          this.buildingsSetData({
+          this.billTermsSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
 
           /**
-          * Vuex action to set fetching buildingy
+          * Vuex action to set fetching billTerm
           * to false, thus hiding the spinner
           * that is part of navbar.vue
           */
@@ -82,18 +82,18 @@
 
       /**
       * Differente from fetch() which always
-      * return a paginated set of buildings
+      * return a paginated set of billTerms
       * this one returns the full set, which
       * is used by other components in the app.
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('dct/buildings/full-list').then(({ data }) => {
+        this.$http.get('dct/billTerms/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
-          * the Vuex Building module
+          * the Vuex BillTerm module
           */
-          this.buildingsSetData({
+          this.billTermsSetData({
             full_list: data.data,
           })
           this.setFetching({ fetching: false })
@@ -108,22 +108,22 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'dctManager.buildings.index', query: { page: obj.page } })
+        this.$router.push({ name: 'dctManager.billTerms.index', query: { page: obj.page } })
 
         /**
-        * Fetch a new set of Building based on
+        * Fetch a new set of BillTerm based on
         * current page number. Mind the nextTick()
         * which delays a the request a fraction
         * of a second. This ensures the currentPage
-        * building is set before making the request.
+        * billTerm is set before making the request.
         */
         Vue.nextTick(() => this.fetchPaginated())
       },
 
-      addFlat(buildingId) {
+      addFlat(billTermId) {
         this.$router.push({
           name: "dctManager.flats.new",
-          query: { page: 1, bdId: buildingId }
+          query: { page: 1, bdId: billTermId }
         });
       },
 
@@ -133,7 +133,7 @@
       askRemove(item) {
         swal({
           title: 'Are you sure?',
-          text: `Building ${item.name} will be permanently removed.`,
+          text: `BillTerm ${item.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
@@ -146,9 +146,9 @@
       * Makes the HTTP requesto to the API
       */
       remove(item) {
-        this.$http.delete(`dct/buildings/${item.id}`).then(() => {
+        this.$http.delete(`dct/billTerms/${item.id}`).then(() => {
           /**
-          * On success fetch a new set of Buildings
+          * On success fetch a new set of BillTerms
           * based on current page number
           */
           this.fetchPaginated()
@@ -162,14 +162,14 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'Building removed.', 'success')
+          swal('Done!', 'BillTerm removed.', 'success')
 
           /**
           * Redirects back to the main list,
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'dctManager.buildings.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'dctManager.billTerms.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -186,22 +186,22 @@
 
     /**
     * mapState will bring indicated Vuex
-    * state buildings to the scope of this component.
+    * state billTerms to the scope of this component.
     */
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.DctManager.Buildings.pagination,
-        list: state => state.DctManager.Buildings.list,
+        pagination: state => state.DctManager.BillTerms.pagination,
+        list: state => state.DctManager.BillTerms.list,
       }),
-      buildings() {
+      billTerms() {
         return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
       isFormVisible() {
-        return this.$route.name === 'dctManager.buildings.new' || this.$route.name === 'dctManager.buildings.edit'
+        return this.$route.name === 'dctManager.billTerms.new' || this.$route.name === 'dctManager.billTerms.edit'
       },
     },
     /**
@@ -212,8 +212,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('building.created')
-      this.$bus.$off('building.updated')
+      this.$bus.$off('billTerm.created')
+      this.$bus.$off('billTerm.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -223,10 +223,10 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * Building was created or updated, refresh the list
+      * BillTerm was created or updated, refresh the list
       */
-      this.$bus.$on('building.created', this.fetch)
-      this.$bus.$on('building.updated', this.fetch)
+      this.$bus.$on('billTerm.created', this.fetch)
+      this.$bus.$on('billTerm.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
@@ -263,7 +263,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>楼栋管理</h1>
+        <h1>账期列表</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -272,7 +272,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Building">
+            title="New BillTerm">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -280,7 +280,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Building">
+            title="New BillTerm">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -298,27 +298,20 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>楼栋名称</th>
-          <th>楼栋编号</th>
-          <th>房屋数量</th>
+          <th>账单账期</th>
+          <!-- <th>账单总数</th> -->
+          <!-- <th>已修改账单数</th> -->
+          <th>状态</th>
           <th>操作</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in buildings">
+        <tr v-for="(item, index) in billTerms">
           <td width="1%" nowrap>{{ index +1 }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.number }}</td>
-          <td>{{ item.count }}</td>
+          <td>{{ item.date }}</td>
+          <td v-if="item.is_released">已发布</td>
+          <td v-else>未发布</td>
           <td width="1%" nowrap="nowrap">
-            <a href="#"
-              @click.prevent="addFlat(item.id)"
-              class="btn btn-xs btn-default"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Add Flat">
-              <i class="fa fa-fw fa-plus"></i>
-            </a>
             <a href="#"
               @click.prevent="edit(item.id)"
               class="btn btn-xs btn-default"
