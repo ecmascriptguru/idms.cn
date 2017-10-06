@@ -46,7 +46,6 @@ class Bill extends Model
     }
 
     public function feeStandard() {
-        $houseType = $this->flat->houseType;
-        return $houseType->feeStandard;
+        return $this->flat->feeStandard();
     }
 }

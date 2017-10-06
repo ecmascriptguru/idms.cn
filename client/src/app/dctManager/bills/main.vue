@@ -24,13 +24,24 @@
         this.$router.push({
           name: 'dctManager.bills.edit',
           params: { id },
-          query: { page: this.currentPage, date: this.date, building: this.building } })
-      },
-      create() {
-        this.$router.push({ name: 'dctManager.bills.new', query: { page: this.currentPage } })
+          query: { 
+            page: this.currentPage, 
+            date: this.date, 
+            building: this.building,
+            keyword: this.keyword,
+          } 
+        })
       },
       hide() {
-        this.$router.push({ name: 'dctManager.bills.index', query: { page: this.currentPage } })
+        this.$router.push({ 
+          name: 'dctManager.bills.index', 
+          query: { 
+            page: this.currentPage,
+            date: this.date,
+            building: this.building,
+            keyword: this.keyword,
+          } 
+        })
       },
       /**
       * Brings actions from Vuex to the scope of
@@ -47,7 +58,12 @@
       buildingChanged(event) {
         this.$router.push({
           name: this.$route.name,
-          query: { page: this.currentPage, date: this.date, building: event.target.value, keyword: this.keyword }
+          query: { 
+            page: this.currentPage,
+            date: this.date,
+            building: event.target.value,
+            keyword: this.keyword,
+          }
         })
         this.fetch()
       },
@@ -78,7 +94,25 @@
       keywordChanged(event) {
         this.$router.push({
           name: this.$route.name,
-          query: { page: this.currentPage, date: this.date, building: this.building, keyword: event.target.value }
+          query: { 
+            page: this.currentPage,
+            date: this.date,
+            building: this.building,
+            keyword: event.target.value,
+          }
+        })
+        this.fetch()
+      },
+
+      dateChanged(event) {
+        this.$router.push({
+          name: this.$route.name,
+          query: { 
+            page: this.currentPage,
+            date: event.target.value,
+            building: this.building,
+            keyword: this.keyword,
+          }
         })
         this.fetch()
       },
@@ -148,7 +182,15 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'dctManager.bills.index', query: { page: obj.page } })
+        this.$router.push({ 
+          name: 'dctManager.bills.index',
+          query: { 
+            page: obj.page,
+            date: obj.date,
+            building: obj.building,
+            keyword: obj.keyword,
+          } 
+        })
 
         /**
         * Fetch a new set of Bill based on
@@ -202,7 +244,15 @@
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'dctManager.bills.index', query: { page: this.currentPage } })
+            this.$router.push({ 
+              name: 'dctManager.bills.index', 
+              query: { 
+                page: this.currentPage, 
+                date: this.date, 
+                building: this.building,
+                keyword: this.keyword, 
+              } 
+            })
           }
         })
         .catch((error) => {
@@ -319,7 +369,7 @@
     </transition>
     <div class="col-xs-12">
       <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
           <select @change="buildingChanged" class="form-control" v-model="building" ref="building">
             <option value="0">全部</option>
             <option v-for="building in buildings" :value="building.id">
@@ -327,7 +377,10 @@
             </option>
           </select>
         </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+          <input type="text" @change="dateChanged" class="form-control" v-model="date" ref="date" placeholder="账期" />
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
           <input type="text" @change="keywordChanged" class="form-control" v-model="keyword" ref="keyword" placeholder="房屋编号" />
         </div>
       </div>
