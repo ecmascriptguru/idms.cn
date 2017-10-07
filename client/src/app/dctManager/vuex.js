@@ -21,6 +21,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  Devices: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
 
   }
@@ -72,6 +77,17 @@ const mutations = {
       st.Bills.pagination = obj.pagination
     }
   },
+  [TYPES.DCT_DEVICES_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.Devices.list = obj.list
+    }
+    if (obj.full_list) {
+      st.Devices.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.Devices.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -86,6 +102,9 @@ const actions = {
   },
   billsSetData({ commit }, obj) {
     commit(TYPES.DCT_BILLS_SET_DATA, obj)
+  },
+  devicesSetData({ commit }, obj) {
+    commit(TYPES.DCT_DEVICES_SET_DATA, obj)
   },
 }
 

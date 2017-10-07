@@ -162,5 +162,10 @@ Route::group([
         Route::resource('/dct/bills', 'District\BillsController', [
             'except' => ['create', 'edit'],
         ]);
+
+        Route::get('/dct/devices/full-list', 'District\CheckInDevicesController@fullList');
+        Route::resource('/dct/devices', 'District\CheckInDevicesController', [
+            'except' => ['create', 'edit'],
+        ]);
     });
 });
