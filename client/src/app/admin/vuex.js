@@ -11,6 +11,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  CheckInTypes: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   CustomFeeTypes: {
     list: [],
     full_list: [],
@@ -94,6 +99,17 @@ const mutations = {
       st.HouseTypes.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_CHECK_IN_TYPES_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.CheckInTypes.list = obj.list
+    }
+    if (obj.full_list) {
+      st.CheckInTypes.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.CheckInTypes.pagination = obj.pagination
+    }
+  },
   [TYPES.ADMIN_CUSTOM_FEE_TYPES_SET_DATA](st, obj) {
     if (obj.list) {
       st.CustomFeeTypes.list = obj.list
@@ -164,6 +180,9 @@ const actions = {
   },
   citiesSetData({ commit }, obj) {
     commit(TYPES.ADMIN_CITIES_SET_DATA, obj)
+  },
+  checkInTypesSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_CHECK_IN_TYPES_SET_DATA, obj)
   },
 }
 

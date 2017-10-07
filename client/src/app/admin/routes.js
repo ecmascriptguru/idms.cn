@@ -7,8 +7,10 @@ import { routes as Users } from './users'
 import { routes as ParkingLots } from './parkingLots'
 import { routes as Provinces } from './provinces'
 import { routes as Cities } from './cities'
+import { routes as CheckInTypes } from './checkInTypes'
 
 const routes = [ ...Dashboard, ...Roles, ...Ops, ...Users,
-     ...HouseTypes, ...CustomFeeTypes, ...ParkingLots, ...Provinces, ...Cities ]
+     ...HouseTypes, ...CustomFeeTypes, ...ParkingLots, ...Provinces, ...Cities,
+     ...CheckInTypes ]
 
 export { routes }

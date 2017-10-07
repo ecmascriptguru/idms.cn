@@ -13,9 +13,8 @@ class RolesController extends ApiController
 {
     public function isAdmin() {
         $user = Auth::guard('api')->user();
-        $role = $user->role;
 
-        return $role->id === 1;
+        return ($user && $user->role) ? $user->role->id === 1 : false;
     }
 
     /**
