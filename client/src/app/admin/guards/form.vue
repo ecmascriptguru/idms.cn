@@ -94,7 +94,10 @@
         }
       },
       setParkingLotId() {
-        this.$refs.guard_form_parking_lot_id.value = this.guard.parking_lot_id || this.parkingLotId
+        if (!this.guard.parking_lot_id) {
+          this.guard.parking_lot_id = this.parkingLotId
+        }
+        this.$refs.guard_form_parking_lot_id.value = this.guard.parking_lot_id
       },
       submit() {
         /**
