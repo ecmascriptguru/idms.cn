@@ -25,9 +25,6 @@ class GuardRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'address' => 'required',
-            'contact' => 'required',
-            'phone' => 'required',
         ];
     }
 }

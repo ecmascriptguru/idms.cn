@@ -99,8 +99,22 @@
             <router-link tag="li" active-class="active" :to="{ path: '/admin/checkInPositions', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 门禁位置</a>
             </router-link>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-automobile"></i> <span>停车场设置</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
             <router-link tag="li" active-class="active" :to="{ path: '/admin/parkingLots', query: { page: 1 } }">
-              <a href="#"><i class="fa fa-circle-o"></i> ParkingLots</a>
+              <a href="#"><i class="fa fa-circle-o"></i> 停车场</a>
+            </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/admin/guards', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 岗亭</a>
             </router-link>
           </ul>
         </li>

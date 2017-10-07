@@ -53,6 +53,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  Guards: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
 
   }
@@ -170,6 +175,17 @@ const mutations = {
       st.Cities.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_GUARDS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.Guards.list = obj.list
+    }
+    if (obj.full_list) {
+      st.Guards.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.Guards.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -202,6 +218,9 @@ const actions = {
   },
   checkInPositionsSetData({ commit }, obj) {
     commit(TYPES.ADMIN_CHECK_IN_POSITIONS_SET_DATA, obj)
+  },
+  guardsSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_GUARDS_SET_DATA, obj)
   },
 }
 
