@@ -252,7 +252,7 @@
       <ul v-else-if="(currentUser.role || {}).id === 4" class="sidebar-menu">
         <li active-class="active" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>档案管理</span>
+            <i class="glyphicon glyphicon-file"></i> <span>档案管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -272,13 +272,13 @@
 
         <router-link tag="li" active-class="active" :to="{ path: '/dct/costs', query: { page: 1} }">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>房屋认证</span>
+            <i class="glyphicon glyphicon-user"></i> <span>房屋认证</span>
           </a>
         </router-link>
 
         <li active-class="active" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>物业费用</span>
+            <i class="glyphicon glyphicon-usd"></i> <span>物业费用</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

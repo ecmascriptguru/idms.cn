@@ -252,8 +252,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('flat.created')
-      this.$bus.$off('flat.updated')
+      this.$bus.$off('device.created')
+      this.$bus.$off('device.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -265,8 +265,8 @@
       /**
       * User was created or updated, refresh the list
       */
-      this.$bus.$on('flat.created', this.fetch)
-      this.$bus.$on('flat.updated', this.fetch)
+      this.$bus.$on('device.created', this.fetch)
+      this.$bus.$on('device.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
