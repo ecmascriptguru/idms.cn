@@ -52,6 +52,11 @@ Route::group([
             'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/admin/checkInTypes/full-list', 'Admin\CheckInTypesController@fullList');
+        Route::resource('/admin/checkInTypes', 'Admin\CheckInTypesController', [
+            'except' => ['create', 'edit'],
+        ]);
+
         Route::get('/admin/customFeeTypes/full-list', 'Admin\CustomFeeTypesController@fullList');
         Route::resource('/admin/customFeeTypes', 'Admin\CustomFeeTypesController', [
             'except' => ['create', 'edit'],
