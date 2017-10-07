@@ -20,6 +20,7 @@ class GuardTransformer extends TransformerAbstract
             'id' => $guard->id,
             'parking_lot_id' => $guard->parking_lot_id,
             'name' => $guard->name,
+            'parkingLot' => $guard->parkingLot,
             'created_at' => $guard->created_at->toIso8601String(),
             'updated_at' => $guard->updated_at->toIso8601String(),
         ];

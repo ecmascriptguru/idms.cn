@@ -340,13 +340,15 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
-          <th>Actions</th>
+          <th>停车场名称</th>
+          <th>岗亭名车</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in guards">
           <td width="1%" nowrap>{{ index + 1 }}</td>
+          <td>{{ item.parkingLot.name }}</td>
           <td>{{ item.name }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"

@@ -22,6 +22,7 @@ class ParkingLotTransformer extends TransformerAbstract
             'address' => $parkingLot->address,
             'contact' => $parkingLot->contact,
             'phone' => $parkingLot->phone,
+            'guards' => $parkingLot->guards,
             'created_at' => $parkingLot->created_at->toIso8601String(),
             'updated_at' => $parkingLot->updated_at->toIso8601String(),
         ];
