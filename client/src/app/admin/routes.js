@@ -8,9 +8,10 @@ import { routes as ParkingLots } from './parkingLots'
 import { routes as Provinces } from './provinces'
 import { routes as Cities } from './cities'
 import { routes as CheckInTypes } from './checkInTypes'
+import { routes as CheckInPositions } from './checkInPositions'
 
 const routes = [ ...Dashboard, ...Roles, ...Ops, ...Users,
      ...HouseTypes, ...CustomFeeTypes, ...ParkingLots, ...Provinces, ...Cities,
-     ...CheckInTypes ]
+     ...CheckInTypes, ...CheckInPositions ]
 
 export { routes }

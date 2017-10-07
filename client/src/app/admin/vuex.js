@@ -16,6 +16,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  CheckInPositions: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   CustomFeeTypes: {
     list: [],
     full_list: [],
@@ -110,6 +115,17 @@ const mutations = {
       st.CheckInTypes.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_CHECK_IN_POSITIONS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.CheckInPositions.list = obj.list
+    }
+    if (obj.full_list) {
+      st.CheckInPositions.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.CheckInPositions.pagination = obj.pagination
+    }
+  },
   [TYPES.ADMIN_CUSTOM_FEE_TYPES_SET_DATA](st, obj) {
     if (obj.list) {
       st.CustomFeeTypes.list = obj.list
@@ -183,6 +199,9 @@ const actions = {
   },
   checkInTypesSetData({ commit }, obj) {
     commit(TYPES.ADMIN_CHECK_IN_TYPES_SET_DATA, obj)
+  },
+  checkInPositionsSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_CHECK_IN_POSITIONS_SET_DATA, obj)
   },
 }
 
