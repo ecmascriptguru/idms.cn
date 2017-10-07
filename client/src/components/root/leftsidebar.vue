@@ -272,7 +272,7 @@
 
         <router-link tag="li" active-class="active" :to="{ path: '/dct/costs', query: { page: 1} }">
           <a href="#">
-            <i class="glyphicon glyphicon-user"></i> <span>房屋认证</span>
+            <i class="glyphicon glyphicon-certificate"></i> <span>房屋认证</span>
           </a>
         </router-link>
 
@@ -298,7 +298,7 @@
 
         <li active-class="active" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>物业管理</span>
+            <i class="glyphicon glyphicon-wrench"></i> <span>物业管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -321,7 +321,7 @@
 
         <li active-class="active" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>门禁系统</span>
+            <i class="glyphicon glyphicon-check"></i> <span>门禁系统</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -330,7 +330,7 @@
             <router-link tag="li" active-class="active"  :to="{ path: '/dct/devices', query: { page: 1} }">
               <a href="#"><i class="fa fa-circle-o"></i> 门禁设备</a>
             </router-link>
-            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/monitor', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 设备监控</a>
             </router-link>
             <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
@@ -347,7 +347,7 @@
 
         <li active-class="active" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>梯控系统</span>
+            <i class="glyphicon glyphicon-road"></i> <span>梯控系统</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -364,7 +364,7 @@
 
         <li active-class="active" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>停车场系统</span>
+            <i class="fa fa-automobile"></i> <span>停车场系统</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -384,7 +384,7 @@
 
         <li active-class="active" class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>社区互动</span>
+            <i class="glyphicon glyphicon-globe"></i> <span>社区互动</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -398,13 +398,13 @@
 
         <router-link tag="li" active-class="active" :to="{ path: '/dct/payments', query: { page: 1} }">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>商家入驻</span>
+            <i class="glyphicon glyphicon-bishop"></i> <span>商家入驻</span>
           </a>
         </router-link>
 
         <router-link tag="li" active-class="active" :to="{ path: '/dct/parkings', query: { page: 1} }">
           <a href="#">
-            <i class="glyphicon glyphicon-home"></i> <span>住户管理</span>
+            <i class="glyphicon glyphicon-user"></i> <span>住户管理</span>
           </a>
         </router-link>
 

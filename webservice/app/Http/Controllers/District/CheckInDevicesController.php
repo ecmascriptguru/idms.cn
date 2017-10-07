@@ -55,7 +55,7 @@ class CheckInDevicesController extends ApiController
             return $this->response(
                 $this->transform->collection(CheckInDevice::where(['building_id' => $buildingId])->get(), new CheckInDeviceTransformer)
             );
-        } elseif ($user->district_id) {
+        } elseif ($user && $user->district_id) {
             return $this->response(
                 $this->transform->collection(CheckInDevice::where(['district_id' => $user->district_id])->get(), new CheckInDeviceTransformer)
             );
@@ -170,5 +170,9 @@ class CheckInDevicesController extends ApiController
         else{
             return $this->response(['result' => 'failure']);
         }
+    }
+
+    public function reboot($id) {
+        return $this->response(['result' => 'success']);
     }
 }

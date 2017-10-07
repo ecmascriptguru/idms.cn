@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'JdDctDevices',
+    name: 'JdDctDeviceMonitor',
 
     /**
     * Components registered with
@@ -20,18 +20,6 @@
     },
 
     methods: {
-      edit(id) {
-        this.$router.push({
-          name: 'dctManager.devices.edit',
-          params: { id },
-          query: { page: this.currentPage, bdId: this.buildingId } })
-      },
-      create() {
-        this.$router.push({ name: 'dctManager.devices.new', query: { page: this.currentPage, bdId: this.buildingId } })
-      },
-      hide() {
-        this.$router.push({ name: 'dctManager.devices.index', query: { page: this.currentPage, bdId: this.buildingId } })
-      },
       /**
       * Brings actions from Vuex to the scope of
       * this component
@@ -125,16 +113,16 @@
       /**
       * Shows a confirmation dialog
       */
-      askRemove(item) {
+      askReboot(item) {
         swal({
           title: 'Are you sure?',
-          text: `User ${item.name} will be permanently removed.`,
+          text: `设备 ${item.name} 要重置。`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
           confirmButtonText: 'Yes, do it!',
           closeOnConfirm: false,
-        }, () => this.remove(item)) // callback executed when OK is pressed
+        }, () => this.reboot(item)) // callback executed when OK is pressed
       },
 
       fetchBuildings() {
@@ -171,8 +159,8 @@
       /**
       * Makes the HTTP requesto to the API
       */
-      remove(item) {
-        this.$http.delete(`dct/devices/${item.id}`).then(() => {
+      reboot(item) {
+        this.$http.post(`dct/devices/reboot/${item.id}`).then(() => {
           /**
           * On success fetch a new set of Devices
           * based on current page number
@@ -180,7 +168,7 @@
           this.fetchPaginated()
 
           /**
-          * If we remove a item then
+          * If we reboot a item then
           * the full list must be refreshed
           */
           this.fetchFullList()
@@ -188,7 +176,7 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'User removed.', 'success')
+          swal('Done!', 'User rebooted.', 'success')
 
           /**
           * Redirects back to the main list,
@@ -270,8 +258,8 @@
       /**
       * Fetch data immediately after component is mounted
       */
-      this.fetchPaginated()
       this.fetchBuildings()
+      this.fetchPaginated()
       this.setBuildingId()
       this.fixLayout()
     },
@@ -293,27 +281,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>费用标准管理</h1>
-      </div>
-      <div class="col-md-6 text-right">
-        <div class="button-within-header">
-          <a href="#"
-            v-show="!isFormVisible"
-            @click.prevent="create"
-            class="btn btn-xs btn-default"
-            data-toggle="tooltip" data-placement="top"
-            title="New User">
-            <i class="fa fa-fw fa-plus"></i>
-          </a>
-          <a href="#"
-            v-show="isFormVisible"
-            @click.prevent="hide"
-            class="btn btn-xs btn-default"
-            data-toggle="tooltip" data-placement="top"
-            title="New User">
-            <i class="fa fa-fw fa-minus"></i>
-          </a>
-        </div>
+        <h1>设备列表</h1>
       </div>
     </div>
     <div class="row">
@@ -338,36 +306,33 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>名称</th>
-          <th>位置</th>
-          <th>序列号</th>
-          <th>创建时间</th>
+          <th>小区名称</th>
+          <th>门禁名称</th>
+          <th>设备MAC地址</th>
+          <th>设备位置</th>
+          <th>设备数据状态</th>
+          <th>最后连按时间</th>
           <th>操　　作</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in devices">
           <td width="1%" nowrap>{{ index + 1 }}</td>
+          <td>{{ item.district.name }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.checkInPosition.name }}</td>
           <td>{{ item.mac_address }}</td>
-          <td>{{ new Date(item.created_at).toLocaleString() }}</td>
+          <td>{{ item.checkInPosition.name }}</td>
+          <td v-if="item.status">正常</td>
+          <td v-else>不正常</td>
+          <td>{{ new Date(item.updated_at).toLocaleString() }}(离线)</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"
-              @click.prevent="edit(item.id)"
-              class="btn btn-xs btn-default"
+              @click="askReboot(item)"
+              class="btn btn-xs btn-primary"
               data-toggle="tooltip"
               data-placement="top"
-              title="Edit">
-              <i class="fa fa-fw fa-pencil"></i>
-            </a>
-            <a href="#"
-              @click="askRemove(item)"
-              class="btn btn-xs btn-default"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Remove">
-              <i class="fa fa-fw fa-times"></i>
+              title="设备重置">
+              <i class="fa fa-fw fa-check"></i>设备重置
             </a>
           </td>
         </tr>

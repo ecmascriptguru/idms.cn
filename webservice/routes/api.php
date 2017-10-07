@@ -164,6 +164,7 @@ Route::group([
         ]);
 
         Route::get('/dct/devices/full-list', 'District\CheckInDevicesController@fullList');
+        Route::post('/dct/devices/reboot/{id}', 'District\CheckInDevicesController@reboot');
         Route::resource('/dct/devices', 'District\CheckInDevicesController', [
             'except' => ['create', 'edit'],
         ]);

@@ -6,7 +6,8 @@ import { routes as FeeStandards } from './feeStandards'
 import { routes as BillTerms } from './billTerms'
 import { routes as Bills } from './bills'
 import { routes as Devices } from './devices'
+import { routes as Monitor } from './deviceMonitor'
 
-const routes = [ ...Dashboard, ...Buildings, ...Flats, ...Import, ...FeeStandards, ...BillTerms, ...Bills, ...Devices ]
+const routes = [ ...Dashboard, ...Buildings, ...Flats, ...Import, ...FeeStandards, ...BillTerms, ...Bills, ...Devices, ...Monitor ]
 
 export { routes }
