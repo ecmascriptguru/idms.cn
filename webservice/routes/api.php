@@ -88,6 +88,11 @@ Route::group([
             'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/admin/guards/full-list', 'Admin\GuardsController@fullList');
+        Route::resource('/admin/guards', 'Admin\GuardsController', [
+            'except' => ['create', 'edit'],
+        ]);
+
         /**
          *  For Operating Company Admin
          */
