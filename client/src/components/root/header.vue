@@ -55,17 +55,17 @@
         <span class="logo-mini"><b>A</b>D</span>
         <span class="logo-lg"><b>Admin</b>Dashbaord</span>
     </a>
-    <a v-else-if="(currentUser.role || {}).id === 2" title="Operating Company Dashboard" href="/op" class="logo">
+    <a v-else-if="(currentUser.role || {}).id === 2 && currentUser.organization" title="Operating Company Dashboard" href="/op" class="logo">
         <span class="logo-mini"><b>{{ currentUser.organization.short_name }}</b></span>
         <span class="logo-lg"><b>{{ currentUser.organization.name }}</b></span>
     </a>
 
-    <a v-else-if="(currentUser.role || {}).id === 3" title="Property Company Dashboard" href="/ppc" class="logo">
+    <a v-else-if="(currentUser.role || {}).id === 3 && currentUser.organization" title="Property Company Dashboard" href="/ppc" class="logo">
         <span class="logo-mini"><b>{{ currentUser.organization.short_name }}</b></span>
         <span class="logo-lg"><b>{{ currentUser.organization.name }}</b></span>
     </a>
 
-    <a v-else-if="(currentUser.role || {}).id === 4" title="District Company Dashboard" href="/dct" class="logo">
+    <a v-else-if="(currentUser.role || {}).id === 4 && currentUser.organization" title="District Company Dashboard" href="/dct" class="logo">
         <span class="logo-mini"><b>{{ currentUser.organization.short_name }}</b></span>
         <span class="logo-lg"><b>{{ currentUser.organization.name }}</b></span>
     </a>
