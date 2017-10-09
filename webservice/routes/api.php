@@ -42,6 +42,11 @@ Route::group([
             'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/admin/accountTypes/full-list', 'Admin\AccountTypesController@fullList');
+        Route::resource('/admin/accountTypes', 'Admin\AccountTypesController', [
+            'except' => ['create', 'edit'],
+        ]);
+
         Route::get('/admin/parkingLots/full-list', 'Admin\ParkingLotsController@fullList');
         Route::resource('/admin/parkingLots', 'Admin\ParkingLotsController', [
             'except' => ['create', 'edit'],
