@@ -63,6 +63,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  AccountTypes: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
 
   }
@@ -202,6 +207,17 @@ const mutations = {
       st.Lanes.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_ACCOUNT_TYPES_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.AccountTypes.list = obj.list
+    }
+    if (obj.full_list) {
+      st.AccountTypes.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.AccountTypes.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -240,6 +256,9 @@ const actions = {
   },
   lanesSetData({ commit }, obj) {
     commit(TYPES.ADMIN_LANES_SET_DATA, obj)
+  },
+  accountTypesSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_ACCOUNT_TYPES_SET_DATA, obj)
   },
 }
 

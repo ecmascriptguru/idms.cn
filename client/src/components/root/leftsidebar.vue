@@ -99,6 +99,9 @@
             <router-link tag="li" active-class="active" :to="{ path: '/admin/checkInPositions', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 门禁位置</a>
             </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/admin/accountTypes', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 入住类别</a>
+            </router-link>
           </ul>
         </li>
 

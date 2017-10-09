@@ -11,9 +11,10 @@ import { routes as CheckInTypes } from './checkInTypes'
 import { routes as CheckInPositions } from './checkInPositions'
 import { routes as Guards } from './guards'
 import { routes as Lanes } from './lanes'
+import { routes as AccountTypes } from './accountTypes'
 
 const routes = [ ...Dashboard, ...Roles, ...Ops, ...Users,
      ...HouseTypes, ...CustomFeeTypes, ...ParkingLots, ...Provinces, ...Cities,
-     ...CheckInTypes, ...CheckInPositions, ...Guards, ...Lanes ]
+     ...CheckInTypes, ...CheckInPositions, ...Guards, ...Lanes, ...AccountTypes ]
 
 export { routes }
