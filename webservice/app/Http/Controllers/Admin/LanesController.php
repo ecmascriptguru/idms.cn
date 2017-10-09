@@ -13,7 +13,7 @@ use App\Http\Controllers\ApiController;
 class LanesController extends ApiController
 {
     public function isAdmin() {
-        $user = Auth::lane('api')->user();
+        $user = Auth::guard('api')->user();
 
         return ($user && $user->role) ? $user->role->id === 1 : false;
     }
@@ -28,24 +28,24 @@ class LanesController extends ApiController
         $sort = $this->getSort();
         $order = $this->getOrder();
         $limit = $this->getLimit();
+        $parkingLotId = $request->get('pl');
         $guardId = $request->get('guard');
 
-        if ($guardId || $guardId > 0) {
-            $lanes = Lane::orderBy($sort, $order)->where(['guard_id' => $guardId])->paginate($limit);
-        } else {
-            $lanes = Lane::orderBy($sort, $order)->paginate($limit);
+        $query = Lane::orderBy($sort, $order);
+
+        if ($parkingLotId || $parkingLotId > 0) {
+            $query = $query->where(['parking_lot_id' => $parkingLotId]);
         }
 
-        if ($this->isAdmin()) {
-            return $this->response(
-                $this->transform->collection($lanes, new LaneTransformer)
-            );
-        } else {
-            $lanes = Lane::where(['id' => null])->paginate($limit);
-            return $this->response(
-                $this->transform->collection($lanes, new LaneTransformer)
-            );
+        if ($guardId || $guardId > 0) {
+            $query = $query->where(['guard_id' => $guardId]);
         }
+        
+        $lanes = $query->paginate($limit);
+
+        return $this->response(
+            $this->transform->collection($lanes, new LaneTransformer)
+        );
     }
 
     public function fullList(Request $request)
@@ -73,7 +73,7 @@ class LanesController extends ApiController
     {
         if ($this->isAdmin()) {
         
-            Lane::create($request->only('parking_lot_id', 'guard_id', 'name'));
+            Lane::create($request->only('parking_lot_id', 'guard_id', 'name', 'number', 'control_number'));
 
             return $this->response(['result' => 'success']);
         } else {
@@ -116,9 +116,9 @@ class LanesController extends ApiController
         }
 
         if ($this->isAdmin()) {
-            $lane->parking_lot_id = $request->get('parking_lot_id');
-            $lane->guard_id = $request->get('guard_id');
             $lane->name = $request->get('name');
+            $lane->number = $request->get('number');
+            $lane->control_number = $request->get('control_number');
             $lane->save();
 
             return $this->response(['result' => 'success']);

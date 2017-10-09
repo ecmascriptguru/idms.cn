@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'JdAdminGuards',
+    name: 'JdAdminLanes',
 
     /**
     * Components registered with
@@ -22,21 +22,25 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'admin.guards.edit',
+          name: 'admin.lanes.edit',
           params: { id },
-          query: { page: this.currentPage, pl: this.parkingLotId } })
+          query: { page: this.currentPage, pl: this.parkingLotId, guard: this.guardId } })
       },
       create() {
-        this.$router.push({ name: 'admin.guards.new', query: { page: this.currentPage, pl: this.parkingLotId } })
+        this.$router.push({ 
+          name: 'admin.lanes.new',
+          query: { page: this.currentPage, pl: this.parkingLotId, guard: this.guardId } })
       },
       hide() {
-        this.$router.push({ name: 'admin.guards.index', query: { page: this.currentPage, pl: this.parkingLotId } })
+        this.$router.push({ 
+          name: 'admin.lanes.index',
+          query: { page: this.currentPage, pl: this.parkingLotId, guard: this.guardId } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['guardsSetData', 'parkingLotsSetData', 'setFetching']),
+      ...mapActions(['lanesSetData', 'parkingLotsSetData', 'guardsSetData', 'setFetching']),
 
       fetch() {
         this.fetchPaginated()
@@ -44,7 +48,7 @@
       },
 
       /**
-      * Fetch a new set of guards
+      * Fetch a new set of lanes
       * based on the current page
       */
       fetchPaginated() {
@@ -61,12 +65,12 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`admin/guards?page=${this.currentPage}&pl=${this.parkingLotId}`).then(({ data }) => {
+        this.$http.get(`admin/lanes?page=${this.currentPage}&pl=${this.parkingLotId}&guard=${this.guardId}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
-          * the Vuex Guards module
+          * the Vuex Lanes module
           */
-          this.guardsSetData({
+          this.lanesSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
@@ -82,18 +86,18 @@
 
       /**
       * Differente from fetch() which always
-      * return a paginated set of guards
+      * return a paginated set of lanes
       * this one returns the full set, which
       * is used by other components in the app.
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('admin/guards/full-list').then(({ data }) => {
+        this.$http.get('admin/lanes/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
-          * the Vuex Guards module
+          * the Vuex Lanes module
           */
-          this.guardsSetData({
+          this.lanesSetData({
             full_list: data.data,
           })
           this.setFetching({ fetching: false })
@@ -108,10 +112,10 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'admin.guards.index', query: { page: obj.page } })
+        this.$router.push({ name: 'admin.lanes.index', query: { page: obj.page } })
 
         /**
-        * Fetch a new set of Guards based on
+        * Fetch a new set of Lanes based on
         * current page number. Mind the nextTick()
         * which delays a the request a fraction
         * of a second. This ensures the currentPage
@@ -141,17 +145,49 @@
           this.setProvinceId()
         }
       },
+      
+      /**
+       * Fetching Guards to render parkingLot drop down
+       */
+      fetchGuards() {
+        if (!this.guards.length) {
+          this.setFetching({ fetching: true })
+          this.$http.get(`admin/guards/full-list?pl=${this.parkingLotId}`).then(({ data }) => {
+            /**
+            * Vuex action to set full list array in
+            * the Vuex OperatingCompanies module
+            */
+            this.guardsSetData({
+              full_list: data.data,
+            })
+            this.setFetching({ fetching: false })
+            this.setProvinceId()
+          })
+        } else {
+          this.setProvinceId()
+        }
+      },
 
       parkingLotChanged(event) {
         this.$router.push({
           name: this.$route.name,
-          query: { page: this.currentPage, pl: event.target.value }
+          query: { page: this.currentPage, pl: event.target.value, guard: this.guardId }
+        })
+        this.guardsSetData({full_list: []})
+        this.fetchGuards()
+        this.fetch()
+      },
+
+      guardChanged(event) {
+        this.$router.push({
+          name: this.$route.name,
+          query: { page: this.currentPage, pl:this.parkingLotId, guard: event.target.value }
         })
         this.fetch()
       },
 
       setProvinceId() {
-        this.$refs.guards_parking_lot_id.value = this.$route.query.pl || 0
+        this.$refs.lanes_parking_lot_id.value = this.$route.query.pl || 0
       },
 
       /**
@@ -160,7 +196,7 @@
       askRemove(item) {
         swal({
           title: 'Are you sure?',
-          text: `Guard ${item.name} will be permanently removed.`,
+          text: `Lane ${item.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
@@ -173,9 +209,9 @@
       * Makes the HTTP requesto to the API
       */
       remove(item) {
-        this.$http.delete(`guards/${item.id}`).then(() => {
+        this.$http.delete(`admin/lanes/${item.id}`).then(() => {
           /**
-          * On success fetch a new set of Guards
+          * On success fetch a new set of Lanes
           * based on current page number
           */
           this.fetchPaginated()
@@ -189,14 +225,14 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'Guard removed.', 'success')
+          swal('Done!', 'Lane removed.', 'success')
 
           /**
           * Redirects back to the main list,
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'admin.guards.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'admin.lanes.index', query: { page: this.currentPage, pl: this.parkingLotId, guard: this.guardId } })
           }
         })
         .catch((error) => {
@@ -218,11 +254,12 @@
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.Admin.Guards.pagination,
-        list: state => state.Admin.Guards.list,
-        parkingLots: state => state.Admin.ParkingLots.full_list
+        pagination: state => state.Admin.Lanes.pagination,
+        list: state => state.Admin.Lanes.list,
+        parkingLots: state => state.Admin.ParkingLots.full_list,
+        guards: state => state.Admin.Guards.full_list,
       }),
-      guards() {
+      lanes() {
         return this.list
       },
       currentPage() {
@@ -231,8 +268,11 @@
       parkingLotId() {
         return parseInt(this.$route.query.pl || 0)
       },
+      guardId() {
+        return parseInt(this.$route.query.guard || 0)
+      },
       isFormVisible() {
-        return this.$route.name === 'admin.guards.new' || this.$route.name === 'admin.guards.edit'
+        return this.$route.name === 'admin.lanes.new' || this.$route.name === 'admin.lanes.edit'
       },
     },
     /**
@@ -243,8 +283,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('guard.created')
-      this.$bus.$off('guard.updated')
+      this.$bus.$off('lane.created')
+      this.$bus.$off('lane.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -254,14 +294,15 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * Guard was created or updated, refresh the list
+      * Lane was created or updated, refresh the list
       */
-      this.$bus.$on('guard.created', this.fetch)
-      this.$bus.$on('guard.updated', this.fetch)
+      this.$bus.$on('lane.created', this.fetch)
+      this.$bus.$on('lane.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
       this.fetchParkingLots()
+      this.fetchGuards()
       this.fetchPaginated()
       if (jQuery.AdminLTE.layout) {
         jQuery.AdminLTE.layout.fix()
@@ -296,7 +337,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>Guard Management</h1>
+        <h1>Lane Management</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -305,7 +346,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Guard">
+            title="New Lane">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -313,7 +354,7 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New Guard">
+            title="New Lane">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
@@ -321,10 +362,18 @@
     </div>
     <div class="row">
       <div class="col-sm-4 col-xs-12">
-        <select @change.prevent="parkingLotChanged" ref="guards_parking_lot_id" class="form-control" id="guards_parking_lot_id">
+        <select @change.prevent="parkingLotChanged" ref="lanes_parking_lot_id" class="form-control" id="lanes_parking_lot_id">
           <option value="0">全部</option>
           <option v-for="parkingLot in parkingLots" :value="parkingLot.id">
             {{ parkingLot.name }}
+          </option>
+        </select>
+      </div>
+      <div class="col-sm-4 col-xs-12">
+        <select @change.prevent="guardChanged" ref="lanes_guard_id" class="form-control" id="lanes_guard_id">
+          <option value="0">全部</option>
+          <option v-for="guard in guards" :value="guard.id">
+            {{ guard.name }}
           </option>
         </select>
       </div>
@@ -332,7 +381,7 @@
 
     <!-- Form to create/edit will be inserted here  -->
     <!-- when navigate to /nova or /editar/{id}  -->
-    <!-- see /src/modules/guards/routes.js  -->
+    <!-- see /src/modules/lanes/routes.js  -->
     <transition name="fade">
       <router-view></router-view>
     </transition>
@@ -342,13 +391,17 @@
           <th>ID</th>
           <th>停车场名称</th>
           <th>岗亭名车</th>
+          <th>车道编号</th>
+          <th>车道名称</th>
           <th>操作</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in guards">
+        <tr v-for="(item, index) in lanes">
           <td width="1%" nowrap>{{ index + 1 }}</td>
           <td>{{ item.parkingLot.name }}</td>
+          <td>{{ item.guard.name }}</td>
+          <td>{{ item.number }}</td>
           <td>{{ item.name }}</td>
           <td width="1%" nowrap="nowrap">
             <a href="#"

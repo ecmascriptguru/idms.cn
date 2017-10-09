@@ -93,6 +93,11 @@ Route::group([
             'except' => ['create', 'edit'],
         ]);
 
+        Route::get('/admin/lanes/full-list', 'Admin\LanesController@fullList');
+        Route::resource('/admin/lanes', 'Admin\LanesController', [
+            'except' => ['create', 'edit'],
+        ]);
+
         /**
          *  For Operating Company Admin
          */

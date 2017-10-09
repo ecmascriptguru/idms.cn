@@ -116,6 +116,9 @@
             <router-link tag="li" active-class="active" :to="{ path: '/admin/guards', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 岗亭</a>
             </router-link>
+            <router-link tag="li" active-class="active" :to="{ path: '/admin/lanes', query: { page: 1 } }">
+              <a href="#"><i class="fa fa-circle-o"></i> 车道</a>
+            </router-link>
           </ul>
         </li>
 

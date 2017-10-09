@@ -23,7 +23,8 @@ class LaneTransformer extends TransformerAbstract
             'name' => $lane->name,
             'number' => $lane->number,
             'control_number' => $lane->control_number,
-            'guard' => $lane->guard,
+            'parkingLot' => $lane->parkingLot,
+            'guard' => $lane->parkingGuard(),
             'created_at' => $lane->created_at->toIso8601String(),
             'updated_at' => $lane->updated_at->toIso8601String(),
         ];

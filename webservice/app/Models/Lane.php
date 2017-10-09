@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Guard;
+use App\Models\ParkingLot;
+use App\Models\Guard as ParkingGuard;
 
 class Lane extends Model
 {
@@ -16,7 +17,11 @@ class Lane extends Model
         'control_number',
     ];
 
-    public function guard() {
-        return $this->belongsTo(Guard::class);
+    public function parkingGuard() {
+        return parkingGuard::find($this->guard_id);
+    }
+
+    public function parkingLot() {
+        return $this->belongsTo(ParkingLot::class);
     }
 }

@@ -58,6 +58,11 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  Lanes: {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
 
   }
@@ -186,6 +191,17 @@ const mutations = {
       st.Guards.pagination = obj.pagination
     }
   },
+  [TYPES.ADMIN_LANES_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.Lanes.list = obj.list
+    }
+    if (obj.full_list) {
+      st.Lanes.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.Lanes.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
@@ -221,6 +237,9 @@ const actions = {
   },
   guardsSetData({ commit }, obj) {
     commit(TYPES.ADMIN_GUARDS_SET_DATA, obj)
+  },
+  lanesSetData({ commit }, obj) {
+    commit(TYPES.ADMIN_LANES_SET_DATA, obj)
   },
 }
 
