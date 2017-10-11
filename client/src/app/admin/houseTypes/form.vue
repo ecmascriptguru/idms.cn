@@ -158,6 +158,6 @@
       <label for="name" class="control-label">House Type Name</label>
       <input ref="firstInput" type="text" id="name" class="form-control" v-model="houseType.name">
     </div>
-    <button class="btn btn-primary btn-xs" type="submit">Salvar</button>
+    <button class="btn btn-primary" type="submit">保存</button>
   </form>
 </template>

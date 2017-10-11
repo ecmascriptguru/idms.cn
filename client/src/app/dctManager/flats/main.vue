@@ -157,7 +157,7 @@
       },
       
       setBuildingId() {
-        this.$refs.flats_building_selector.value = this.$route.query.bdId || 0
+        // this.$refs.flats_building_selector.value = this.$route.query.bdId || 0
       },
 
       buildingChanged(event) {

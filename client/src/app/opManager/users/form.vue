@@ -232,6 +232,6 @@
         </option>
       </select>
     </div>
-    <button class="btn btn-primary btn-xs" type="submit">Salvar</button>
+    <button class="btn btn-primary" type="submit">保存</button>
   </form>
 </template>

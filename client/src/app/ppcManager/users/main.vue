@@ -157,7 +157,7 @@
       },
       
       setDistrictId() {
-        this.$refs.users_district_selector.value = this.$route.query.dctId || 0
+        // this.$refs.users_district_selector.value = this.$route.query.dctId || 0
       },
 
       changeDistrict(event) {

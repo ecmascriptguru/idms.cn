@@ -327,7 +327,7 @@
           <my-video :sources="sources" :options="options"></my-video>
           <div class="app-adv-img-hover">
             <button class="btn btn-remove" @click.prevent="askRemove(deviceAdv)" title="Remove This File">
-              <i class="fa fa-remove" >
+              <i class="fa fa-remove"></i>
             </button>
           </div>
         </div>

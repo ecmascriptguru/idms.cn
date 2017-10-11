@@ -26,6 +26,26 @@ const state = {
     full_list: [],
     pagination: {},
   },
+  Certifications : {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
+  OwnerCards : {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
+  FingerPrints : {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
+  CheckInLogs : {
+    list: [],
+    full_list: [],
+    pagination: {},
+  },
   Dashboard: {
 
   }
@@ -42,6 +62,17 @@ const mutations = {
     }
     if (obj.pagination) {
       st.Buildings.pagination = obj.pagination
+    }
+  },
+  [TYPES.DCT_CERTIFICATIONS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.Certifications.list = obj.list
+    }
+    if (obj.full_list) {
+      st.Certifications.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.Certifications.pagination = obj.pagination
     }
   },
   [TYPES.DCT_FLATS_SET_DATA](st, obj) {
@@ -88,11 +119,47 @@ const mutations = {
       st.Devices.pagination = obj.pagination
     }
   },
+  [TYPES.DCT_OWNER_CARDS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.OwnerCards.list = obj.list
+    }
+    if (obj.full_list) {
+      st.OwnerCards.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.OwnerCards.pagination = obj.pagination
+    }
+  },
+  [TYPES.DCT_FINGER_PRINTS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.FingerPrints.list = obj.list
+    }
+    if (obj.full_list) {
+      st.FingerPrints.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.FingerPrints.pagination = obj.pagination
+    }
+  },
+  [TYPES.DCT_CHECK_IN_LOGS_SET_DATA](st, obj) {
+    if (obj.list) {
+      st.CheckInLogs.list = obj.list
+    }
+    if (obj.full_list) {
+      st.CheckInLogs.full_list = obj.full_list
+    }
+    if (obj.pagination) {
+      st.CheckInLogs.pagination = obj.pagination
+    }
+  },
 }
 
 const actions = {
   buildingsSetData({ commit }, obj) {
     commit(TYPES.DCT_BUILDINGS_SET_DATA, obj)
+  },
+  certificationsSetData({ commit }, obj) {
+    commit(TYPES.DCT_CERTIFICATIONS_SET_DATA, obj)
   },
   flatsSetData({ commit }, obj) {
     commit(TYPES.DCT_FLATS_SET_DATA, obj)
@@ -105,6 +172,15 @@ const actions = {
   },
   devicesSetData({ commit }, obj) {
     commit(TYPES.DCT_DEVICES_SET_DATA, obj)
+  },
+  ownerCardsSetData({ commit }, obj) {
+    commit(TYPES.DCT_OWNER_CARDS_SET_DATA, obj)
+  },
+  fingerPrintsSetData({ commit }, obj) {
+    commit(TYPES.DCT_FINGER_PRINTS_SET_DATA, obj)
+  },
+  checkInLogsSetData({ commit }, obj) {
+    commit(TYPES.DCT_CHECK_IN_LOGS_SET_DATA, obj)
   },
 }
 

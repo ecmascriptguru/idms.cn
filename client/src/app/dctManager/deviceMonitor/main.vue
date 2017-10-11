@@ -145,7 +145,7 @@
       },
       
       setBuildingId() {
-        this.$refs.devices_building_selector.value = this.$route.query.bdId || 0
+        // this.$refs.devices_building_selector.value = this.$route.query.bdId || 0
       },
 
       buildingChanged(event) {

@@ -290,7 +290,7 @@
           </ul>
         </li>
 
-        <router-link tag="li" active-class="active" :to="{ path: '/dct/costs', query: { page: 1} }">
+        <router-link tag="li" active-class="active" :to="{ path: '/dct/certifications', query: { page: 1} }">
           <a href="#">
             <i class="glyphicon glyphicon-certificate"></i> <span>房屋认证</span>
           </a>
@@ -353,13 +353,13 @@
             <router-link tag="li" active-class="active" :to="{ path: '/dct/monitor', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 设备监控</a>
             </router-link>
-            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/ownerCards', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 门禁卡管理</a>
             </router-link>
-            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/fingerPrints', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 指纹管理</a>
             </router-link>
-            <router-link tag="li" active-class="active" :to="{ path: '/dct/users', query: { page: 1 } }">
+            <router-link tag="li" active-class="active" :to="{ path: '/dct/checkInLogs', query: { page: 1 } }">
               <a href="#"><i class="fa fa-circle-o"></i> 开门记录</a>
             </router-link>
           </ul>

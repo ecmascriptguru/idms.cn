@@ -240,7 +240,7 @@
           <img :src="appAdv.image_url" class="img-responsive">
           <div class="app-adv-img-hover">
             <button class="btn btn-remove" @click.prevent="askRemove(appAdv)" title="Remove This Image">
-              <i class="fa fa-remove" >
+              <i class="fa fa-remove" ></i>
             </button>
           </div>
         </div>

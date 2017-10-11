@@ -9,7 +9,7 @@
     * Components name to be displayed on
     * Vue.js Devtools
     */
-    name: 'JdDctDevices',
+    name: 'JdDctCertifications',
 
     /**
     * Components registered with
@@ -22,35 +22,34 @@
     methods: {
       edit(id) {
         this.$router.push({
-          name: 'dctManager.devices.edit',
+          name: 'dctManager.buildings.edit',
           params: { id },
-          query: { page: this.currentPage, bdId: this.buildingId } })
+          query: { page: this.currentPage } })
       },
       create() {
-        this.$router.push({ name: 'dctManager.devices.new', query: { page: this.currentPage, bdId: this.buildingId } })
+        this.$router.push({ name: 'dctManager.buildings.new', query: { page: this.currentPage } })
       },
       hide() {
-        this.$router.push({ name: 'dctManager.devices.index', query: { page: this.currentPage, bdId: this.buildingId } })
+        this.$router.push({ name: 'dctManager.buildings.index', query: { page: this.currentPage } })
       },
       /**
       * Brings actions from Vuex to the scope of
       * this component
       */
-      ...mapActions(['devicesSetData', 'setFetching', 'buildingsSetData']),
+      ...mapActions(['buildingsSetData', 'setFetching']),
 
       fetch() {
         this.fetchPaginated()
         this.fetchFullList()
-        this.setBuildingId()
       },
 
       /**
-      * Fetch a new set of devices
+      * Fetch a new set of buildings
       * based on the current page
       */
       fetchPaginated() {
         /**
-        * Vuex action to set fetching property
+        * Vuex action to set fetching buildings
         * to true, thus showing the spinner
         * that is part of navbar.vue
         */
@@ -62,18 +61,18 @@
         * an Axios object.
         * See /src/plugins/http.js
         */
-        this.$http.get(`dct/devices?page=${this.currentPage}&building_id=${this.buildingId}`).then(({ data }) => {
+        this.$http.get(`dct/buildings?page=${this.currentPage}`).then(({ data }) => {
           /**
           * Vuex action to set pagination object in
-          * the Vuex Devices module
+          * the Vuex OpratingCompany module
           */
-          this.devicesSetData({
+          this.buildingsSetData({
             list: data.data,
             pagination: data.meta.pagination,
           })
 
           /**
-          * Vuex action to set fetching property
+          * Vuex action to set fetching buildingy
           * to false, thus hiding the spinner
           * that is part of navbar.vue
           */
@@ -83,22 +82,21 @@
 
       /**
       * Differente from fetch() which always
-      * return a paginated set of devices
+      * return a paginated set of buildings
       * this one returns the full set, which
       * is used by other components in the app.
       */
       fetchFullList() {
         this.setFetching({ fetching: true })
-        this.$http.get('dct/devices/full-list').then(({ data }) => {
+        this.$http.get('dct/buildings/full-list').then(({ data }) => {
           /**
           * Vuex action to set full list array in
-          * the Vuex Devices module
+          * the Vuex Building module
           */
-          this.devicesSetData({
+          this.buildingsSetData({
             full_list: data.data,
           })
           this.setFetching({ fetching: false })
-          this.setBuildingId()
         })
       },
 
@@ -110,16 +108,23 @@
         /**
         * Push the page number to the query string
         */
-        this.$router.push({ name: 'dctManager.devices.index', query: { page: obj.page } })
+        this.$router.push({ name: 'dctManager.buildings.index', query: { page: obj.page } })
 
         /**
-        * Fetch a new set of Devices based on
+        * Fetch a new set of Building based on
         * current page number. Mind the nextTick()
         * which delays a the request a fraction
         * of a second. This ensures the currentPage
-        * property is set before making the request.
+        * building is set before making the request.
         */
         Vue.nextTick(() => this.fetchPaginated())
+      },
+
+      addFlat(buildingId) {
+        this.$router.push({
+          name: "dctManager.flats.new",
+          query: { page: 1, bdId: buildingId }
+        });
       },
 
       /**
@@ -128,7 +133,7 @@
       askRemove(item) {
         swal({
           title: 'Are you sure?',
-          text: `User ${item.name} will be permanently removed.`,
+          text: `Building ${item.name} will be permanently removed.`,
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#DD6B55',
@@ -137,44 +142,13 @@
         }, () => this.remove(item)) // callback executed when OK is pressed
       },
 
-      fetchBuildings() {
-        if (!this.buildings.length) {
-          this.setFetching({ fetching: true })
-          this.$http.get('dct/buildings/full-list').then(({ data }) => {
-            /**
-            * Vuex action to set full list array in
-            * the Vuex OperatingCompanies module
-            */
-            this.buildingsSetData({
-              full_list: data.data,
-            })
-            this.setFetching({ fetching: false })
-            this.setBuildingId()
-          })
-        } else {
-          this.setBuildingId()
-        }
-      },
-      
-      setBuildingId() {
-        // this.$refs.devices_building_selector.value = this.$route.query.bdId || 0
-      },
-
-      buildingChanged(event) {
-        this.$router.push({ 
-          name: this.$route.name,
-          query: { page: this.currentPage, bdId: event.target.value }
-        })
-        this.fetch()
-      },
-
       /**
       * Makes the HTTP requesto to the API
       */
       remove(item) {
-        this.$http.delete(`dct/devices/${item.id}`).then(() => {
+        this.$http.delete(`dct/buildings/${item.id}`).then(() => {
           /**
-          * On success fetch a new set of Devices
+          * On success fetch a new set of Certifications
           * based on current page number
           */
           this.fetchPaginated()
@@ -188,14 +162,14 @@
           /**
           * Shows a different dialog based on the result
           */
-          swal('Done!', 'User removed.', 'success')
+          swal('Done!', 'Building removed.', 'success')
 
           /**
           * Redirects back to the main list,
           * in case the form is open
           */
           if (this.isFormVisible) {
-            this.$router.push({ name: 'dctManager.devices.index', query: { page: this.currentPage } })
+            this.$router.push({ name: 'dctManager.buildings.index', query: { page: this.currentPage } })
           }
         })
         .catch((error) => {
@@ -208,40 +182,26 @@
           swal('Falha!', error.response.data.messages[0], 'error')
         })
       },
-
-      fixLayout() {
-        if (jQuery.AdminLTE.layout) {
-          jQuery.AdminLTE.layout.fix()
-        } else {
-          jQuery(document).ready(() => {
-            jQuery.AdminLTE.layout.fix()
-          })
-        }
-      },
     },
 
     /**
     * mapState will bring indicated Vuex
-    * state properties to the scope of this component.
+    * state buildings to the scope of this component.
     */
     computed: {
       ...mapState({
         fetching: state => state.fetching,
-        pagination: state => state.DctManager.Devices.pagination,
-        list: state => state.DctManager.Devices.list,
-        buildings: state => state.DctManager.Buildings.full_list,
+        pagination: state => state.DctManager.Certifications.pagination,
+        list: state => state.DctManager.Certifications.list,
       }),
-      devices() {
+      buildings() {
         return this.list
       },
       currentPage() {
         return parseInt(this.$route.query.page, 10)
       },
-      buildingId() {
-        return this.$route.query.bdId || 0
-      },
       isFormVisible() {
-        return this.$route.name === 'dctManager.devices.new' || this.$route.name === 'dctManager.devices.edit'
+        return this.$route.name === 'dctManager.buildings.new' || this.$route.name === 'dctManager.buildings.edit'
       },
     },
     /**
@@ -252,8 +212,8 @@
     */
     beforeRouteLeave(to, from, next) {
       this.$bus.$off('navigate')
-      this.$bus.$off('device.created')
-      this.$bus.$off('device.updated')
+      this.$bus.$off('building.created')
+      this.$bus.$off('building.updated')
       jQuery('body').off('keyup')
       next()
     },
@@ -263,17 +223,21 @@
       */
       this.$bus.$on('navigate', obj => this.navigate(obj))
       /**
-      * User was created or updated, refresh the list
+      * Building was created or updated, refresh the list
       */
-      this.$bus.$on('device.created', this.fetch)
-      this.$bus.$on('device.updated', this.fetch)
+      this.$bus.$on('building.created', this.fetch)
+      this.$bus.$on('building.updated', this.fetch)
       /**
       * Fetch data immediately after component is mounted
       */
       this.fetchPaginated()
-      this.fetchBuildings()
-      this.setBuildingId()
-      this.fixLayout()
+      if (jQuery.AdminLTE.layout) {
+        jQuery.AdminLTE.layout.fix()
+      } else {
+        jQuery(document).ready(() => {
+          jQuery.AdminLTE.layout.fix()
+        })
+      }
     },
     /**
     * This hook is called every time DOM
@@ -283,8 +247,14 @@
       /**
       * start Bootstrap Tooltip
       */
-      this.setBuildingId()
-      this.fixLayout()
+      jQuery('[data-toggle="tooltip"]').tooltip();
+      if (jQuery.AdminLTE.layout) {
+        jQuery.AdminLTE.layout.fix()
+      } else {
+        jQuery(document).ready(() => {
+          jQuery.AdminLTE.layout.fix()
+        })
+      }
     },
   }
 </script>
@@ -293,7 +263,7 @@
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <h1>费用标准管理</h1>
+        <h1>房屋认证管理</h1>
       </div>
       <div class="col-md-6 text-right">
         <div class="button-within-header">
@@ -302,7 +272,7 @@
             @click.prevent="create"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New User">
+            title="New Building">
             <i class="fa fa-fw fa-plus"></i>
           </a>
           <a href="#"
@@ -310,26 +280,16 @@
             @click.prevent="hide"
             class="btn btn-xs btn-default"
             data-toggle="tooltip" data-placement="top"
-            title="New User">
+            title="New Building">
             <i class="fa fa-fw fa-minus"></i>
           </a>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-4 col-xs-6">
-        <select ref="devices_building_selector" @change.prevent="buildingChanged" class="form-control" id="devices_building_selector">
-          <option value="0">全部</option>
-          <option v-for="building in buildings" :value="building.id">
-            {{ building.name }}
-          </option>
-        </select>
-      </div>
-    </div>
 
     <!-- Form to create/edit will be inserted here  -->
     <!-- when navigate to /nova or /editar/{id}  -->
-    <!-- see /src/modules/devices/routes.js  -->
+    <!-- see /src/modules/opCompanies/routes.js  -->
     <transition name="fade">
       <router-view></router-view>
     </transition>
@@ -338,21 +298,27 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>名称</th>
-          <th>位置</th>
-          <th>序列号</th>
-          <th>创建时间</th>
-          <th>操　　作</th>
+          <th>楼栋名称</th>
+          <th>房屋编号</th>
+          <th>联系电话</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in devices">
-          <td width="1%" nowrap>{{ index + 1 }}</td>
+        <tr v-for="(item, index) in buildings">
+          <td width="1%" nowrap>{{ index +1 }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.checkInPosition.name }}</td>
-          <td>{{ item.mac_address }}</td>
-          <td>{{ new Date(item.created_at).toLocaleString() }}</td>
+          <td>{{ item.number }}</td>
+          <td>{{ item.count }}</td>
           <td width="1%" nowrap="nowrap">
+            <a href="#"
+              @click.prevent="addFlat(item.id)"
+              class="btn btn-xs btn-default"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Add Flat">
+              <i class="fa fa-fw fa-plus"></i>
+            </a>
             <a href="#"
               @click.prevent="edit(item.id)"
               class="btn btn-xs btn-default"

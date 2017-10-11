@@ -158,6 +158,6 @@
       <label for="name" class="control-label">Role Name</label>
       <input ref="firstInput" type="text" id="name" class="form-control" v-model="role.name">
     </div>
-    <button class="btn btn-primary btn-xs" type="submit">Salvar</button>
+    <button class="btn btn-primary" type="submit">保存</button>
   </form>
 </template>

@@ -13,7 +13,7 @@ class PropertyCompaniesController extends ApiController
     public function isOperatingCompanyAdmin() {
         $user = Auth::guard('api')->user();
 
-        return ($user && $user->role) ? $role->id === 2 : false;
+        return ($user && $user->role) ? $user->role->id === 2 : false;
     }
 
     private function getOperatingCompanyId() {
