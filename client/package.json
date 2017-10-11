@@ -1,8 +1,8 @@
 {
-  "name": "codecasts-spa-starter-kit",
-  "version": "1.0.3",
-  "description": "Client for Codecast's SPA Starter Kit",
-  "author": "Fabio Vedovelli <vedovelli@gmail.com>",
+  "name": "idms",
+  "version": "1.0.0",
+  "description": "Intelligent CheckIn Management System",
+  "author": "Alexis Richard <ecmascript.guru@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
